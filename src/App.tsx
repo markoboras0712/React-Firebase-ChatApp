@@ -1,10 +1,13 @@
-import React from 'react';
-import './App.css';
+import "./App.css";
+import { Chat } from "modules/chat/components";
+import { SignIn } from "modules/authentication/components";
+import React from "react";
 
 export default function App() {
   return (
-    <div>
-      Hello World
-    </div>
+    <React.Fragment>
+      <SignIn />
+      <Chat />
+    </React.Fragment>
   );
 }
