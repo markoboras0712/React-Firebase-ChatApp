@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { auth } from 'firebase';
+import { auth } from 'modules/redux-store';
 import { signOut } from '@firebase/auth';
 
 export const SignOut: React.FC = ({}) => {

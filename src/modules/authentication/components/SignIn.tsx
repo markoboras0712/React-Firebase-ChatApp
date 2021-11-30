@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { auth, provider } from 'firebase';
+import { auth, provider } from 'modules/redux-store';
 import { signInWithPopup } from '@firebase/auth';
 
 export const SignIn: React.FC = ({}) => {

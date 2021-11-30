@@ -1,8 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import messages from '../chat/redux/chatSlice';
+import { chatReducer } from 'modules/chat';
 
 const rootReducer = combineReducers({
-  messages,
+  messages: chatReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

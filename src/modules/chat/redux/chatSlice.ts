@@ -5,7 +5,7 @@ import { fetchMessages } from 'modules/chat/redux/chatActions';
 const initialState: AllMessages = {
   allMessages: [],
   loading: false,
-  error: '',
+  error: null,
   message: {
     photoUrl: '',
     text: '',
@@ -13,7 +13,7 @@ const initialState: AllMessages = {
   },
 };
 
-const chatSlice = createSlice({
+export const chatSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {},
@@ -27,9 +27,9 @@ const chatSlice = createSlice({
     });
     builder.addCase(fetchMessages.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.error.message;
     });
   },
 });
 
-export default chatSlice.reducer;
+export const chatReducer = chatSlice.reducer;
