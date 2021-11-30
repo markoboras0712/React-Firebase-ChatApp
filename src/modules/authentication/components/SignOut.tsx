@@ -1,6 +1,6 @@
-import { Button } from "@mui/material";
-import { auth } from "firebase";
-import { signOut } from "@firebase/auth";
+import { Button } from '@mui/material';
+import { auth } from 'firebase';
+import { signOut } from '@firebase/auth';
 
 export const SignOut: React.FC = ({}) => {
   const handleSignOut = () => {

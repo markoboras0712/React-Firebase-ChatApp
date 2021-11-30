@@ -1,11 +1,9 @@
-import { SignOut } from "modules/authentication/components";
-import { useState, useEffect } from "react";
-import { collection, getDocs } from "@firebase/firestore";
-import { db } from "../../../firebase";
+import { SignOut } from 'modules/authentication/components';
+import { useMessages } from 'modules/chat/hooks/useMessages';
 
 export const Chat: React.FC = ({}) => {
-  const [messages, setMessages] = useState([]);
-  useEffect(() => {}, []);
+  const messages = useMessages();
+  console.log(messages);
   return (
     <div>
       <SignOut />

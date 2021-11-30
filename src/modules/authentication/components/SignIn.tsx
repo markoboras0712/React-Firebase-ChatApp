@@ -1,6 +1,6 @@
-import { Button } from "@mui/material";
-import { auth, provider } from "firebase";
-import { signInWithPopup } from "@firebase/auth";
+import { Button } from '@mui/material';
+import { auth, provider } from 'firebase';
+import { signInWithPopup } from '@firebase/auth';
 
 export const SignIn: React.FC = ({}) => {
   const handleSignIn = () => {
