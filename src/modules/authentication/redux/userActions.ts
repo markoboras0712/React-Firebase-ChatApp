@@ -1,8 +1,9 @@
+import { getDownloadURL, ref, uploadBytes } from '@firebase/storage';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { RegisterData } from 'modules/authentication';
-import { auth, db, provider } from 'modules/redux-store';
+import { auth, db, provider, storage } from 'modules/redux-store';
 
 export const signInWithGoogle = createAsyncThunk(
   'signInWithGoogle',
@@ -49,11 +50,28 @@ export const signUpWithEmailPassword = createAsyncThunk(
         displayName: displayName,
         email: user.email,
         refreshToken: user.refreshToken,
-        userPhoto: userData.photoUrl,
       });
       return user;
     } catch (error) {
       throw new Error('Didng signup');
+    }
+  },
+);
+
+export const getImageUrl = createAsyncThunk(
+  'getImageUrl',
+  async (uploadedFile: File) => {
+    try {
+      const storageRef = ref(storage);
+      console.log('Storage ref', storageRef);
+      const imagesRef = ref(storageRef, uploadedFile.name);
+      await uploadBytes(imagesRef, uploadedFile);
+      console.log('Image uplaoded');
+      const url = await getDownloadURL(imagesRef);
+      console.log('url iz akcije', url);
+      return url;
+    } catch (error) {
+      throw new Error('didnt fetch data');
     }
   },
 );

@@ -1,11 +1,11 @@
 import { Button } from '@mui/material';
-import { signInWithGoogle } from 'modules/authentication/redux/userActions';
-import { useDispatch } from 'react-redux';
+import { useAuthentication } from 'modules/authentication/hooks/useAuthentication';
 
 export const SignIn: React.FC = ({}) => {
-  const dispatch = useDispatch();
+  const { loginWithGoogle } = useAuthentication();
+  //const dispatch = useDispatch();
   const handleSignIn = () => {
-    dispatch(signInWithGoogle());
+    loginWithGoogle();
   };
   return (
     <div>
