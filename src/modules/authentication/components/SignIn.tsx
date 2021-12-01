@@ -1,10 +1,11 @@
 import { Button } from '@mui/material';
-import { auth, provider } from 'modules/redux-store';
-import { signInWithPopup } from '@firebase/auth';
+import { signInWithGoogle } from 'modules/authentication/redux/userActions';
+import { useDispatch } from 'react-redux';
 
 export const SignIn: React.FC = ({}) => {
+  const dispatch = useDispatch();
   const handleSignIn = () => {
-    signInWithPopup(auth, provider);
+    dispatch(signInWithGoogle());
   };
   return (
     <div>

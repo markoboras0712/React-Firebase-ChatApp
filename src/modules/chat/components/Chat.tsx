@@ -21,8 +21,8 @@ export const Chat: React.FC = ({}) => {
     <div>
       <SignOut />
       <div>
-        {messages.map(({ photoUrl, text, uid }) => (
-          <div key={uid}>
+        {messages.map(({ photoUrl, text }) => (
+          <div key={Math.random()}>
             <img src={photoUrl} alt="" />
             <p>{text}</p>
           </div>
