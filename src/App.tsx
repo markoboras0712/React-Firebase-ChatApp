@@ -1,12 +1,11 @@
 import './App.css';
-import { SignIn, RegisterUser } from 'modules/authentication/components';
 import React from 'react';
+import { Routing } from 'modules/routing/components/Routing';
 
 export const App: React.FC = () => {
   return (
     <React.Fragment>
-      <SignIn />
-      <RegisterUser />
+      <Routing />
     </React.Fragment>
   );
 };

@@ -1,8 +1,15 @@
 import { getDownloadURL, ref, uploadBytes } from '@firebase/storage';
+import { navigate } from '@reach/router';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { RegisterData } from 'modules/authentication';
+import { RegisterData, LoginData } from 'modules/authentication';
 import { auth, db, provider, storage } from 'modules/redux-store';
 
 export const signInWithGoogle = createAsyncThunk(
@@ -50,10 +57,51 @@ export const signUpWithEmailPassword = createAsyncThunk(
         displayName: displayName,
         email: user.email,
         refreshToken: user.refreshToken,
+        userPhoto: userData.photoUrl,
       });
       return user;
     } catch (error) {
       throw new Error('Didng signup');
+    }
+  },
+);
+
+export const signInWithEmailPassword = createAsyncThunk(
+  'signInWithEmailPassword',
+  async (userData: LoginData) => {
+    try {
+      const response = await signInWithEmailAndPassword(
+        auth,
+        userData.email,
+        userData.password,
+      );
+      const { user } = response;
+      console.log(user);
+      navigate('/messages');
+      return user;
+    } catch (error) {
+      throw new Error('Didnt sign in');
+    }
+  },
+);
+
+export const logout = createAsyncThunk('logout', async () => {
+  try {
+    await signOut(auth);
+    navigate('/');
+  } catch (error) {
+    throw new Error('didnt logout');
+  }
+});
+
+export const sendPasswordReset = createAsyncThunk(
+  'sendPasswordReset',
+  async (userEmail: string) => {
+    try {
+      await sendPasswordResetEmail(auth, userEmail);
+      navigate('/');
+    } catch (error) {
+      throw new Error('didnt send password reset');
     }
   },
 );
