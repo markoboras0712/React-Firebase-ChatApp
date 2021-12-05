@@ -1,4 +1,9 @@
-import { signInWithGoogle } from 'modules/authentication/redux/userActions';
+import {
+  sendPasswordReset,
+  signInWithEmailPassword,
+  signInWithGoogle,
+} from 'modules/authentication/redux/userActions';
+import { LoginData } from 'modules/authentication';
 import { useDispatch } from 'react-redux';
 
 export const useAuthentication = () => {
@@ -7,5 +12,13 @@ export const useAuthentication = () => {
   const loginWithGoogle = () => {
     dispatch(signInWithGoogle());
   };
-  return { loginWithGoogle };
+
+  const loginWithEmailPassword = (data: LoginData) => {
+    dispatch(signInWithEmailPassword(data));
+  };
+
+  const resetPassword = (email: string) => {
+    dispatch(sendPasswordReset(email));
+  };
+  return { loginWithGoogle, loginWithEmailPassword, resetPassword };
 };

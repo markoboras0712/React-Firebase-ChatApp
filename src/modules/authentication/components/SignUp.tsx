@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import { Link } from '@reach/router';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -32,7 +32,6 @@ type FormData = {
 const theme = createTheme();
 
 export const SignUp: React.FC = () => {
-  const [fileUploaded, setFileUploaded] = useState<File[]>();
   const dispatch = useDispatch();
   const { handleSubmit, control } = useForm<FormData>();
   const onSubmit = async (data: FormData) => {
@@ -163,9 +162,7 @@ export const SignUp: React.FC = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
+                <Link to="/">Already have an account? Sign in</Link>
               </Grid>
             </Grid>
           </form>

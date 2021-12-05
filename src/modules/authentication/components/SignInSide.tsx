@@ -1,70 +1,45 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import { TextField } from '@material-ui/core';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useAuthentication } from 'modules/authentication/hooks/useAuthentication';
-import { LoginData } from 'modules/authentication';
-import { useDispatch } from 'react-redux';
 import {
-  sendPasswordReset,
-  signInWithEmailPassword,
-} from 'modules/authentication/redux/userActions';
-import { useState } from 'react';
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+  Grid,
+  Box,
+  Paper,
+  Link,
+  Checkbox,
+  FormControlLabel,
+  Avatar,
+  Button,
+  TextField,
+  Typography,
+  CssBaseline,
+  createTheme,
+  ThemeProvider,
+} from '@mui/material';
+import { LoginData, useAuthentication } from 'modules/authentication';
+import { Controller, useForm } from 'react-hook-form';
 
 const theme = createTheme();
 
+type FormData = {
+  email: string;
+  password: string;
+};
+
 export const SignInSide: React.FC = () => {
-  const { loginWithGoogle } = useAuthentication();
-  const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
+  const { loginWithGoogle, loginWithEmailPassword, resetPassword } =
+    useAuthentication();
+  const { handleSubmit, control } = useForm<FormData>();
   const handleSignIn = () => {
     loginWithGoogle();
   };
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const onSubmit = (data: FormData) => {
     const loginData: LoginData = {
-      email: data.get('email') as string,
-      password: data.get('password') as string,
+      email: data.email,
+      password: data.password,
     };
-    dispatch(signInWithEmailPassword(loginData));
+    loginWithEmailPassword(loginData);
   };
 
-  const passwordResetHandler = () => {
-    console.log(email);
-    dispatch(sendPasswordReset(email));
+  const passwordResetHandler = (data: FormData) => {
+    resetPassword(data.email);
   };
 
   return (
@@ -102,32 +77,31 @@ export const SignInSide: React.FC = () => {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
-            >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                onChange={(e) => setEmail(e.target.value)}
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
+            <Box component="form" noValidate sx={{ mt: 1 }}>
+              <Controller
+                name={'email'}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <TextField
+                    onChange={onChange}
+                    value={value || ''}
+                    required
+                    label={'Email'}
+                  />
+                )}
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
+              <Controller
+                name={'password'}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <TextField
+                    onChange={onChange}
+                    value={value || ''}
+                    required
+                    type="password"
+                    label={'Password'}
+                  />
+                )}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -136,6 +110,7 @@ export const SignInSide: React.FC = () => {
               <Button
                 type="submit"
                 fullWidth
+                onClick={handleSubmit(onSubmit)}
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
@@ -144,7 +119,7 @@ export const SignInSide: React.FC = () => {
               <Button
                 type="submit"
                 fullWidth
-                onClick={handleSignIn}
+                onClick={handleSubmit(handleSignIn)}
                 variant="contained"
                 sx={{ mt: 2, mb: 2 }}
               >
@@ -153,7 +128,7 @@ export const SignInSide: React.FC = () => {
               <Button
                 type="submit"
                 fullWidth
-                onClick={passwordResetHandler}
+                onClick={handleSubmit(passwordResetHandler)}
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
@@ -167,7 +142,6 @@ export const SignInSide: React.FC = () => {
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
