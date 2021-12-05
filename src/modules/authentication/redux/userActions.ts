@@ -48,18 +48,21 @@ export const signUpWithEmailPassword = createAsyncThunk(
         userData.email,
         userData.password,
       );
+      const storageRef = ref(storage);
+      const imagesRef = ref(storageRef, userData.uploadedPhoto?.name);
+      await uploadBytes(imagesRef, userData.uploadedPhoto as File);
+      const url = await getDownloadURL(imagesRef);
       const { user } = response;
       const displayName = `${userData.firstName} ${userData.lastName}`;
-      console.log('Display name', displayName);
       await addDoc(collection(db, 'users'), {
         id: user.uid,
         authenticated: true,
         displayName: displayName,
         email: user.email,
         refreshToken: user.refreshToken,
-        userPhoto: userData.photoUrl,
+        userPhoto: url,
       });
-      return user;
+      return { user, url, displayName };
     } catch (error) {
       throw new Error('Didng signup');
     }
@@ -75,10 +78,22 @@ export const signInWithEmailPassword = createAsyncThunk(
         userData.email,
         userData.password,
       );
+
       const { user } = response;
-      console.log(user);
+      const userRef = collection(db, 'users');
+      const q = query(userRef, where('id', '==', user.uid));
+      const querySnapshot = await getDocs(q);
+      const dataFromFirestore: string[] = [];
+      if (querySnapshot.docs.length === 1) {
+        querySnapshot.docs.map((res) => {
+          dataFromFirestore.push(res.data().id);
+          dataFromFirestore.push(res.data().displayName);
+        });
+      }
+      const photoUrl = dataFromFirestore[0];
+      const displayName = dataFromFirestore[1];
       navigate('/messages');
-      return user;
+      return { user, photoUrl, displayName };
     } catch (error) {
       throw new Error('Didnt sign in');
     }
@@ -102,24 +117,6 @@ export const sendPasswordReset = createAsyncThunk(
       navigate('/');
     } catch (error) {
       throw new Error('didnt send password reset');
-    }
-  },
-);
-
-export const getImageUrl = createAsyncThunk(
-  'getImageUrl',
-  async (uploadedFile: File) => {
-    try {
-      const storageRef = ref(storage);
-      console.log('Storage ref', storageRef);
-      const imagesRef = ref(storageRef, uploadedFile.name);
-      await uploadBytes(imagesRef, uploadedFile);
-      console.log('Image uplaoded');
-      const url = await getDownloadURL(imagesRef);
-      console.log('url iz akcije', url);
-      return url;
-    } catch (error) {
-      throw new Error('didnt fetch data');
     }
   },
 );

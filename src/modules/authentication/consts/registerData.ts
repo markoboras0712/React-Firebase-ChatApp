@@ -3,5 +3,5 @@ export interface RegisterData {
   password: string;
   firstName: string;
   lastName: string;
-  photoUrl: string;
+  uploadedPhoto: File | undefined;
 }

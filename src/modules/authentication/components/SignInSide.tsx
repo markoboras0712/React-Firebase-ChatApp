@@ -2,7 +2,6 @@ import {
   Grid,
   Box,
   Paper,
-  Link,
   Checkbox,
   FormControlLabel,
   Avatar,
@@ -14,6 +13,7 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import { LoginData, useAuthentication } from 'modules/authentication';
+import { Link } from '@reach/router';
 import { Controller, useForm } from 'react-hook-form';
 
 const theme = createTheme();
@@ -137,9 +137,7 @@ export const SignInSide: React.FC = () => {
               <Grid container>
                 <Grid item xs></Grid>
                 <Grid item>
-                  <Link href="/register" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
+                  <Link to="/register">Dont have an account? Sign up</Link>
                 </Grid>
               </Grid>
             </Box>

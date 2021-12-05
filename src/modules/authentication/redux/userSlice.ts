@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from 'modules/authentication';
 import {
+  logout,
+  sendPasswordReset,
+  signInWithEmailPassword,
   signInWithGoogle,
   signUpWithEmailPassword,
 } from 'modules/authentication/redux/userActions';
@@ -59,15 +62,55 @@ export const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(signUpWithEmailPassword.fulfilled, (state, action) => {
-      state.userData.displayName = action.payload?.email;
-      state.userData.email = action.payload?.email;
+      state.userData.displayName = action.payload.displayName;
+      state.userData.email = action.payload?.user.email;
       state.authenticated = true;
-      state.userData.id = action.payload?.uid;
-      state.userPhoto = action.payload.photoURL;
-      state.refreshToken = action.payload?.refreshToken;
+      state.userData.id = action.payload?.user.uid;
+      state.userPhoto = action.payload.url;
+      state.refreshToken = action.payload?.user.refreshToken;
       state.isLoading = false;
     });
     builder.addCase(signUpWithEmailPassword.rejected, (state, action) => {
+      state.error = action.error;
+    });
+    builder.addCase(signInWithEmailPassword.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(signInWithEmailPassword.fulfilled, (state, action) => {
+      state.userData.displayName = action.payload?.displayName;
+      state.userData.email = action.payload?.user.email;
+      state.authenticated = true;
+      state.userPhoto = action.payload.photoUrl;
+      state.userData.id = action.payload?.user.uid;
+      state.refreshToken = action.payload?.user.refreshToken;
+      state.isLoading = false;
+    });
+    builder.addCase(signInWithEmailPassword.rejected, (state, action) => {
+      state.error = action.error;
+    });
+    builder.addCase(sendPasswordReset.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(sendPasswordReset.fulfilled, (state) => {
+      state.authenticated = false;
+      state.isLoading = false;
+    });
+    builder.addCase(sendPasswordReset.rejected, (state, action) => {
+      state.error = action.error;
+    });
+    builder.addCase(logout.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(logout.fulfilled, (state) => {
+      state.userData.displayName = null;
+      state.userData.email = null;
+      state.authenticated = false;
+      state.userData.id = undefined;
+      state.refreshToken = null;
+      state.userPhoto = null;
+      state.isLoading = false;
+    });
+    builder.addCase(logout.rejected, (state, action) => {
       state.error = action.error;
     });
   },

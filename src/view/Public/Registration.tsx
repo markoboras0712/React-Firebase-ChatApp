@@ -1,9 +1,10 @@
-import { SignUp } from 'modules/authentication/components/SignUp';
+import { SignUp } from 'modules/authentication';
+import { PublicAuthGuard } from 'modules/authentication/components/PublicAuthGuard';
 
 export const Registration: React.FC = () => {
   return (
-    <section>
+    <PublicAuthGuard>
       <SignUp />
-    </section>
+    </PublicAuthGuard>
   );
 };

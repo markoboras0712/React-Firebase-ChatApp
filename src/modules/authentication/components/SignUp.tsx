@@ -1,25 +1,22 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import {
+  Grid,
+  Box,
+  Checkbox,
+  FormControlLabel,
+  Avatar,
+  Button,
+  Container,
+  TextField,
+  Typography,
+  CssBaseline,
+  createTheme,
+  ThemeProvider,
+} from '@mui/material';
 import { Link } from '@reach/router';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { DropzoneArea } from 'material-ui-dropzone';
-import { useState } from 'react';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { storage } from 'modules/redux-store';
 import { RegisterData } from 'modules/authentication';
-import { useDispatch } from 'react-redux';
-import { signUpWithEmailPassword } from 'modules/authentication/redux/userActions';
-import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import { useAuthentication } from 'modules/authentication';
+import { useForm, Controller } from 'react-hook-form';
 
 type FormData = {
   email: string;
@@ -32,27 +29,18 @@ type FormData = {
 const theme = createTheme();
 
 export const SignUp: React.FC = () => {
-  const dispatch = useDispatch();
+  const { registerWithEmailPassword } = useAuthentication();
   const { handleSubmit, control } = useForm<FormData>();
-  const onSubmit = async (data: FormData) => {
-    console.log(data);
+  const onSubmit = (data: FormData) => {
     const file = data.photoUrl.shift();
-    if (file === undefined) {
-      return;
-    }
-    const storageRef = ref(storage);
-    const imagesRef = ref(storageRef, file.name);
-    await uploadBytes(imagesRef, file);
-    const url = await getDownloadURL(imagesRef);
-    console.log('url s firebasea', url);
     const registerData: RegisterData = {
       email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,
       password: data.password,
-      photoUrl: url,
+      uploadedPhoto: file,
     };
-    dispatch(signUpWithEmailPassword(registerData));
+    registerWithEmailPassword(registerData);
   };
 
   return (
@@ -136,7 +124,7 @@ export const SignUp: React.FC = () => {
                 <Controller
                   name={'photoUrl'}
                   control={control}
-                  render={({ field: { onChange, value } }) => (
+                  render={({ field: { onChange } }) => (
                     <DropzoneArea filesLimit={1} onChange={onChange} />
                   )}
                 />

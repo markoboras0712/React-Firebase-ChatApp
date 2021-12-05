@@ -1,9 +1,10 @@
-import { SignInSide } from 'modules/authentication/components/SignInSide';
+import { SignInSide } from 'modules/authentication';
+import { PublicAuthGuard } from 'modules/authentication/components/PublicAuthGuard';
 
 export const Login: React.FC = () => {
   return (
-    <section>
+    <PublicAuthGuard>
       <SignInSide />
-    </section>
+    </PublicAuthGuard>
   );
 };
