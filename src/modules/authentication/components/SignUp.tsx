@@ -19,59 +19,41 @@ import { storage } from 'modules/redux-store';
 import { RegisterData } from 'modules/authentication';
 import { useDispatch } from 'react-redux';
 import { signUpWithEmailPassword } from 'modules/authentication/redux/userActions';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+type FormData = {
+  email: string;
+  password: string;
+  lastName: string;
+  firstName: string;
+  photoUrl: File[];
+};
 
 const theme = createTheme();
 
 export const SignUp: React.FC = () => {
   const [fileUploaded, setFileUploaded] = useState<File[]>();
   const dispatch = useDispatch();
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    if (fileUploaded === undefined) {
-      return;
-    }
-    const file = fileUploaded.shift();
+  const { handleSubmit, control } = useForm<FormData>();
+  const onSubmit = async (data: FormData) => {
+    console.log(data);
+    const file = data.photoUrl.shift();
     if (file === undefined) {
       return;
     }
-
     const storageRef = ref(storage);
     const imagesRef = ref(storageRef, file.name);
     await uploadBytes(imagesRef, file);
     const url = await getDownloadURL(imagesRef);
+    console.log('url s firebasea', url);
     const registerData: RegisterData = {
-      email: data.get('email') as string,
-      firstName: data.get('firstName') as string,
-      lastName: data.get('lastName') as string,
-      password: data.get('password') as string,
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      password: data.password,
       photoUrl: url,
     };
-    console.log('url s firebasea', url);
-    console.log('Register data', registerData);
     dispatch(signUpWithEmailPassword(registerData));
-  };
-
-  const handleImage = (files: File[]) => {
-    setFileUploaded(files);
   };
 
   return (
@@ -90,57 +72,75 @@ export const SignUp: React.FC = () => {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
+          <form>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
+                <Controller
+                  name={'firstName'}
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <TextField
+                      onChange={onChange}
+                      value={value || ''}
+                      required
+                      label={'First Name'}
+                    />
+                  )}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                <Controller
+                  name={'lastName'}
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <TextField
+                      onChange={onChange}
+                      value={value || ''}
+                      required
+                      label={'Last Name'}
+                    />
+                  )}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
+                <Controller
+                  name={'email'}
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <TextField
+                      onChange={onChange}
+                      value={value || ''}
+                      fullWidth
+                      required
+                      label={'Email'}
+                    />
+                  )}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
+                <Controller
+                  name={'password'}
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <TextField
+                      onChange={onChange}
+                      value={value || ''}
+                      fullWidth
+                      type="password"
+                      required
+                      label={'Password'}
+                    />
+                  )}
                 />
               </Grid>
               <Grid item xs={12}>
-                <DropzoneArea filesLimit={1} onChange={handleImage} />
+                <Controller
+                  name={'photoUrl'}
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <DropzoneArea filesLimit={1} onChange={onChange} />
+                  )}
+                />
               </Grid>
 
               <Grid item xs={12}>
@@ -157,6 +157,7 @@ export const SignUp: React.FC = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit(onSubmit)}
             >
               Sign Up
             </Button>
@@ -167,9 +168,8 @@ export const SignUp: React.FC = () => {
                 </Link>
               </Grid>
             </Grid>
-          </Box>
+          </form>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
