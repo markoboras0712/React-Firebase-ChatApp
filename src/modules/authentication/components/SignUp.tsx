@@ -1,8 +1,6 @@
 import {
   Grid,
   Box,
-  Checkbox,
-  FormControlLabel,
   Avatar,
   Button,
   Container,
@@ -70,6 +68,9 @@ export const SignUp: React.FC = () => {
                       onChange={onChange}
                       value={value || ''}
                       required
+                      fullWidth
+                      autoComplete="firstName"
+                      margin="normal"
                       label={'First Name'}
                     />
                   )}
@@ -84,6 +85,9 @@ export const SignUp: React.FC = () => {
                       onChange={onChange}
                       value={value || ''}
                       required
+                      fullWidth
+                      margin="normal"
+                      autoComplete="lastName"
                       label={'Last Name'}
                     />
                   )}
@@ -127,15 +131,6 @@ export const SignUp: React.FC = () => {
                   render={({ field: { onChange } }) => (
                     <DropzoneArea filesLimit={1} onChange={onChange} />
                   )}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
             </Grid>

@@ -72,11 +72,17 @@ export const useAuthentication = () => {
     navigate('/messages');
   };
 
+  const logoutUser = async () => {
+    await dispatch(logout());
+    navigate('/messages');
+  };
+
   return {
     loginWithGoogle,
     loginWithEmailPassword,
     resetPassword,
     registerWithEmailPassword,
     autoLogin,
+    logoutUser,
   };
 };

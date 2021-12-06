@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Grid,
   Box,
@@ -15,6 +16,8 @@ import {
 import { LoginData, useAuthentication } from 'modules/authentication';
 import { Link } from '@reach/router';
 import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 const theme = createTheme();
 
@@ -24,13 +27,29 @@ type FormData = {
 };
 
 export const SignInSide: React.FC = () => {
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().required('Email is required').email('Email is invalid'),
+    password: Yup.string()
+      .required('Password is required')
+      .min(6, 'Password must be at least 6 characters')
+      .max(40, 'Password must not exceed 40 characters'),
+  });
+
   const { loginWithGoogle, loginWithEmailPassword, resetPassword } =
     useAuthentication();
-  const { handleSubmit, control } = useForm<FormData>();
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(validationSchema),
+  });
   const handleSignIn = () => {
     loginWithGoogle();
   };
   const onSubmit = (data: FormData) => {
+    console.log(data);
     const loginData: LoginData = {
       email: data.email,
       password: data.password,
@@ -52,8 +71,7 @@ export const SignInSide: React.FC = () => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage:
-              'url(https://as1.ftcdn.net/v2/jpg/03/67/00/34/500_F_367003415_3JIx0TrEgjIGCC8PG2Ti0fTnbeOu8Pj1.jpg)',
+            backgroundImage: 'url(https://source.unsplash.com/random)',
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light'
@@ -81,26 +99,36 @@ export const SignInSide: React.FC = () => {
               <Controller
                 name={'email'}
                 control={control}
-                render={({ field: { onChange, value } }) => (
-                  <TextField
-                    onChange={onChange}
-                    value={value || ''}
-                    required
-                    label={'Email'}
-                  />
+                render={() => (
+                  <div>
+                    <TextField
+                      required
+                      fullWidth
+                      {...register('email', { required: true })}
+                      autoComplete="email"
+                      margin="normal"
+                      label={'Email'}
+                    />
+                    <div>{errors.email?.message}</div>
+                  </div>
                 )}
               />
               <Controller
                 name={'password'}
                 control={control}
-                render={({ field: { onChange, value } }) => (
-                  <TextField
-                    onChange={onChange}
-                    value={value || ''}
-                    required
-                    type="password"
-                    label={'Password'}
-                  />
+                render={() => (
+                  <div>
+                    <TextField
+                      required
+                      fullWidth
+                      {...register('password', { required: true })}
+                      autoComplete="current-password"
+                      margin="normal"
+                      type="password"
+                      label={'Password'}
+                    />
+                    <div>{errors.password?.message}</div>
+                  </div>
                 )}
               />
               <FormControlLabel
