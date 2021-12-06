@@ -7,10 +7,35 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  User,
 } from 'firebase/auth';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { RegisterData, LoginData } from 'modules/authentication';
 import { auth, db, provider, storage } from 'modules/redux-store';
+
+const getPhotoDisplayName = async (user: User) => {
+  const userRef = collection(db, 'users');
+  const q = query(userRef, where('id', '==', user.uid));
+  const querySnapshot = await getDocs(q);
+  const dataFromFirestore: string[] = [];
+  if (querySnapshot.docs.length === 1) {
+    querySnapshot.docs.map((res) => {
+      dataFromFirestore.push(res.data().id);
+      dataFromFirestore.push(res.data().displayName);
+    });
+  }
+  const photoUrl = dataFromFirestore[0];
+  const displayName = dataFromFirestore[1];
+  return { photoUrl, displayName };
+};
+
+const getFirestoreImageUrl = async (userData: RegisterData) => {
+  const storageRef = ref(storage);
+  const imagesRef = ref(storageRef, userData.uploadedPhoto?.name);
+  await uploadBytes(imagesRef, userData.uploadedPhoto as File);
+  const url = await getDownloadURL(imagesRef);
+  return url;
+};
 
 export const signInWithGoogle = createAsyncThunk(
   'signInWithGoogle',
@@ -19,7 +44,6 @@ export const signInWithGoogle = createAsyncThunk(
       const res = await signInWithPopup(auth, provider);
       const { user } = res;
       const userRef = collection(db, 'users');
-      console.log('User ref', userRef);
       const q = query(userRef, where('id', '==', user.uid));
       const querySnapshot = await getDocs(q);
       if (querySnapshot.docs.length === 0) {
@@ -48,11 +72,8 @@ export const signUpWithEmailPassword = createAsyncThunk(
         userData.email,
         userData.password,
       );
-      const storageRef = ref(storage);
-      const imagesRef = ref(storageRef, userData.uploadedPhoto?.name);
-      await uploadBytes(imagesRef, userData.uploadedPhoto as File);
-      const url = await getDownloadURL(imagesRef);
       const { user } = response;
+      const url = await getFirestoreImageUrl(userData);
       const displayName = `${userData.firstName} ${userData.lastName}`;
       await addDoc(collection(db, 'users'), {
         id: user.uid,
@@ -80,18 +101,7 @@ export const signInWithEmailPassword = createAsyncThunk(
       );
 
       const { user } = response;
-      const userRef = collection(db, 'users');
-      const q = query(userRef, where('id', '==', user.uid));
-      const querySnapshot = await getDocs(q);
-      const dataFromFirestore: string[] = [];
-      if (querySnapshot.docs.length === 1) {
-        querySnapshot.docs.map((res) => {
-          dataFromFirestore.push(res.data().id);
-          dataFromFirestore.push(res.data().displayName);
-        });
-      }
-      const photoUrl = dataFromFirestore[0];
-      const displayName = dataFromFirestore[1];
+      const { photoUrl, displayName } = await getPhotoDisplayName(user);
       navigate('/messages');
       return { user, photoUrl, displayName };
     } catch (error) {
