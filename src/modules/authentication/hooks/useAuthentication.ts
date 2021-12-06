@@ -7,14 +7,15 @@ import {
 } from 'modules/authentication/redux/userActions';
 import {
   clearUser,
+  getDataFromUser,
   LoginData,
   RegisterData,
   saveUser,
 } from 'modules/authentication';
 import { useDispatch } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth, db } from 'modules/redux-store';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { auth } from 'modules/redux-store';
+
 import { navigate } from '@reach/router';
 
 export interface UserData {
@@ -26,6 +27,7 @@ export interface UserData {
   userPhoto?: string | null | undefined;
   loading?: boolean | undefined;
 }
+
 export const useAuthentication = () => {
   const dispatch = useDispatch();
 
@@ -37,18 +39,7 @@ export const useAuthentication = () => {
       }
       if (user) {
         console.log('Auto login', user);
-        const userRef = collection(db, 'users');
-        const q = query(userRef, where('id', '==', user.uid));
-        const querySnapshot = await getDocs(q);
-        const dataFromFirestore: string[] = [];
-        if (querySnapshot.docs.length === 1) {
-          querySnapshot.docs.map((res) => {
-            dataFromFirestore.push(res.data().userPhoto);
-            dataFromFirestore.push(res.data().displayName);
-          });
-        }
-        const photoUrl = dataFromFirestore[0];
-        const displayName = dataFromFirestore[1];
+        const { displayName, photoUrl } = await getDataFromUser(user);
         const userData: UserData = {
           displayName: displayName,
           email: user.email,
