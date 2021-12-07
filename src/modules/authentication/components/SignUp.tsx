@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Grid,
   Box,
@@ -12,9 +13,10 @@ import {
 } from '@mui/material';
 import { Link } from '@reach/router';
 import { DropzoneArea } from 'material-ui-dropzone';
-import { RegisterData } from 'modules/authentication';
-import { useAuthentication } from 'modules/authentication';
+import { RegisterData, useAuthentication } from 'modules/authentication';
 import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 type FormData = {
   email: string;
@@ -27,8 +29,31 @@ type FormData = {
 const theme = createTheme();
 
 export const SignUp: React.FC = () => {
+  const validationSchema = Yup.object().shape({
+    firstName: Yup.string()
+      .required('Username is required')
+      .min(6, 'Username must be at least 6 characters')
+      .max(20, 'Username must not exceed 20 characters'),
+    lastName: Yup.string()
+      .required('Username is required')
+      .min(6, 'Username must be at least 6 characters')
+      .max(20, 'Username must not exceed 20 characters'),
+    email: Yup.string().required('Email is required').email('Email is invalid'),
+    password: Yup.string()
+      .required('Password is required')
+      .min(6, 'Password must be at least 6 characters')
+      .max(40, 'Password must not exceed 40 characters'),
+  });
+
   const { registerWithEmailPassword } = useAuthentication();
-  const { handleSubmit, control } = useForm<FormData>();
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(validationSchema),
+  });
   const onSubmit = (data: FormData) => {
     const file = data.photoUrl.shift();
     const registerData: RegisterData = {
@@ -63,16 +88,18 @@ export const SignUp: React.FC = () => {
                 <Controller
                   name={'firstName'}
                   control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <TextField
-                      onChange={onChange}
-                      value={value || ''}
-                      required
-                      fullWidth
-                      autoComplete="firstName"
-                      margin="normal"
-                      label={'First Name'}
-                    />
+                  render={() => (
+                    <div>
+                      <TextField
+                        required
+                        fullWidth
+                        {...register('firstName', { required: true })}
+                        autoComplete="firstName"
+                        margin="normal"
+                        label={'First Name'}
+                      />
+                      <div>{errors.firstName?.message}</div>
+                    </div>
                   )}
                 />
               </Grid>
@@ -80,16 +107,18 @@ export const SignUp: React.FC = () => {
                 <Controller
                   name={'lastName'}
                   control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <TextField
-                      onChange={onChange}
-                      value={value || ''}
-                      required
-                      fullWidth
-                      margin="normal"
-                      autoComplete="lastName"
-                      label={'Last Name'}
-                    />
+                  render={() => (
+                    <div>
+                      <TextField
+                        required
+                        fullWidth
+                        {...register('lastName', { required: true })}
+                        margin="normal"
+                        autoComplete="lastName"
+                        label={'Last Name'}
+                      />
+                      <div>{errors.lastName?.message}</div>
+                    </div>
                   )}
                 />
               </Grid>
@@ -97,14 +126,16 @@ export const SignUp: React.FC = () => {
                 <Controller
                   name={'email'}
                   control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <TextField
-                      onChange={onChange}
-                      value={value || ''}
-                      fullWidth
-                      required
-                      label={'Email'}
-                    />
+                  render={() => (
+                    <div>
+                      <TextField
+                        fullWidth
+                        {...register('email', { required: true })}
+                        required
+                        label={'Email'}
+                      />
+                      <div>{errors.email?.message}</div>
+                    </div>
                   )}
                 />
               </Grid>
@@ -112,15 +143,17 @@ export const SignUp: React.FC = () => {
                 <Controller
                   name={'password'}
                   control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <TextField
-                      onChange={onChange}
-                      value={value || ''}
-                      fullWidth
-                      type="password"
-                      required
-                      label={'Password'}
-                    />
+                  render={() => (
+                    <div>
+                      <TextField
+                        fullWidth
+                        {...register('password', { required: true })}
+                        type="password"
+                        required
+                        label={'Password'}
+                      />
+                      <div>{errors.password?.message}</div>
+                    </div>
                   )}
                 />
               </Grid>
