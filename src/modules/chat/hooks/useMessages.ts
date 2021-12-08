@@ -1,4 +1,5 @@
-import { Message, sendMsg } from 'modules/chat';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Message, setMessagesListener } from 'modules/chat';
 import { RootState } from 'modules/redux-store';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,9 +13,14 @@ export const useMessages = () => {
       userName: user.userData.displayName,
       userPhoto: user.userPhoto,
     };
-    await dispatch(sendMsg(message));
+    //await dispatch(sendMsg(message));
+  };
+
+  const getMessages = () => {
+    dispatch(setMessagesListener());
   };
   return {
     sendMessageToFirestore,
+    getMessages,
   };
 };

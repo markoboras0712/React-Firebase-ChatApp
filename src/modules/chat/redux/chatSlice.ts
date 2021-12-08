@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { AllMessages, Message } from 'modules/chat/consts/message';
-import { fetchMessages, sendMsg } from 'modules/chat/redux/chatActions';
+import { db } from 'modules/redux-store';
 
 const initialState: AllMessages = {
   allMessages: [],
@@ -13,22 +14,40 @@ const initialState: AllMessages = {
   },
 };
 
+/*
+export const sendMsg = createAsyncThunk('sendMsg', async (message: Message) => {
+  try {
+    await addDoc(collection(db, 'messages'), {
+      createdAt: serverTimestamp(),
+      text: message.text,
+      uid: message.uid,
+      userName: message.userName,
+      userPhoto: message.userPhoto,
+    });
+  } catch (error) {
+    throw new Error('didnt send message');
+  }
+});
+*/
+
 export const chatSlice = createSlice({
   name: 'messages',
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchMessages.pending, (state) => {
+  reducers: {
+    fetchMessagesPending: (state) => {
       state.loading = true;
-    });
-    builder.addCase(fetchMessages.fulfilled, (state, action) => {
-      state.allMessages = [];
+    },
+    fetchMessagesFulfilled: (state, { payload }) => {
+      state.allMessages = payload;
       state.loading = false;
-    });
-    builder.addCase(fetchMessages.rejected, (state, action) => {
+    },
+    fetchMessagesRejected: (state, { payload }) => {
+      state.error = payload;
       state.loading = false;
-      state.error = action.error.message;
-    });
+    },
+  },
+  /*
+  extraReducers: (builder) => {
     builder.addCase(sendMsg.pending, (state) => {
       state.loading = true;
     });
@@ -39,7 +58,11 @@ export const chatSlice = createSlice({
       state.loading = false;
       state.error = action.error.message;
     });
-  },
+  },*/
 });
-
+export const {
+  fetchMessagesPending,
+  fetchMessagesFulfilled,
+  fetchMessagesRejected,
+} = chatSlice.actions;
 export const chatReducer = chatSlice.reducer;

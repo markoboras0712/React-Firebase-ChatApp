@@ -12,33 +12,20 @@ import {
   serverTimestamp,
 } from 'firebase/firestore';
 import { Message } from 'modules/chat/consts/message';
-const listenerUnsubscribeList = [];
-export const fetchMessages = createAsyncThunk('fetchMessages', async () => {
-  try {
-    const messagesRef = collection(db, 'messages');
-    let messages: Message[] = [];
-    const q = query(messagesRef, orderBy('createdAt'), limit(50));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      messages = snapshot.docs.map((doc) => ({ ...doc.data() })) as Message[];
-      console.log(messages);
-    });
+import { fetchMessagesPending } from 'modules/chat/redux/chatSlice';
+import { fetchMessagesFulfilled, fetchMessagesRejected } from 'modules/chat';
 
-    listenerUnsubscribeList.push(unsubscribe);
-  } catch (error) {
-    throw new Error('didnt fetch data');
-  }
-});
-
-export const sendMsg = createAsyncThunk('sendMsg', async (message: Message) => {
-  try {
-    await addDoc(collection(db, 'messages'), {
-      createdAt: serverTimestamp(),
-      text: message.text,
-      uid: message.uid,
-      userName: message.userName,
-      userPhoto: message.userPhoto,
-    });
-  } catch (error) {
-    throw new Error('didnt send message');
-  }
-});
+export const setMessagesListener =
+  () => (dispatch: (arg0: { payload: any; type: string }) => void) => {
+    try {
+      const messagesRef = collection(db, 'messages');
+      dispatch(fetchMessagesPending());
+      const q = query(messagesRef, orderBy('createdAt'), limit(50));
+      onSnapshot(q, (snapshot) => {
+        const messages = snapshot.docs.map((doc) => ({ ...doc.data() }));
+        dispatch(fetchMessagesFulfilled(messages));
+      });
+    } catch (error) {
+      dispatch(fetchMessagesRejected(error));
+    }
+  };
