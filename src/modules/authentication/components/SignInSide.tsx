@@ -145,9 +145,8 @@ export const SignInSide: React.FC = () => {
                 Sign In
               </Button>
               <Button
-                type="submit"
                 fullWidth
-                onClick={handleSubmit(handleSignIn)}
+                onClick={handleSignIn}
                 variant="contained"
                 sx={{ mt: 2, mb: 2 }}
               >

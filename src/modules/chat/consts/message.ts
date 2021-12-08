@@ -1,10 +1,8 @@
-import { Timestamp } from '@firebase/firestore';
-
 export interface Message {
-  createdAt?: Timestamp;
-  photoUrl: string;
-  text: string;
-  uid: string;
+  text?: string;
+  uid?: string;
+  userName?: string | undefined | null;
+  userPhoto?: string | undefined | null;
 }
 
 export interface AllMessages {

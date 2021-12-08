@@ -1,64 +1,40 @@
-import { addDoc, collection } from '@firebase/firestore';
-import { Button, Input } from '@mui/material';
-import { serverTimestamp } from 'firebase/firestore';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prefer-const */
+import { collection, Timestamp } from '@firebase/firestore';
+import { limit, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { SignOut } from 'modules/authentication';
-import { useMessages } from 'modules/chat';
-import { db } from 'modules/redux-store';
-import { useState } from 'react';
-
+import { fetchMessages, setMessagesListener, useMessages } from 'modules/chat';
+import { SendMessage } from 'modules/chat/components/SendMessage';
+import { db, RootState } from 'modules/redux-store';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+interface Message {
+  createdAt?: Timestamp;
+  text: string;
+  uid: string;
+  userName: string;
+  userPhoto: string;
+}
 export const Chat: React.FC = ({}) => {
-  const messages = useMessages();
-  console.log(messages);
-  const [msg, setMsg] = useState('');
-  const sendMessage = async (event: React.FormEvent) => {
-    event.preventDefault();
-    await addDoc(collection(db, 'messages'), {
-      createdAt: serverTimestamp(),
-      text: msg,
-    });
-  };
+  const [msg, setMsg] = useState<Message[]>([]);
+  const messages = useSelector((state: RootState) => state.messages);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setMessagesListener());
+  }, []);
   return (
     <div>
       <SignOut />
       <div>
-        {messages.map(({ photoUrl, text }) => (
+        {messages.allMessages.map(({ text, userPhoto, userName }) => (
           <div key={Math.random()}>
-            <img src={photoUrl} alt="" />
+            <img src={userPhoto as string} />
+            <p>{userName}</p>
             <p>{text}</p>
           </div>
         ))}
       </div>
-      <div>
-        <form onSubmit={sendMessage}>
-          <div className="sendMsg">
-            <Input
-              style={{
-                width: '78%',
-                fontSize: '15px',
-                fontWeight: '550',
-                marginLeft: '5px',
-                marginBottom: '-3px',
-              }}
-              placeholder="Message..."
-              type="text"
-              value={msg}
-              onChange={(e) => setMsg(e.target.value)}
-            />
-            <Button
-              style={{
-                width: '18%',
-                fontSize: '15px',
-                fontWeight: '550',
-                margin: '4px 5% -13px 5%',
-                maxWidth: '200px',
-              }}
-              type="submit"
-            >
-              Send
-            </Button>
-          </div>
-        </form>
-      </div>
+      <SendMessage />
     </div>
   );
 };

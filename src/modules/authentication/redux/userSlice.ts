@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { User } from 'modules/authentication';
+import { User } from 'models';
 import {
   logout,
   sendPasswordReset,
@@ -57,6 +57,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(signInWithGoogle.rejected, (state, action) => {
       state.error = action.error;
+      state.isLoading = false;
     });
     builder.addCase(signUpWithEmailPassword.pending, (state) => {
       state.isLoading = true;
@@ -72,6 +73,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(signUpWithEmailPassword.rejected, (state, action) => {
       state.error = action.error;
+      state.isLoading = false;
     });
     builder.addCase(signInWithEmailPassword.pending, (state) => {
       state.isLoading = true;
@@ -87,6 +89,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(signInWithEmailPassword.rejected, (state, action) => {
       state.error = action.error;
+      state.isLoading = false;
     });
     builder.addCase(sendPasswordReset.pending, (state) => {
       state.isLoading = true;
@@ -97,6 +100,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(sendPasswordReset.rejected, (state, action) => {
       state.error = action.error;
+      state.isLoading = false;
     });
     builder.addCase(logout.pending, (state) => {
       state.isLoading = true;
@@ -112,6 +116,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(logout.rejected, (state, action) => {
       state.error = action.error;
+      state.isLoading = false;
     });
   },
 });

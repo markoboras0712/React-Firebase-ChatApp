@@ -15,7 +15,6 @@ import {
 import { useDispatch } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from 'modules/redux-store';
-
 import { navigate } from '@reach/router';
 
 export interface UserData {
@@ -55,7 +54,6 @@ export const useAuthentication = () => {
 
   const loginWithGoogle = async () => {
     await dispatch(signInWithGoogle());
-    navigate('/messages');
   };
 
   const loginWithEmailPassword = async (data: LoginData) => {

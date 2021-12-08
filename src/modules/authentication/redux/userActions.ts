@@ -1,5 +1,4 @@
 import { getDownloadURL, ref, uploadBytes } from '@firebase/storage';
-import { navigate } from '@reach/router';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   createUserWithEmailAndPassword,
@@ -20,7 +19,7 @@ const getPhotoDisplayName = async (user: User) => {
   const dataFromFirestore: string[] = [];
   if (querySnapshot.docs.length === 1) {
     querySnapshot.docs.map((res) => {
-      dataFromFirestore.push(res.data().id);
+      dataFromFirestore.push(res.data().userPhoto);
       dataFromFirestore.push(res.data().displayName);
     });
   }
@@ -102,7 +101,6 @@ export const signInWithEmailPassword = createAsyncThunk(
 
       const { user } = response;
       const { photoUrl, displayName } = await getPhotoDisplayName(user);
-      navigate('/messages');
       return { user, photoUrl, displayName };
     } catch (error) {
       throw new Error('Didnt sign in');
@@ -113,7 +111,6 @@ export const signInWithEmailPassword = createAsyncThunk(
 export const logout = createAsyncThunk('logout', async () => {
   try {
     await signOut(auth);
-    navigate('/');
   } catch (error) {
     throw new Error('didnt logout');
   }
@@ -124,7 +121,6 @@ export const sendPasswordReset = createAsyncThunk(
   async (userEmail: string) => {
     try {
       await sendPasswordResetEmail(auth, userEmail);
-      navigate('/');
     } catch (error) {
       throw new Error('didnt send password reset');
     }
