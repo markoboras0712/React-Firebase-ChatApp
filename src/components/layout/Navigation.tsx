@@ -1,27 +1,35 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import { Link } from '@reach/router';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import { useAuthentication } from 'modules/authentication';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Avatar,
+  Button,
+  IconButton,
+  Typography,
+} from '@mui/material';
+import { useSelector } from 'react-redux';
+import { RootState } from 'modules/redux-store';
 
 export const Navigation: React.FC = () => {
+  const userPhoto = useSelector((state: RootState) => state.user.userPhoto);
+  const { logoutUser } = useAuthentication();
+  const handleSignOut = () => {
+    logoutUser();
+  };
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar position="static">
         <Toolbar>
-          <Box sx={{ flexGrow: 0 }}>
+          <Box>
             <IconButton sx={{ p: 1 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Avatar alt="Remy Sharp" src={userPhoto as string} />
             </IconButton>
           </Box>
           <Button
             color="info"
+            sx={{ ml: 1 }}
             component={Link}
             to={'/contacts'}
             variant="contained"
@@ -37,6 +45,18 @@ export const Navigation: React.FC = () => {
             variant="contained"
           >
             Messages
+          </Button>
+          <Typography color="inherit" style={{ flex: 1 }} sx={{ ml: 1 }}>
+            CHAT APP
+          </Typography>
+
+          <Button
+            color="success"
+            variant="contained"
+            onClick={handleSignOut}
+            sx={{ ml: 1 }}
+          >
+            LOGOUT
           </Button>
         </Toolbar>
       </AppBar>

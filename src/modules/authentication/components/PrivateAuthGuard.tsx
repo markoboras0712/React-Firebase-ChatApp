@@ -10,10 +10,10 @@ export const PrivateAuthGuard: React.FC = ({ children }) => {
   const isLoading = user.isLoading;
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated && !isLoading) {
       navigate('/');
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, isLoading]);
 
   if (isLoading) {
     return <LinearProgress color="success" />;

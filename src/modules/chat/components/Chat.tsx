@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
 import { Timestamp } from '@firebase/firestore';
-import { SignOut } from 'modules/authentication';
 import { SendMessage } from 'modules/chat/components/SendMessage';
 import { useMessages } from 'modules/chat/hooks/useMessages';
 import { RootState } from 'modules/redux-store';
@@ -17,7 +16,6 @@ export const Chat: React.FC = ({}) => {
 
   return (
     <div>
-      <SignOut />
       <div>
         {messages.map(({ text, userPhoto, userName }) => (
           <div key={Math.random()}>

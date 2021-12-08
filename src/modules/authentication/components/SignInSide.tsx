@@ -163,7 +163,14 @@ export const SignInSide: React.FC = () => {
               <Grid container>
                 <Grid item xs></Grid>
                 <Grid item>
-                  <Link to="/register">Dont have an account? Sign up</Link>
+                  <Button
+                    color="info"
+                    component={Link}
+                    to={'/register'}
+                    variant="contained"
+                  >
+                    Dont have an account? Sign up
+                  </Button>
                 </Grid>
               </Grid>
             </Box>
