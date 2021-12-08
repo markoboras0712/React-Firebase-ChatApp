@@ -15,7 +15,7 @@ import { Copyright } from 'modules/chat/components/Copyright';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import ResponsiveAppBar from 'components/layout/ResponsiveAppBar';
+import { Navigation } from 'components/layout/Navigation';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -25,12 +25,12 @@ export default function ContactsList() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <ResponsiveAppBar />
+      <Navigation />
       <main>
-        <Container sx={{ py: 8 }} maxWidth="md">
-          <Grid container spacing={4}>
+        <Container sx={{ py: 8 }} fixed>
+          <Grid container spacing={8}>
             {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+              <Grid item key={card} xs={4} sm={6} md={3}>
                 <Card
                   sx={{
                     height: '100%',
@@ -43,13 +43,13 @@ export default function ContactsList() {
                     image="https://source.unsplash.com/random"
                     alt="random"
                   />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
+                  <CardContent sx={{ flexGrow: 2 }}>
+                    <Typography variant="h5" component="h5">
                       Heading
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">Chat</Button>
+                    <Button size="large">Chat</Button>
                   </CardActions>
                 </Card>
               </Grid>
