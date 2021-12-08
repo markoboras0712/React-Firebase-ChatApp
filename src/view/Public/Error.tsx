@@ -1,25 +1,6 @@
-import {
-  Button,
-  Link,
-  Typography,
-  Box,
-  CssBaseline,
-  Container,
-} from '@mui/material';
+import { Button, Typography, Box, CssBaseline, Container } from '@mui/material';
+import { Copyright } from 'modules/chat/components/Copyright';
 import { navigate } from '@reach/router';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary">
-      {'Copyright © '}
-      <Link color="inherit" href="https://prototyp.digital/">
-        PROTOTYP
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 export const NotFound: React.FC = () => {
   const returnHomeHandler = () => {

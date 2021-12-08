@@ -37,7 +37,6 @@ export const useAuthentication = () => {
         dispatch(clearUser());
       }
       if (user) {
-        console.log('Auto login', user);
         const { displayName, photoUrl } = await getDataFromUser(user);
         const userData: UserData = {
           displayName: displayName,
@@ -47,7 +46,6 @@ export const useAuthentication = () => {
           userPhoto: photoUrl,
         };
         dispatch(saveUser(userData));
-        console.log('User refresh token', user.refreshToken);
       }
     });
   };

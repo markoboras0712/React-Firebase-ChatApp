@@ -49,7 +49,6 @@ export const SignInSide: React.FC = () => {
     loginWithGoogle();
   };
   const onSubmit = (data: FormData) => {
-    console.log(data);
     const loginData: LoginData = {
       email: data.email,
       password: data.password,

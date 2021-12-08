@@ -33,7 +33,7 @@ export const sendMsg = createAsyncThunk('sendMsg', async (message: Message) => {
 });
 
 export const setMessagesListener =
-  () => (dispatch: (arg0: { payload: any; type: string }) => void) => {
+  () => (dispatch: (arg0: { payload: unknown; type: string }) => void) => {
     try {
       const messagesRef = collection(db, 'messages');
       dispatch(fetchMessagesPending());
