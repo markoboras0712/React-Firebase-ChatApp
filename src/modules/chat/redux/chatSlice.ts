@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { sendMsg } from 'modules/chat/redux/chatActions';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { AllMessages, Message } from 'modules/chat/consts/message';
@@ -13,22 +14,6 @@ const initialState: AllMessages = {
     uid: '',
   },
 };
-
-/*
-export const sendMsg = createAsyncThunk('sendMsg', async (message: Message) => {
-  try {
-    await addDoc(collection(db, 'messages'), {
-      createdAt: serverTimestamp(),
-      text: message.text,
-      uid: message.uid,
-      userName: message.userName,
-      userPhoto: message.userPhoto,
-    });
-  } catch (error) {
-    throw new Error('didnt send message');
-  }
-});
-*/
 
 export const chatSlice = createSlice({
   name: 'messages',
@@ -46,7 +31,6 @@ export const chatSlice = createSlice({
       state.loading = false;
     },
   },
-  /*
   extraReducers: (builder) => {
     builder.addCase(sendMsg.pending, (state) => {
       state.loading = true;
@@ -58,7 +42,7 @@ export const chatSlice = createSlice({
       state.loading = false;
       state.error = action.error.message;
     });
-  },*/
+  },
 });
 export const {
   fetchMessagesPending,

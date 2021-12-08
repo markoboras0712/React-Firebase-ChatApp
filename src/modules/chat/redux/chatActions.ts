@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import { db } from 'modules/redux-store/firebase';
 import {
   addDoc,
@@ -11,9 +10,27 @@ import {
   query,
   serverTimestamp,
 } from 'firebase/firestore';
-import { Message } from 'modules/chat/consts/message';
-import { fetchMessagesPending } from 'modules/chat/redux/chatSlice';
-import { fetchMessagesFulfilled, fetchMessagesRejected } from 'modules/chat';
+import {
+  fetchMessagesFulfilled,
+  fetchMessagesRejected,
+  fetchMessagesPending,
+  Message,
+} from 'modules/chat';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+
+export const sendMsg = createAsyncThunk('sendMsg', async (message: Message) => {
+  try {
+    await addDoc(collection(db, 'messages'), {
+      createdAt: serverTimestamp(),
+      text: message.text,
+      uid: message.uid,
+      userName: message.userName,
+      userPhoto: message.userPhoto,
+    });
+  } catch (error) {
+    throw new Error('didnt send message');
+  }
+});
 
 export const setMessagesListener =
   () => (dispatch: (arg0: { payload: any; type: string }) => void) => {

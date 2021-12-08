@@ -1,21 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
-import { collection, Timestamp } from '@firebase/firestore';
-import { limit, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { Timestamp } from '@firebase/firestore';
 import { SignOut } from 'modules/authentication';
 import { SendMessage } from 'modules/chat/components/SendMessage';
 import { useMessages } from 'modules/chat/hooks/useMessages';
-import { setMessagesListener } from 'modules/chat/redux/chatActions';
-import { db, RootState } from 'modules/redux-store';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-interface Message {
-  createdAt?: Timestamp;
-  text: string;
-  uid: string;
-  userName: string;
-  userPhoto: string;
-}
+import { RootState } from 'modules/redux-store';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
 export const Chat: React.FC = ({}) => {
   const { getMessages } = useMessages();
   useEffect(getMessages, []);
@@ -35,6 +27,7 @@ export const Chat: React.FC = ({}) => {
           </div>
         ))}
       </div>
+      <SendMessage />
     </div>
   );
 };
