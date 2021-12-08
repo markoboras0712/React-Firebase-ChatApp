@@ -3,11 +3,11 @@
 import { collection, Timestamp } from '@firebase/firestore';
 import { limit, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { SignOut } from 'modules/authentication';
-import { fetchMessages, setMessagesListener, useMessages } from 'modules/chat';
+import { fetchMessages, useMessages } from 'modules/chat';
 import { SendMessage } from 'modules/chat/components/SendMessage';
-import { db, RootState } from 'modules/redux-store';
+import { db } from 'modules/redux-store';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 interface Message {
   createdAt?: Timestamp;
   text: string;
@@ -17,18 +17,26 @@ interface Message {
 }
 export const Chat: React.FC = ({}) => {
   const [msg, setMsg] = useState<Message[]>([]);
-  const messages = useSelector((state: RootState) => state.messages);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setMessagesListener());
+    const messagesRef = collection(db, 'messages');
+    const q = query(messagesRef, orderBy('createdAt'), limit(50));
+    onSnapshot(q, (snapshot) => {
+      let messagesFromFireStore: Message[] = [];
+      snapshot.forEach((doc) => {
+        messagesFromFireStore.push(doc.data() as Message);
+      });
+      setMsg(messagesFromFireStore);
+    });
+    dispatch(fetchMessages());
   }, []);
   return (
     <div>
       <SignOut />
       <div>
-        {messages.allMessages.map(({ text, userPhoto, userName }) => (
+        {msg.map(({ text, userPhoto, userName }) => (
           <div key={Math.random()}>
-            <img src={userPhoto as string} />
+            <img src={userPhoto} />
             <p>{userName}</p>
             <p>{text}</p>
           </div>
