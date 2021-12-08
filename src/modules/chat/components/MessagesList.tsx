@@ -1,25 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Copyright } from 'modules/chat/components/Copyright';
 import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
   CssBaseline,
-  Grid,
   Box,
-  Typography,
   Container,
-  Stack,
+  Grid,
   Paper,
+  Button,
+  CardContent,
+  CardActions,
+  Card,
+  Avatar,
+  Typography,
+  CardMedia,
+  CardActionArea,
 } from '@mui/material';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import { Navigation } from 'components/layout/Navigation';
 import { Chat } from 'modules/chat/components/Chat';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 const theme = createTheme();
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -34,17 +34,36 @@ export const MessagesList: React.FC = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Navigation />
-      <Stack
-        direction="column"
-        sx={{ mt: 3 }}
-        justifyContent="flex-start"
-        alignItems="stretch"
-        spacing={6}
-      >
-        <Item>Item 1</Item>
-        <Item>Item 2</Item>
-        <Item>Item 3</Item>
-      </Stack>
+      <Container sx={{ py: 8 }} fixed>
+        <Grid
+          container
+          spacing={6}
+          direction="column"
+          justifyContent="center"
+          alignItems="stretch"
+        >
+          {cards.map((card) => (
+            <Grid item key={card} xs={6} md={3}>
+              <Card>
+                <CardMedia
+                  component="img"
+                  height="300"
+                  image="https://source.unsplash.com/random"
+                  alt="random"
+                />
+                <CardContent sx={{ flexGrow: 2 }}>
+                  <Typography variant="h5" component="h5">
+                    Heading
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="large">Chat</Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
       <Box
         sx={{ bgcolor: 'background.paper', py: 3, px: 2, mt: 'auto' }}
         component="footer"

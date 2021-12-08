@@ -4,6 +4,7 @@ import { db } from 'modules/redux-store/firebase';
 import {
   addDoc,
   collection,
+  getDocs,
   limit,
   onSnapshot,
   orderBy,
@@ -46,3 +47,14 @@ export const setMessagesListener =
       dispatch(fetchMessagesRejected(error));
     }
   };
+
+export const fetchUsers = createAsyncThunk('fetchUsers', async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, 'users'));
+    return querySnapshot.docs.map((res) => {
+      console.log(res.data());
+    });
+  } catch (error) {
+    throw new Error('didnt fetch data');
+  }
+});

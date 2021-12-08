@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { sendMsg } from 'modules/chat/redux/chatActions';
+import { fetchUsers, sendMsg } from 'modules/chat/redux/chatActions';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { AllMessages, Message } from 'modules/chat/consts/message';
