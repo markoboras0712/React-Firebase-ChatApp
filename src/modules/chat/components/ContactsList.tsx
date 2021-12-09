@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Copyright } from 'modules/chat/components/Copyright';
 import {
   Button,
@@ -13,12 +14,20 @@ import {
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Navigation } from 'components/layout/Navigation';
+import { useEffect, useState } from 'react';
+import { useMessages } from 'modules/chat';
+import { fetchUsers } from 'modules/users';
+import { useDispatch } from 'react-redux';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
 export const ContactsList: React.FC = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
