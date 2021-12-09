@@ -1,3 +1,5 @@
+import { MockedChat } from 'modules/chat/components/MockedChat';
+
 export const Message: React.FC = () => {
-  return <p>Chat with one person</p>;
+  return <MockedChat />;
 };

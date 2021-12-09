@@ -1,9 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { fetchUsers } from 'modules/users/redux/usersActions';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { AllMessages, Message } from 'modules/chat/consts/message';
-import { db } from 'modules/redux-store';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AllUsers, User } from 'modules/users/consts/users';
 
 const initialState: AllUsers = {

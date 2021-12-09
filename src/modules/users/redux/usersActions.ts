@@ -1,22 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
 import { db } from 'modules/redux-store/firebase';
-import {
-  addDoc,
-  collection,
-  getDocs,
-  limit,
-  onSnapshot,
-  orderBy,
-  query,
-  serverTimestamp,
-} from 'firebase/firestore';
-import {
-  fetchMessagesFulfilled,
-  fetchMessagesRejected,
-  fetchMessagesPending,
-  Message,
-} from 'modules/chat';
+import { collection, getDocs } from 'firebase/firestore';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { User } from 'modules/users/consts/users';
 
@@ -29,7 +14,6 @@ export const fetchUsers = createAsyncThunk('fetchUsers', async () => {
       userName: res.data().displayName,
       userPhoto: res.data().userPhoto,
     }));
-    console.log(allUsers);
     return allUsers;
   } catch (error) {
     throw new Error('didnt fetch data');
