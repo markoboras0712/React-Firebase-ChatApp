@@ -17,17 +17,18 @@ import { Navigation } from 'components/layout/Navigation';
 import { useEffect, useState } from 'react';
 import { useMessages } from 'modules/chat';
 import { fetchUsers } from 'modules/users';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useUsers } from 'modules/users/hooks/useUsers';
+import { RootState } from 'modules/redux-store';
+import { useContacts } from 'modules/users/hooks/useContacts';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
 export const ContactsList: React.FC = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, []);
+  const contacts = useContacts();
+  console.log('Contacts', contacts);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -35,8 +36,8 @@ export const ContactsList: React.FC = () => {
       <main>
         <Container sx={{ py: 8 }} fixed>
           <Grid container spacing={8}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={6} md={3}>
+            {contacts.map(({ email, uid, userName, userPhoto }) => (
+              <Grid item key={uid} xs={6} md={3}>
                 <Card
                   sx={{
                     height: '100%',
@@ -46,12 +47,12 @@ export const ContactsList: React.FC = () => {
                 >
                   <CardMedia
                     component="img"
-                    image="https://source.unsplash.com/random"
+                    image={userPhoto as string}
                     alt="random"
                   />
                   <CardContent sx={{ flexGrow: 2 }}>
                     <Typography variant="h5" component="h5">
-                      Heading
+                      {userName}
                     </Typography>
                   </CardContent>
                   <CardActions>
