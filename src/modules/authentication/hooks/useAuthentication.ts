@@ -50,12 +50,12 @@ export const useAuthentication = () => {
     });
   };
 
-  const loginWithGoogle = async () => {
-    await dispatch(signInWithGoogle());
+  const loginWithGoogle = () => {
+    dispatch(signInWithGoogle());
   };
 
-  const loginWithEmailPassword = async (data: LoginData) => {
-    await dispatch(signInWithEmailPassword(data));
+  const loginWithEmailPassword = (data: LoginData) => {
+    dispatch(signInWithEmailPassword(data));
     navigate('/messages');
   };
 
@@ -63,13 +63,13 @@ export const useAuthentication = () => {
     dispatch(sendPasswordReset(email));
   };
 
-  const registerWithEmailPassword = async (data: RegisterData) => {
-    await dispatch(signUpWithEmailPassword(data));
+  const registerWithEmailPassword = (data: RegisterData) => {
+    dispatch(signUpWithEmailPassword(data));
     navigate('/messages');
   };
 
-  const logoutUser = async () => {
-    await dispatch(logout());
+  const logoutUser = () => {
+    dispatch(logout());
     navigate('/messages');
   };
 

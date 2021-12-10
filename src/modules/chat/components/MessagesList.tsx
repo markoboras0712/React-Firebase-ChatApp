@@ -18,6 +18,7 @@ import {
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import { Navigation } from 'components/layout/Navigation';
 import { Chat } from 'modules/chat/components/Chat';
+import { NavigationBar } from 'components/layout/NavigationBar';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const theme = createTheme();
@@ -32,8 +33,6 @@ const Item = styled(Paper)(({ theme }) => ({
 export const MessagesList: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Navigation />
       <Container sx={{ py: 8 }} fixed>
         <Grid
           container

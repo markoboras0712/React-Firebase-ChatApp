@@ -6,6 +6,8 @@ import { Routes } from 'fixtures';
 import { Registration } from 'view/Public/Registration';
 import { Contacts } from 'view/Authenticated/Contacts';
 import { Message } from 'view/Authenticated/Message';
+import { SignIn } from 'modules/authentication/components/SignIn';
+import { Register } from 'modules/authentication/components/Register';
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps,
@@ -15,6 +17,8 @@ export const Routing: React.FC = () => {
   return (
     <Router>
       <RouterPage path={Routes.Login} pageComponent={<Login />} />
+      <RouterPage path="signin" pageComponent={<SignIn />} />
+      <RouterPage path="registerr" pageComponent={<Register />} />
       <RouterPage path={Routes.Register} pageComponent={<Registration />} />
       <RouterPage path={Routes.Messages} pageComponent={<AllMessages />} />
       <RouterPage path={Routes.Contacts} pageComponent={<Contacts />} />

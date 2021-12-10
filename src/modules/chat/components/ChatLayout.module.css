@@ -1,0 +1,44 @@
+/* Style the header */
+.header {
+    background-color: #e5e5e5;
+    padding: 30px;
+    display: flex;
+    color: #242424;
+}
+
+.push {
+    margin-left: auto;
+}
+
+.header__element {
+    margin: 10px;
+    padding: 20px;
+    font-size: 30px;
+}
+
+.header__svg {
+    margin: 40px;
+}
+
+/* Container for flexboxes */
+.section {
+    display: -webkit-flex;
+    display: flex;
+}
+
+/* Style the content */
+.article {
+    -webkit-flex: 3;
+    -ms-flex: 3;
+    flex: 3;
+    background-color: #f1f1f1;
+    padding: 10px;
+}
+
+/* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+@media (max-width: 600px) {
+    section {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+    }
+}

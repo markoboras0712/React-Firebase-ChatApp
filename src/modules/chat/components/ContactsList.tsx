@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Copyright } from 'modules/chat/components/Copyright';
 import {
   Button,
@@ -22,7 +23,6 @@ export const ContactsList: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Navigation />
       <main>
         <Container sx={{ py: 8 }} fixed>
           <Grid container spacing={8}>
