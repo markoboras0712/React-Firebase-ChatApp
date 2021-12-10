@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Copyright } from 'modules/chat/components/Copyright';
 import {
   Button,
   Card,
@@ -57,11 +56,7 @@ export const ContactsList: React.FC = () => {
       <Box
         sx={{ bgcolor: 'background.paper', py: 3, px: 2, mt: 'auto' }}
         component="footer"
-      >
-        <Container maxWidth="md">
-          <Copyright />
-        </Container>
-      </Box>
+      ></Box>
     </ThemeProvider>
   );
 };

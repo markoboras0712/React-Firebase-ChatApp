@@ -1,34 +1,66 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import classes from './SignIn.module.css';
+import classes from './Register.module.css';
 
 export const Register: React.FC = () => {
   return (
-    <div>
+    <div className={classes.container}>
       <form className={classes.form}>
-        <div className={classes.control}>
-          <label htmlFor="firstName">First Name</label>
-          <input type="text" required id="firstName" />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="lastName">Last Name</label>
-          <input type="text" required id="lastName" />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="email">Email</label>
-          <input type="text" required id="email" />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="password">Password</label>
-          <input type="password" required id="password" />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="image">Profile Photo</label>
-          <input type="file" required id="image" />
-        </div>
-        <div className={classes.actions}>
-          <button type="submit">Register</button>
-          <button type="submit">Already have account?</button>
-          <button type="submit">Sign in With Google</button>
+        <h1 className={classes.form__title}>Sign Up</h1>
+        <div>
+          <input
+            type="text"
+            required
+            id="firstName"
+            placeholder="First Name"
+            name="firstName"
+            className={classes.form__input}
+          />
+          <input
+            type="text"
+            required
+            id="lastName"
+            placeholder="Last Name"
+            name="lastName"
+            className={classes.form__input}
+          />
+          <input
+            type="text"
+            required
+            id="email"
+            placeholder="Email address"
+            name="email"
+            className={classes.form__input}
+          />
+
+          <input
+            type="password"
+            required
+            id="password"
+            placeholder="Password"
+            name="password"
+            className={classes.form__input}
+          />
+          <input
+            type="file"
+            id="userPhoto"
+            placeholder="Photo"
+            name="userPhoto"
+            className={classes.form__input}
+          />
+          <br />
+          <button type="submit" className={classes.form__button}>
+            Register
+          </button>
+
+          <button type="submit" className={classes.form__button}>
+            Sign in with Google
+          </button>
+          <br />
+          <div className={classes.form__actions}>
+            <button type="button" className={classes.form__button}>
+              Already have account?
+            </button>
+          </div>
         </div>
       </form>
     </div>

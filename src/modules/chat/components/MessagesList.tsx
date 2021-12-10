@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Copyright } from 'modules/chat/components/Copyright';
 import {
   CssBaseline,
   Box,
@@ -67,9 +66,6 @@ export const MessagesList: React.FC = () => {
         sx={{ bgcolor: 'background.paper', py: 3, px: 2, mt: 'auto' }}
         component="footer"
       >
-        <Container maxWidth="md">
-          <Copyright />
-        </Container>
         <Chat />
       </Box>
     </ThemeProvider>
