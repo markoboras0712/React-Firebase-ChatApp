@@ -22,7 +22,6 @@ export const ContactsList: React.FC = () => {
   const contacts = useContacts();
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
       <main>
         <Container sx={{ py: 8 }} fixed>
           <Grid container spacing={8}>
