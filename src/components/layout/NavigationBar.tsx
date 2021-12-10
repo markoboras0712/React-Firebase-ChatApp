@@ -9,18 +9,18 @@ export const NavigationBar: React.FC = () => {
   };
   return (
     <ul className={classes.navbar}>
-      <li className={classes.navbar__pages}>
-        <Link className={classes.navbar__links} to={'/messages'}>
+      <li>
+        <Link className={classes.navigation__link} to={'/messages'}>
           Inbox
         </Link>
       </li>
-      <li className={classes.navbar__pages}>
-        <Link className={classes.navbar__links} to={'/contacts'}>
+      <li>
+        <Link className={classes.navigation__link} to={'/contacts'}>
           Contacts
         </Link>
       </li>
-      <li className={classes.navbar__logout}>
-        <a className={classes.navbar__links} onClick={handleSignOut}>
+      <li className={classes.navigation__logout}>
+        <a className={classes.navigation__link} onClick={handleSignOut}>
           Logout
         </a>
       </li>
