@@ -8,6 +8,8 @@ import { Contacts } from 'view/Authenticated/Contacts';
 import { Message } from 'view/Authenticated/Message';
 import { SignIn } from 'modules/authentication/components/SignIn';
 import { Register } from 'modules/authentication/components/Register';
+import { ContactList } from 'modules/chat/components/ContactList';
+import { MessageList } from 'modules/chat/components/MessageList';
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps,
@@ -18,6 +20,10 @@ export const Routing: React.FC = () => {
     <Router>
       <RouterPage path={Routes.Login} pageComponent={<Login />} />
       <RouterPage path="signin" pageComponent={<SignIn />} />
+
+      <RouterPage path="messagess" pageComponent={<MessageList />} />
+
+      <RouterPage path="contactss" pageComponent={<ContactList />} />
       <RouterPage path="registerr" pageComponent={<Register />} />
       <RouterPage path={Routes.Register} pageComponent={<Registration />} />
       <RouterPage path={Routes.Messages} pageComponent={<AllMessages />} />
