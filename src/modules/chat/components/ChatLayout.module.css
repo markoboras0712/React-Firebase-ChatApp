@@ -1,7 +1,16 @@
 /* Style the header */
+
+.container {
+    margin-top: 0px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    gap: 0px;
+}
 .header {
-    background-color: #e5e5e5;
+    background-color: white;
     padding: 30px;
+    padding-top: 0px;
     height: 50px;
     display: flex;
     color: #242424;
@@ -24,7 +33,7 @@
     margin: 0px;
 }
 
-.userName__name{
+.userName__name {
     margin-top: 5px;
 }
 
@@ -45,25 +54,76 @@
     margin: 40px;
 }
 
-/* Container for flexboxes */
-.section {
-    display: -webkit-flex;
+.day {
+    margin-top: 0px;
+    margin-left: 50%;
+    color: #969696;
+}
+.messages {
     display: flex;
+    flex: 1;
+    min-height: auto;
+    flex-direction: column;
+    flex-flow: wrap;
+    gap: 0px;
 }
 
-/* Style the content */
-.article {
-    -webkit-flex: 3;
-    -ms-flex: 3;
-    flex: 3;
-    background-color: #f1f1f1;
+.message__received {
+    background-color: #484848;
+    color: white;
+    width: 73.33%;
     padding: 10px;
+    margin: 8px;
+}
+.time__received {
+    margin-top: 0px;
+    margin-left: 73.33%;
+    color: #969696;
 }
 
-/* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+.message__sent {
+    margin-left: 26.66%;
+    background-color: #484848;
+    padding: 10px;
+    color: white;
+}
+
+.seen {
+    margin-left: 26.66%;
+}
+.time__sent {
+    margin-top: 0px;
+    margin-left: auto;
+    color: #969696;
+}
+
+.footer {
+    background-color: white;
+    padding: 30px;
+    display: flex;
+    color: #242424;
+}
+
+.emoji {
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+
+.sendMessage{
+    margin-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+    border: none;
+}
+
+.photo {
+    margin-top: 10px;
+    margin-left: 20px;
+}
 @media (max-width: 600px) {
-    section {
-        -webkit-flex-direction: column;
-        flex-direction: column;
+    .time {
+        margin-left: 85%;
     }
 }

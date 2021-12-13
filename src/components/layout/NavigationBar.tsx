@@ -4,7 +4,6 @@ import { Link } from '@reach/router';
 import classes from './NavigationBar.module.css';
 import { useSelector } from 'react-redux';
 import { RootState } from 'modules/redux-store';
-import { CssBaseline } from '@mui/material';
 
 export const NavigationBar: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -13,41 +12,39 @@ export const NavigationBar: React.FC = () => {
     logoutUser();
   };
   return (
-    <div className={classes.container}>
-      <ul className={classes.navigation}>
-        {user.authenticated && (
-          <li>
-            <img
-              src={user.userPhoto as string}
-              alt="Avatar"
-              className={classes.navigation__avatar}
-            />
-          </li>
-        )}
-
+    <ul className={classes.navigation}>
+      {user.authenticated && (
         <li>
-          <Link className={classes.navigation__link} to={'/messages'}>
-            Inbox
-          </Link>
+          <img
+            src={user.userPhoto as string}
+            alt="Avatar"
+            className={classes.navigation__avatar}
+          />
         </li>
+      )}
 
-        <li>
-          <Link className={classes.navigation__link} to={'/contacts'}>
-            Contacts
-          </Link>
+      <li>
+        <Link className={classes.navigation__link} to={'/messages'}>
+          Inbox
+        </Link>
+      </li>
+
+      <li>
+        <Link className={classes.navigation__link} to={'/contacts'}>
+          Contacts
+        </Link>
+      </li>
+      {user.authenticated && (
+        <li className={classes.navigation__logout}>
+          <button
+            type="button"
+            className={classes.navigation__button}
+            onClick={handleSignOut}
+          >
+            Logout
+          </button>
         </li>
-        {user.authenticated && (
-          <li className={classes.navigation__logout}>
-            <button
-              type="button"
-              className={classes.navigation__button}
-              onClick={handleSignOut}
-            >
-              Logout
-            </button>
-          </li>
-        )}
-      </ul>
-    </div>
+      )}
+    </ul>
   );
 };
