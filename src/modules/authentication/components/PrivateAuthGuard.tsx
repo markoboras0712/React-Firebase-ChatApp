@@ -6,9 +6,9 @@ import { RootState } from 'modules/redux-store';
 
 export const PrivateAuthGuard: React.FC = ({ children }) => {
   const user = useSelector((state: RootState) => state.user);
-  console.log('PRVOJERA');
+
   useEffect(() => {
-    console.log(user.authenticated);
+    console.log('auth', user.authenticated);
     if (!user.authenticated && !user.isLoading) {
       navigate('/');
     }

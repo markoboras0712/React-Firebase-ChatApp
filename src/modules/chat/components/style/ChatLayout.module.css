@@ -1,12 +1,13 @@
 /* Style the header */
 
 .container {
-    margin-top: 0px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     height: 100vh;
-    gap: 0px;
 }
+
+/*HEADER*/
 .header {
     background-color: white;
     padding: 30px;
@@ -16,32 +17,38 @@
     color: #242424;
 }
 
-.arrow {
+.header__arrow {
     margin-top: 10px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
 }
 
-.push {
-    margin-left: auto;
-    margin-top: 10px;
-}
-.userPhoto {
+.header__photo {
     padding-left: 35px;
 }
-.userName {
-    padding-left: 35px;
-    width: 50px;
+
+.header__avatar {
+    vertical-align: middle;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+}
+
+.header__name {
     margin: 0px;
-}
-
-.userName__name {
+    width: 50px;
+    font-size: 22px;
+    padding-left: 35px;
     margin-top: 5px;
 }
 
-.navigation__avatar {
-    vertical-align: middle;
+.header__dots {
+    margin-left: auto;
+    margin-top: 10px;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    cursor: pointer;
 }
 
 .header__element {
@@ -54,8 +61,15 @@
     margin: 40px;
 }
 
-.day {
-    margin-top: 0px;
+/*MESSAGES*/
+
+.message__day {
+    margin-top: 11.2px;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     margin-left: 50%;
     color: #969696;
 }
@@ -88,7 +102,7 @@
     color: white;
 }
 
-.seen {
+.message__seen {
     margin-left: 26.66%;
 }
 .time__sent {
@@ -109,8 +123,7 @@
     margin-right: 20px;
 }
 
-
-.sendMessage{
+.sendMessage {
     margin-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
@@ -125,5 +138,31 @@
 @media (max-width: 600px) {
     .time {
         margin-left: 85%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .header {
+        height: 24px;
+    }
+    .header__arrow {
+        width: 24px;
+        height: 24px;
+    }
+    .header__avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+    .header__name {
+        font-size: 16px;
+    }
+    .header__dots {
+        width: 24px;
+        height: 24px;
+    }
+
+    .message__day {
+        font-size: 10px;
     }
 }

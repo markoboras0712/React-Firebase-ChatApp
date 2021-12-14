@@ -31,18 +31,19 @@ export interface UserData {
 export const useAuthentication = () => {
   const dispatch = useDispatch();
   const autoLogin = () => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (!user) {
         dispatch(logout());
         dispatch(clearUser());
       }
       if (user) {
+        const { displayName, photoUrl } = await getDataFromUser(user);
         const userData: UserData = {
-          displayName: 'test',
+          displayName: displayName,
           email: user.email,
           id: user.uid,
           refreshToken: user.refreshToken,
-          userPhoto: 'photoUrl',
+          userPhoto: photoUrl,
         };
         dispatch(saveUser(userData));
       }

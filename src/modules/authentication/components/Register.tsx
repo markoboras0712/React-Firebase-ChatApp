@@ -1,5 +1,9 @@
 import { navigate } from '@reach/router';
-import { RegisterData, useAuthentication } from 'modules/authentication';
+import {
+  PublicAuthGuard,
+  RegisterData,
+  useAuthentication,
+} from 'modules/authentication';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import classes from './style/Register.module.css';
@@ -39,54 +43,56 @@ export const Register: React.FC = () => {
   });
 
   return (
-    <div className={classes.container}>
-      <form className={classes.form}>
-        <h1 className={classes.form__title}>Sign Up</h1>
-        <div>
-          <Input
-            type="text"
-            required
-            id="firstName"
-            placeholder="First Name"
-            {...register('firstName', { required: true })}
-          />
-          {errors.firstName?.type === 'required' && 'First name is required'}
-          <Input
-            type="text"
-            required
-            id="lastName"
-            placeholder="Last Name"
-            {...register('lastName', { required: true })}
-          />
-          {errors.lastName?.type === 'required' && 'Last name is required'}
-          <Input
-            type="email"
-            required
-            id="email"
-            placeholder="Email address"
-            {...register('email', { required: true })}
-          />
-          {errors.email?.type === 'required' && 'Email is required'}
-          <Input
-            type="password"
-            required
-            id="password"
-            placeholder="Password"
-            {...register('password', { required: true })}
-          />
-          {errors.password?.type === 'required' && 'Password is required'}
-          <Input type="file" id="userPhoto" onChange={fileSelectHandler} />
-          <Button type="submit" onClick={onSubmit}>
-            Register
-          </Button>
-          <Button type="button" onClick={() => loginWithGoogle()}>
-            Sign in with Google
-          </Button>
-          <Button type="button" onClick={() => navigate('/')}>
-            Already have account?
-          </Button>
-        </div>
-      </form>
-    </div>
+    <PublicAuthGuard>
+      <div className={classes.container}>
+        <form className={classes.form}>
+          <h1 className={classes.form__title}>Sign Up</h1>
+          <div>
+            <Input
+              type="text"
+              required
+              id="firstName"
+              placeholder="First Name"
+              {...register('firstName', { required: true })}
+            />
+            {errors.firstName?.type === 'required' && 'First name is required'}
+            <Input
+              type="text"
+              required
+              id="lastName"
+              placeholder="Last Name"
+              {...register('lastName', { required: true })}
+            />
+            {errors.lastName?.type === 'required' && 'Last name is required'}
+            <Input
+              type="email"
+              required
+              id="email"
+              placeholder="Email address"
+              {...register('email', { required: true })}
+            />
+            {errors.email?.type === 'required' && 'Email is required'}
+            <Input
+              type="password"
+              required
+              id="password"
+              placeholder="Password"
+              {...register('password', { required: true })}
+            />
+            {errors.password?.type === 'required' && 'Password is required'}
+            <Input type="file" id="userPhoto" onChange={fileSelectHandler} />
+            <Button type="submit" onClick={onSubmit}>
+              Register
+            </Button>
+            <Button type="button" onClick={() => loginWithGoogle()}>
+              Sign in with Google
+            </Button>
+            <Button type="button" onClick={() => navigate('/')}>
+              Already have account?
+            </Button>
+          </div>
+        </form>
+      </div>
+    </PublicAuthGuard>
   );
 };
