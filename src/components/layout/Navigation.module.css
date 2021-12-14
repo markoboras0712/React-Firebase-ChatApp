@@ -5,7 +5,7 @@
     align-items: center;
     padding-left: 50px;
     padding-right: 40px;
-    background-color: #e5e5e5;
+    background-color: #24252a;
 }
 
 .logo {
@@ -20,7 +20,7 @@
     height: 40px;
     border-radius: 50%;
     margin: 10px;
- }
+}
 
 .navigation {
     margin-left: auto;

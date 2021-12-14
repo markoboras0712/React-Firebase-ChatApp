@@ -6,13 +6,15 @@ import { RootState } from 'modules/redux-store';
 
 export const PublicAuthGuard: React.FC = ({ children }) => {
   const user = useSelector((state: RootState) => state.user);
-
+  const isAuthenticated = user.authenticated;
+  const isLoading = user.isLoading;
+  console.log('Radi li');
   useEffect(() => {
-    if (user.authenticated && !user.isLoading) {
+    if (isAuthenticated && !isLoading) {
       navigate('/messages');
     }
-  }, [user.authenticated, user.isLoading]);
-  if (user.isLoading) {
+  }, [isAuthenticated, isLoading]);
+  if (isLoading) {
     return <LinearProgress color="success" />;
   }
 

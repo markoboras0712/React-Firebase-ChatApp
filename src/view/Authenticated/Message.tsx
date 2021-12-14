@@ -1,11 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import ChatLayout from 'modules/chat/components/ChatLayout';
-import React from 'react';
+import { Layout } from 'components';
+import { PrivateAuthGuard } from 'modules/authentication';
+import { ChatLayout } from 'modules/chat/components/temp_useLater/ChatLayout';
 
 export const Message: React.FC = () => {
   return (
-    <React.Fragment>
-      <ChatLayout />
-    </React.Fragment>
+    <PrivateAuthGuard>
+      <Layout>
+        <ChatLayout />
+      </Layout>
+    </PrivateAuthGuard>
   );
 };

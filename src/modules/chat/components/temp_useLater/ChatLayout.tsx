@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import classes from './ChatLayout.module.css';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Avatar, CssBaseline, IconButton } from '@mui/material';
+import classes from '../style/ChatLayout.module.css';
 
-export default function ChatLayout() {
+export const ChatLayout: React.FC = () => {
   return (
     <div className={classes.container}>
       <header className={classes.header}>
@@ -146,4 +144,4 @@ export default function ChatLayout() {
       </div>
     </div>
   );
-}
+};

@@ -2,19 +2,17 @@ import { Link } from '@reach/router';
 import { Button } from 'components';
 import { useAuthentication } from 'modules/authentication';
 import { RootState } from 'modules/redux-store';
+import logo from '../../assets/chatIcon.svg';
 import { useSelector } from 'react-redux';
 import classes from './Navigation.module.css';
 
 export const Navigation: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
   const { logoutUser } = useAuthentication();
+
   return (
     <header className={classes.header}>
-      <img
-        src="https://www.svgrepo.com/show/9832/chat.svg"
-        alt="logo"
-        className={classes.logo}
-      />
+      <img src={logo} alt="logo" className={classes.logo} />
       <img
         src={user.userPhoto as string}
         alt="logo"
@@ -35,7 +33,7 @@ export const Navigation: React.FC = () => {
           {user.authenticated && (
             <li className={classes.navigation__item}>
               <Link to={'/'}>
-                <Button onClick={() => logoutUser}>Logout</Button>
+                <Button onClick={() => logoutUser()}>Logout</Button>
               </Link>
             </li>
           )}

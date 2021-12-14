@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
 import { Timestamp } from '@firebase/firestore';
-import { SendMessage } from 'modules/chat/components/SendMessage';
+import { SendMessage } from 'modules/chat/components/temp_useLater/SendMessage';
 import { useMessages } from 'modules/chat/hooks/useMessages';
 import { RootState } from 'modules/redux-store';
 import { useEffect } from 'react';
