@@ -1,7 +1,7 @@
 .header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding-left: 50px;
     padding-right: 40px;
@@ -14,7 +14,16 @@
     cursor: pointer;
 }
 
+.avatar {
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 10px;
+ }
+
 .navigation {
+    margin-left: auto;
     align-self: flex-end;
 }
 .navigation__links {

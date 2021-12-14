@@ -15,6 +15,11 @@ export const Navigation: React.FC = () => {
         alt="logo"
         className={classes.logo}
       />
+      <img
+        src={user.userPhoto as string}
+        alt="logo"
+        className={classes.avatar}
+      />
       <nav className={classes.navigation}>
         <ul className={classes.navigation__links}>
           <li className={classes.navigation__item}>
