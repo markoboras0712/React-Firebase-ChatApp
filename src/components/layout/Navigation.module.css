@@ -1,0 +1,35 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 50px;
+    padding-right: 40px;
+    background-color: #e5e5e5;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.navigation {
+    align-self: flex-end;
+}
+.navigation__links {
+    list-style: none;
+}
+
+.navigation__item {
+    display: inline-block;
+    padding-left: 3px;
+    color: deepskyblue;
+}
+
+@media all and (max-width: 600px) {
+    .navigation {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+}

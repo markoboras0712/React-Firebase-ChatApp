@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { NavigationBar } from 'components/layout/NavigationBar';
 import { useAuthentication } from 'modules/authentication';
 import { useContacts } from 'modules/users/hooks/useContacts';
 import classes from './ContactList.module.css';
@@ -8,7 +7,6 @@ export const MessageList: React.FC = () => {
 
   return (
     <div>
-      <NavigationBar />
       <div className={classes.container}>
         {contacts.map(({ uid, userName, userPhoto }) => (
           <div className={classes.card} key={uid}>
