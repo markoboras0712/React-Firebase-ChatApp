@@ -1,12 +1,10 @@
-import { NavigationBar } from 'components/layout/NavigationBar';
-import { SignInSide } from 'modules/authentication';
 import { PublicAuthGuard } from 'modules/authentication/components/PublicAuthGuard';
+import { SignIn } from 'modules/authentication/components/SignIn';
 
 export const Login: React.FC = () => {
   return (
     <PublicAuthGuard>
-      <NavigationBar />
-      <SignInSide />
+      <SignIn />
     </PublicAuthGuard>
   );
 };

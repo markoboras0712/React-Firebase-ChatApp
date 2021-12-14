@@ -46,12 +46,14 @@ export const useAuthentication = () => {
           userPhoto: photoUrl,
         };
         dispatch(saveUser(userData));
+        navigate('/messages');
       }
     });
   };
 
   const loginWithGoogle = () => {
     dispatch(signInWithGoogle());
+    navigate('/messages');
   };
 
   const loginWithEmailPassword = (data: LoginData) => {

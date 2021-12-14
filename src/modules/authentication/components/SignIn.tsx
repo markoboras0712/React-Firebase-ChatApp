@@ -1,6 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import { navigate } from '@reach/router';
 import { useAuthentication } from 'modules/authentication';
-import classes from './SignIn.module.css';
+import { useForm } from 'react-hook-form';
+import classes from './style/SignIn.module.css';
+import { Input, Button } from 'components';
 
 type LoginData = {
   email: string;
@@ -8,44 +10,55 @@ type LoginData = {
 };
 
 export const SignIn: React.FC = () => {
+  const { loginWithGoogle, loginWithEmailPassword, resetPassword } =
+    useAuthentication();
+  const { register, handleSubmit } = useForm<LoginData>();
+  const onSubmit = handleSubmit((data: LoginData) => {
+    const loginData: LoginData = {
+      email: data.email,
+      password: data.password,
+    };
+    loginWithEmailPassword(loginData);
+  });
+
+  const passwordResetHandler = handleSubmit((data: LoginData) => {
+    resetPassword(data.email);
+  });
+
   return (
     <div className={classes.container}>
       <form className={classes.form}>
         <h1 className={classes.form__title}>Sign In</h1>
         <div>
-          <input
-            type="text"
+          <Input
+            type="email"
             required
             id="email"
             placeholder="Email address"
-            name="email"
-            className={classes.form__input}
+            {...register('email', { required: true })}
           />
-
-          <input
+          <Input
             type="password"
             required
             id="password"
             placeholder="Password"
-            name="password"
-            className={classes.form__input}
+            {...register('password')}
           />
-          <br />
-          <button type="submit" className={classes.form__button}>
-            Login
-          </button>
 
-          <button type="submit" className={classes.form__button}>
+          <Button type="submit" onClick={onSubmit}>
+            Login
+          </Button>
+          <Button type="button" onClick={() => loginWithGoogle()}>
             Sign in with Google
-          </button>
-          <br />
+          </Button>
+
           <div className={classes.form__actions}>
-            <button type="button" className={classes.form__button}>
+            <Button type="button" onClick={passwordResetHandler}>
               Forgot your password?
-            </button>
-            <button type="button" className={classes.form__button}>
-              Don't have account?
-            </button>
+            </Button>
+            <Button type="button" onClick={() => navigate('/register')}>
+              Create new account
+            </Button>
           </div>
         </div>
       </form>
