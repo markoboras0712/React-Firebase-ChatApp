@@ -27,6 +27,19 @@ const messagesReceived = [
     text: 'Hai Milica, long time no see! What’s up? Are you still with that guy Ravas? Im so jelaousIm on vacation, here’s a photo!',
     key: '6',
   },
+  {
+    text: 'It is the most populous city in the United Kingdom',
+    key: '7',
+  },
+
+  {
+    text: 'Hai Milica, long time no see! What’s up? Are you still with that guy Ravas? Im so jelaousIm on vacation, here’s a photo!',
+    key: '8',
+  },
+  {
+    text: 'Hai Milica, long time no see! What’s up? Are you still with that guy Ravas? Im so jelaousIm on vacation, here’s a photo!',
+    key: '9',
+  },
 ];
 export const MessageBody: React.FC = () => {
   return (
