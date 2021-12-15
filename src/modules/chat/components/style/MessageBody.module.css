@@ -1,0 +1,63 @@
+/*MESSAGES*/
+
+.messagesbox {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 36px 20px;
+}
+.messages {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/*RECEIVED*/
+
+.message__received {
+    background-color: #484848;
+    padding: 12px 11px 12px 12px;
+    color: #ffffff;
+    line-height: 20px;
+    width: 73.33%;
+}
+
+.message__received:first-child {
+    border-radius: 0px 10px 0px 0px;
+}
+
+.message__received:last-of-type {
+    border-radius: 0px 0px 10px 10px;
+}
+
+.time__received {
+    margin-top: 4px;
+    margin-bottom: 20px;
+    margin-left: 72.28%;
+    color: #969696;
+}
+
+/*SENT*/
+.message__sent {
+    margin-left: 26.66%;
+    background-color: #484848;
+    padding: 12px 11px 12px 12px;
+    color: #ffffff;
+    line-height: 20px;
+   
+}
+
+.message__sent:first-child {
+    border-radius: 10px 10px 0px 0px;
+}
+
+.message__sent:last-of-type {
+    border-radius: 0px 0px 0px 10px;
+}
+
+.time__sent {
+    margin-top: 4px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    color: #969696;
+}

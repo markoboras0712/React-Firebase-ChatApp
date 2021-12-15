@@ -1,0 +1,26 @@
+/*FOOTER*/
+
+.footer {
+    background-color: white;
+    padding: 19px 20px 20px 20px;
+    display: flex;
+    flex-direction: row;
+    color: #242424;
+}
+
+.footer__smiley {
+    border: none;
+    background-color: white;
+}
+
+.footer__input {
+    width: 100%;
+    padding-left: 18px;
+    border: none;
+}
+
+.footer__imgbuttons {
+    border: none;
+    background-color: white;
+}
+

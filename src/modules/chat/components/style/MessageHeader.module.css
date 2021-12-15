@@ -1,0 +1,52 @@
+/*HEADER*/
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+}
+
+.header__arrow {
+    border: none;
+    background-color: white;
+}
+
+.header__photo {
+    padding-left: 16px;
+    padding-right: 20px;
+}
+
+.header__avatar {
+    vertical-align: middle;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+}
+
+.header__userName {
+    display: flex;
+    flex-direction: column;
+    column-gap: 8px;
+}
+
+.header__firstName {
+    font-weight: bold;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    color: #242424;
+}
+
+.header__lastName {
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    color: #242424;
+}
+
+.header__dots {
+    margin-left: auto;
+    border: none;
+    background-color: white;
+}
