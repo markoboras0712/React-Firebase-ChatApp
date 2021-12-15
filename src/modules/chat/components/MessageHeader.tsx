@@ -18,7 +18,6 @@ export const MessageHeader: React.FC<Props> = ({
 }) => {
   const firstName = userName?.split(' ')[0];
   const lastName = userName?.split(' ')[1];
-  console.log(lastName);
   return (
     <div className={classes.sticky}>
       <header className={classes.header}>

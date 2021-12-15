@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Message } from 'modules/chat';
+import { RootState } from 'modules/redux-store';
+import { useSelector } from 'react-redux';
 import classes from './style/MessageBody.module.css';
 
 const messagesReceived = [
@@ -41,20 +45,27 @@ const messagesReceived = [
     key: '9',
   },
 ];
-export const MessageBody: React.FC = () => {
+
+interface Props {
+  messages: Message[];
+}
+export const MessageBody: React.FC<Props> = ({ messages }) => {
+  const user = useSelector((state: RootState) => state.user);
+  console.log('Logged user in this messagfe', user.userData.id);
+  console.log('All messages in msg body', messages);
+
   return (
     <div className={classes.messagesbox}>
       <div className={classes.messages}>
-        {messagesReceived.map(({ text, key }) => (
-          <div className={classes.message__received} key={key}>
-            {text}
-          </div>
-        ))}
-        <p className={classes.time__received}>16:43</p>
-      </div>
-      <div className={classes.messages}>
-        {messagesReceived.map(({ text, key }) => (
-          <div className={classes.message__sent} key={key}>
+        {messages.map(({ text, uid }) => (
+          <div
+            className={`${
+              uid === user.userData.id
+                ? classes.message__sent
+                : classes.message__received
+            }`}
+            key={Math.random()}
+          >
             {text}
           </div>
         ))}

@@ -10,7 +10,6 @@ interface Props {
 }
 
 export const MessageFooter: React.FC<Props> = ({ uid }) => {
-  console.log('Kome saljem', uid);
   const { sendMessageToFirestore } = useMessages();
   const [msg, setMsg] = useState('');
   const sendMessage = async (event: React.FormEvent) => {
