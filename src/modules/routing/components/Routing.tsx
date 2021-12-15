@@ -3,9 +3,10 @@ import { AllMessages } from 'view/Authenticated/AllMessages';
 import { NotFound } from 'view/Public/Error';
 import { Routes } from 'fixtures';
 import { Contacts } from 'view/Authenticated/Contacts';
-import { Message } from 'view/Authenticated/Message';
+import { Chat } from 'view/Authenticated/Chat';
 import { SignIn } from 'modules/authentication/components/SignIn';
 import { Register } from 'modules/authentication/components/Register';
+import { ChatTest } from 'modules/chat/components/temp_useLater/ChatTest';
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps,
@@ -18,7 +19,8 @@ export const Routing: React.FC = () => {
       <RouterPage path={Routes.Register} pageComponent={<Register />} />
       <RouterPage path={Routes.Messages} pageComponent={<AllMessages />} />
       <RouterPage path={Routes.Contacts} pageComponent={<Contacts />} />
-      <RouterPage path={Routes.Message} pageComponent={<Message />} />
+      <RouterPage path={Routes.Message} pageComponent={<Chat />} />
+      <RouterPage path="/testchat" pageComponent={<ChatTest />} />
       <RouterPage path={Routes.NotFound} pageComponent={<NotFound />} />
     </Router>
   );

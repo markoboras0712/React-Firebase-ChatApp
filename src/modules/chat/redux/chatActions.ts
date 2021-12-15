@@ -25,6 +25,7 @@ export const sendMsg = createAsyncThunk('sendMsg', async (message: Message) => {
       createdAt: serverTimestamp(),
       text: message.text,
       uid: message.uid,
+      to: message.to,
       userName: message.userName,
       userPhoto: message.userPhoto,
     });

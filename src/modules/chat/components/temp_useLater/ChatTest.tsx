@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
 import { Timestamp } from '@firebase/firestore';
-import { SendMessage } from 'modules/chat/components/temp_useLater/SendMessage';
 import { useMessages } from 'modules/chat/hooks/useMessages';
 import { RootState } from 'modules/redux-store';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-export const Chat: React.FC = ({}) => {
+export const ChatTest: React.FC = ({}) => {
   const { getMessages } = useMessages();
   useEffect(getMessages, []);
   const messages = useSelector(
@@ -25,7 +24,6 @@ export const Chat: React.FC = ({}) => {
           </div>
         ))}
       </div>
-      <SendMessage />
     </div>
   );
 };

@@ -1,18 +1,22 @@
 /*HEADER*/
+
+.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
 .header {
     display: flex;
     flex-direction: row;
     align-items: center;
     background-color: white;
     padding: 20px;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
 }
 
 .header__arrow {
     border: none;
     background-color: white;
+    cursor: pointer;
 }
 
 .header__photo {
@@ -52,4 +56,10 @@
     margin-left: auto;
     border: none;
     background-color: white;
+    cursor: pointer;
+}
+
+.horizontal_line {
+    opacity: 0.1;
+    border: 1px solid #000000;
 }
