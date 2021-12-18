@@ -7,7 +7,7 @@ export const useContacts = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUsers());
-  }, [dispatch]);
+  }, []);
   const contacts = useSelector((state: RootState) => state.users.allUsers);
   const user = useSelector((state: RootState) => state.user.userData);
   return contacts.filter((contact) => user.email !== contact.email);

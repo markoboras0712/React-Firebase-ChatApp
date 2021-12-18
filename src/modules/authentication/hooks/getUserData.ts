@@ -9,8 +9,7 @@ export const getDataFromUser = async (user: User) => {
   const dataFromFirestore: string[] = [];
   if (querySnapshot.docs.length === 1) {
     querySnapshot.docs.map((res) => {
-      dataFromFirestore.push(res.data().userPhoto);
-      dataFromFirestore.push(res.data().displayName);
+      dataFromFirestore.push(res.data().userPhoto, res.data().displayName);
     });
   }
   const photoUrl = dataFromFirestore[0];

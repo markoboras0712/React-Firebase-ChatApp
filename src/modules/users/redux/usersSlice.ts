@@ -4,7 +4,7 @@ import { AllUsers, User } from 'modules/users/consts/users';
 
 const initialState: AllUsers = {
   allUsers: [],
-  loading: false,
+  isLoading: false,
   error: '',
 };
 
@@ -14,17 +14,18 @@ export const usersSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchUsers.pending, (state) => {
-      state.loading = true;
+      state.isLoading = true;
     });
     builder.addCase(
       fetchUsers.fulfilled,
       (state, action: PayloadAction<User[]>) => {
+        state.isLoading = false;
         state.allUsers = action.payload;
       },
     );
     builder.addCase(fetchUsers.rejected, (state, action) => {
       state.error = action.error;
-      state.loading = false;
+      state.isLoading = false;
     });
   },
 });

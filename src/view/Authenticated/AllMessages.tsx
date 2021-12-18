@@ -6,7 +6,6 @@ export const AllMessages: React.FC = () => {
   return (
     <PrivateAuthGuard>
       <Layout>
-        {' '}
         <MessageList />
       </Layout>
     </PrivateAuthGuard>

@@ -32,6 +32,7 @@ export const userSlice = createSlice({
       state.authenticated = true;
       state.userData.id = action.payload?.id;
       state.refreshToken = action.payload?.refreshToken;
+      state.isLoading = false;
     },
     clearUser: (state) => {
       state.userData.displayName = null;
@@ -40,6 +41,7 @@ export const userSlice = createSlice({
       state.authenticated = false;
       state.userData.id = '';
       state.refreshToken = null;
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {

@@ -31,7 +31,7 @@ export interface UserData {
 export const useAuthentication = () => {
   const dispatch = useDispatch();
   const autoLogin = () => {
-    onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         dispatch(logout());
         dispatch(clearUser());
@@ -47,17 +47,16 @@ export const useAuthentication = () => {
         };
         dispatch(saveUser(userData));
       }
+      unsubscribe();
     });
   };
 
   const loginWithGoogle = () => {
     dispatch(signInWithGoogle());
-    navigate('/messages');
   };
 
   const loginWithEmailPassword = (data: LoginData) => {
     dispatch(signInWithEmailPassword(data));
-    navigate('/messages');
   };
 
   const resetPassword = (email: string) => {
@@ -66,7 +65,6 @@ export const useAuthentication = () => {
 
   const registerWithEmailPassword = (data: RegisterData) => {
     dispatch(signUpWithEmailPassword(data));
-    navigate('/messages');
   };
 
   const logoutUser = () => {

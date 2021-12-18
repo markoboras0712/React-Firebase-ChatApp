@@ -7,6 +7,6 @@ export interface User {
 
 export interface AllUsers {
   allUsers: User[];
-  loading: boolean;
+  isLoading: boolean;
   error: string | unknown;
 }
