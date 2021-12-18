@@ -10,6 +10,7 @@ import {
   orderBy,
   query,
   serverTimestamp,
+  Timestamp,
 } from 'firebase/firestore';
 import {
   fetchMessagesFulfilled,
@@ -22,7 +23,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 export const sendMsg = createAsyncThunk('sendMsg', async (message: Message) => {
   try {
     await addDoc(collection(db, 'messages'), {
-      createdAt: serverTimestamp(),
+      createdAt: new Date(Date.now()),
       text: message.text,
       uid: message.uid,
       to: message.to,
@@ -39,10 +40,20 @@ export const setMessagesListener =
     try {
       const messagesRef = collection(db, 'messages');
       dispatch(fetchMessagesPending());
-      const q = query(messagesRef, orderBy('createdAt'), limit(50));
+      const q = query(messagesRef, orderBy('createdAt'));
       onSnapshot(q, (snapshot) => {
-        const messages = snapshot.docs.map((doc) => ({ ...doc.data() }));
-        dispatch(fetchMessagesFulfilled(messages));
+        const messages = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        })) as Message[];
+        const updated = messages.map((msg) => ({
+          ...msg,
+          createdAt: new Timestamp(
+            msg.createdAt?.seconds as number,
+            msg.createdAt?.nanoseconds as number,
+          ).toDate(),
+        }));
+        dispatch(fetchMessagesFulfilled(updated));
       });
     } catch (error) {
       dispatch(fetchMessagesRejected(error));

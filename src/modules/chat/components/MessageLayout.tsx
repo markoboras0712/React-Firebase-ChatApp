@@ -7,11 +7,7 @@ import {
 } from 'modules/chat';
 
 export const MessageLayout: React.FC = () => {
-  const { contact, sentMessages, receivedMessages, messagesForChat } =
-    useContact();
-  console.log('Sent messages', sentMessages);
-  console.log('Received messages', receivedMessages);
-  console.log('All messages', messagesForChat);
+  const { contact, allMessages } = useContact();
   return (
     <div className={classes.container}>
       <MessageHeader
@@ -19,7 +15,7 @@ export const MessageLayout: React.FC = () => {
         userName={contact?.userName as string}
         userPhoto={contact?.userPhoto as string}
       />
-      <MessageBody messages={messagesForChat} />
+      <MessageBody messages={allMessages} />
       <MessageFooter uid={contact?.uid as string} />
     </div>
   );

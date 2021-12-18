@@ -15,15 +15,26 @@
 .footer__smiley {
     border: none;
     background-color: white;
+    cursor: not-allowed;
 }
 
 .footer__input {
     width: 100%;
     padding-left: 18px;
     border: none;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
 }
 
 .footer__imgbuttons {
     border: none;
     background-color: white;
+    cursor: pointer;
+}
+
+.footer__imgbuttons:disabled {
+    cursor: not-allowed;
 }

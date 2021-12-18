@@ -1,32 +1,33 @@
 /*MESSAGES*/
 
-.messagesbox {
+.messages {
     display: flex;
     flex-direction: column;
     flex: 1;
     padding: 36px 20px;
-}
-.messages {
-    display: flex;
-    flex-direction: column;
     gap: 8px;
 }
 
 /*RECEIVED*/
 
-.message__received {
+.received {
     background-color: #484848;
     padding: 12px 11px 12px 12px;
     color: #ffffff;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
     line-height: 20px;
-    width: 73.33%;
+    border-radius: 00px 10px 10px 10px;
+    margin-right: calc(100% - 264px);
 }
 
-.message__received:first-child {
+.received:first-child {
     border-radius: 0px 10px 0px 0px;
 }
 
-.message__received:last-of-type {
+.received:last-child {
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -38,19 +39,24 @@
 }
 
 /*SENT*/
-.message__sent {
-    margin-left: 26.66%;
-    background-color: #484848;
+.sent {
+    margin-left: calc(100% - 264px);
+    background-color: #ebebeb;
     padding: 12px 11px 12px 12px;
-    color: #ffffff;
+    color: #242424;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
     line-height: 20px;
-}
-
-.message__sent:first-child {
     border-radius: 10px 10px 0px 0px;
 }
 
-.message__sent:last-of-type {
+.sent:first-child {
+    border-radius: 10px 10px 0px 0px;
+}
+
+.sent:last-child {
     border-radius: 0px 0px 0px 10px;
 }
 
