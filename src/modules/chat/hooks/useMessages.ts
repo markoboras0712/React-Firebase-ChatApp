@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { sendMsg } from 'modules/chat/redux/chatActions';
 import { Message, setMessagesListener } from 'modules/chat';
-import { db, RootState } from 'modules/redux-store';
+import { RootState } from 'modules/redux-store';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const useMessages = () => {

@@ -8,13 +8,13 @@
     background-color: #24252a;
 }
 
-.logo {
+.header__logo {
     width: 56px;
     height: 56px;
     cursor: pointer;
 }
 
-.avatar {
+.header__avatar {
     vertical-align: middle;
     width: 56px;
     height: 56px;

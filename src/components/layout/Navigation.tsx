@@ -12,11 +12,11 @@ export const Navigation: React.FC = () => {
 
   return (
     <header className={classes.header}>
-      <img src={logo} alt="logo" className={classes.logo} />
+      <img src={logo} alt="logo" className={classes.header__logo} />
       <img
         src={user.userPhoto as string}
         alt="avatar"
-        className={classes.avatar}
+        className={classes.header__avatar}
       />
       <nav className={classes.navigation}>
         <ul className={classes.navigation__links}>

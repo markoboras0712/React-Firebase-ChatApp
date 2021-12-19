@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import classes from './style/MessageFooter.module.css';
 import { ReactComponent as Smiley } from 'assets/smiley.svg';
 import { ReactComponent as Buttons } from 'assets/imgupload.svg';
 import { ReactComponent as SendButton } from 'assets/send_svg.svg';
 import { useMessages } from 'modules/chat';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 interface Props {
   uid?: string | undefined | null;

@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import classes from './style/MessageHeader.module.css';
 import { ReactComponent as Arrow } from 'assets/arrow.svg';
 import { ReactComponent as Dots } from 'assets/dots.svg';
-import avatar from 'assets/header_avatar.png';
 import { navigate } from '@reach/router';
 
 interface Props {

@@ -1,15 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prefer-const */
 import { db } from 'modules/redux-store/firebase';
 import {
   addDoc,
   collection,
-  getDocs,
-  limit,
   onSnapshot,
   orderBy,
   query,
-  serverTimestamp,
   Timestamp,
 } from 'firebase/firestore';
 import {
@@ -19,6 +14,7 @@ import {
   Message,
 } from 'modules/chat';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { AppDispatch, AppThunk } from 'modules/redux-store';
 
 export const sendMsg = createAsyncThunk('sendMsg', async (message: Message) => {
   try {
@@ -36,7 +32,7 @@ export const sendMsg = createAsyncThunk('sendMsg', async (message: Message) => {
 });
 
 export const setMessagesListener =
-  () => (dispatch: (arg0: { payload: unknown; type: string }) => void) => {
+  (): AppThunk => async (dispatch: AppDispatch) => {
     try {
       const messagesRef = collection(db, 'messages');
       dispatch(fetchMessagesPending());
@@ -59,14 +55,3 @@ export const setMessagesListener =
       dispatch(fetchMessagesRejected(error));
     }
   };
-
-export const fetchUsers = createAsyncThunk('fetchUsers', async () => {
-  try {
-    const querySnapshot = await getDocs(collection(db, 'users'));
-    return querySnapshot.docs.map((res) => {
-      console.log(res.data());
-    });
-  } catch (error) {
-    throw new Error('didnt fetch data');
-  }
-});

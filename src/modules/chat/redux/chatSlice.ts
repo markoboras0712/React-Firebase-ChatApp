@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { fetchUsers, sendMsg } from 'modules/chat/redux/chatActions';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { AllMessages, Message } from 'modules/chat/consts/message';
-import { db } from 'modules/redux-store';
+import { sendMsg } from './chatActions';
+import { AllMessages } from 'modules/chat';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: AllMessages = {
   allMessages: [],
