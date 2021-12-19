@@ -19,10 +19,7 @@ export const MessageHeader: React.FC<Props> = ({
   return (
     <div className={classes.sticky}>
       <header className={classes.header}>
-        <button
-          className={classes.header__arrow}
-          onClick={() => navigate('/contacts')}
-        >
+        <button className={classes.header__arrow} onClick={() => navigate(-1)}>
           <Arrow />
         </button>
 
