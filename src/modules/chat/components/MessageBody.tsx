@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Timestamp } from 'firebase/firestore';
 import { Message } from 'modules/chat';
 import { RootState } from 'modules/redux-store';
 import ScrollableFeed from 'react-scrollable-feed';
-import { RefObject, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import classes from './style/MessageBody.module.css';
 

@@ -9,17 +9,15 @@ interface Props {
 
 export const Contact: React.FC<Props> = ({ uid, userName, userPhoto }) => {
   return (
-    <div className={classes.card} key={uid}>
+    <div className={classes.contact} key={uid}>
       <Link to={`/messages/${uid}`}>
         <img
           src={userPhoto as string}
-          className={classes.card__img}
-          alt="Avatar"
+          alt="avatar"
+          className={classes.contact__avatar}
         />
       </Link>
-      <div>
-        <h2 className={classes.card__title}>{userName}</h2>
-      </div>
+      <span className={classes.contact__userName}>{userName}</span>
     </div>
   );
 };
