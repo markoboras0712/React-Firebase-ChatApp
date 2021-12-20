@@ -42,14 +42,6 @@ export const setMessagesListener =
         const messages = snapshot.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
-        })) as Message[];
-
-        const updated = messages.map((msg) => ({
-          ...msg,
-          createdAt: new Timestamp(
-            msg.createdAt?.seconds as number,
-            msg.createdAt?.nanoseconds as number,
-          ).toDate(),
         }));
         dispatch(fetchMessagesFulfilled(messages));
       });
