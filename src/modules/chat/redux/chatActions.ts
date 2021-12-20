@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { db } from 'modules/redux-store/firebase';
 import {
   addDoc,
@@ -42,6 +43,7 @@ export const setMessagesListener =
           ...doc.data(),
           id: doc.id,
         })) as Message[];
+
         const updated = messages.map((msg) => ({
           ...msg,
           createdAt: new Timestamp(
@@ -49,7 +51,7 @@ export const setMessagesListener =
             msg.createdAt?.nanoseconds as number,
           ).toDate(),
         }));
-        dispatch(fetchMessagesFulfilled(updated));
+        dispatch(fetchMessagesFulfilled(messages));
       });
       return unsubscribe;
     } catch (error) {

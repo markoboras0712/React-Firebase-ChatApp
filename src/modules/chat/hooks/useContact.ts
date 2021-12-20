@@ -16,10 +16,20 @@ export const useContact = () => {
   useEffect(getMessages, []);
 
   const contact = users.find((user) => user.uid === params.id);
-  const allMessages = messages.filter(
+  const allMessagesWithTimestamp = messages.filter(
     (message) =>
       (message.to === params.id && userId === message.uid) ||
       (message.uid === params.id && message.to === userId),
   );
+  const timestampDate = allMessagesWithTimestamp[0].createdAt?.toDate();
+  const numberofHours =
+    timestampDate?.getHours() + ':' + timestampDate?.getMinutes();
+  console.log('Timestamp date', timestampDate);
+  console.log(' num of hours and ninutes', numberofHours);
+  const allMessages = allMessagesWithTimestamp.map((message) => {
+    return { ...message, createdAt: message.createdAt?.toDate() };
+  });
+  console.log('New array with dates', allMessages);
+
   return { contact, allMessages };
 };
