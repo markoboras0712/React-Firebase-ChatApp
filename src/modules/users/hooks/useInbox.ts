@@ -34,12 +34,11 @@ export const useInbox = () => {
       }
     }
   }
-  console.log('With duplicates', chattedUsers);
+
   const ids = chattedUsers.map((user) => user.uid);
   const filteredUsers = chattedUsers.filter(
     ({ uid }, index) => !ids.includes(uid, index + 1),
   );
-  console.log('Without duplicates', filteredUsers);
 
   return filteredUsers;
 };
