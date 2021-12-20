@@ -47,7 +47,7 @@ export const useAuthentication = () => {
         };
         dispatch(saveUser(userData));
       }
-      unsubscribe();
+      return unsubscribe;
     });
   };
 

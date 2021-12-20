@@ -19,28 +19,11 @@
     font-weight: normal;
     font-size: 14px;
     line-height: 20px;
-    border-radius: 00px 10px 10px 10px;
     margin-right: calc(100% - 264px);
-}
-
-.received:first-child {
-    border-radius: 0px 10px 0px 0px;
-}
-
-.received:last-child {
-    border-radius: 0px 0px 10px 10px;
-}
-
-.time__received {
-    margin-top: 4px;
-    margin-bottom: 20px;
-    margin-left: 72.28%;
-    color: #969696;
 }
 
 /*SENT*/
 .sent {
-    margin-left: calc(100% - 264px);
     background-color: #ebebeb;
     padding: 12px 11px 12px 12px;
     color: #242424;
@@ -49,20 +32,21 @@
     font-weight: normal;
     font-size: 14px;
     line-height: 20px;
-    border-radius: 10px 10px 0px 0px;
+    margin-left: calc(100% - 264px);
 }
 
-.sent:first-child {
-    border-radius: 10px 10px 0px 0px;
+.first {
+    border-radius: 0px 10px 0px 0px;
 }
 
-.sent:last-child {
-    border-radius: 0px 0px 0px 10px;
+.test {
+    color:red;
 }
 
-.time__sent {
-    margin-top: 4px;
-    margin-bottom: 20px;
-    margin-left: auto;
-    color: #969696;
+.middle {
+    border-radius: 0px 0px 0px 0px;
+}
+
+.last {
+    border-radius: 0px 0px 10px 10px;
 }

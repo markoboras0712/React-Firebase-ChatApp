@@ -37,7 +37,7 @@ export const setMessagesListener =
       const messagesRef = collection(db, 'messages');
       dispatch(fetchMessagesPending());
       const q = query(messagesRef, orderBy('createdAt'));
-      onSnapshot(q, (snapshot) => {
+      const unsubscribe = onSnapshot(q, (snapshot) => {
         const messages = snapshot.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
@@ -51,6 +51,7 @@ export const setMessagesListener =
         }));
         dispatch(fetchMessagesFulfilled(updated));
       });
+      return unsubscribe;
     } catch (error) {
       dispatch(fetchMessagesRejected(error));
     }

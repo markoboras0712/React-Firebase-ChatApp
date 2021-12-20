@@ -1,16 +1,14 @@
 .contact {
-    background-color: #e5e5e5;
-    padding: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: white;
+    color: #242424;
+    padding: 8px 16px 8px 16px;
     transition: 1s;
     border-radius: 10px;
     display: flex;
     flex-direction: row;
 }
 
-.contact:hover {
-    box-shadow: 0 8px 16px 0 deepskyblue;
-}
+
 .contact__avatar {
     width: 60px;
     height: 60px;
@@ -18,9 +16,20 @@
 }
 
 .contact__userName {
-    padding-left: 20px;
-    align-self: center;
+    padding-top: 9px;
+    padding-left: 11px;
     font-weight: bold;
     font-size: 16px;
     line-height: 24px;
+}
+
+.contact__shape {
+    margin-left: auto;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+}
+
+.link {
+    text-decoration: none;
 }
