@@ -1,18 +1,16 @@
 import { navigate } from '@reach/router';
-import { PublicAuthGuard, useAuthentication } from 'modules/authentication';
+import googleLogo from 'assets/google.png';
+import { useAuthentication, LoginData } from 'modules/authentication';
 import { useForm } from 'react-hook-form';
 import classes from './style/SignIn.module.css';
 import { Input, Button } from 'components';
 
-type LoginData = {
-  email: string;
-  password: string;
-};
-
 export const SignIn: React.FC = () => {
   const { loginWithGoogle, loginWithEmailPassword, resetPassword } =
     useAuthentication();
-  const { register, handleSubmit } = useForm<LoginData>();
+  const { register, handleSubmit, formState } = useForm<LoginData>({
+    mode: 'onChange',
+  });
   const onSubmit = handleSubmit((data: LoginData) => {
     const loginData: LoginData = {
       email: data.email,
@@ -26,44 +24,56 @@ export const SignIn: React.FC = () => {
   });
 
   return (
-    <PublicAuthGuard>
-      <div className={classes.container}>
-        <form className={classes.form}>
-          <h1 className={classes.form__title}>Sign In</h1>
-          <div>
-            <Input
-              type="email"
-              required
-              id="email"
-              placeholder="Email address"
-              {...register('email', { required: true })}
-            />
-            <Input
-              type="password"
-              required
-              id="password"
-              placeholder="Password"
-              {...register('password')}
-            />
+    <div className={classes.container}>
+      <form className={classes.form}>
+        <h1 className={classes.form__title}>Sign In</h1>
+        <div>
+          <Input
+            type="email"
+            required
+            id="email"
+            placeholder="Email address"
+            {...register('email', { required: true })}
+          />
+          <Input
+            type="password"
+            required
+            id="password"
+            placeholder="Password"
+            {...register('password', {
+              required: true,
+            })}
+          />
 
-            <Button type="submit" onClick={onSubmit}>
-              Login
-            </Button>
-            <Button type="button" onClick={() => loginWithGoogle()}>
-              Sign in with Google
-            </Button>
+          <Button
+            type="submit"
+            onClick={onSubmit}
+            disabled={!formState.isValid}
+          >
+            Login
+          </Button>
+          <Button
+            type="button"
+            onClick={passwordResetHandler}
+            disabled={!formState.isValid}
+          >
+            Forgot your password?
+          </Button>
 
-            <div className={classes.form__actions}>
-              <Button type="button" onClick={passwordResetHandler}>
-                Forgot your password?
-              </Button>
-              <Button type="button" onClick={() => navigate('/register')}>
-                Create new account
-              </Button>
-            </div>
+          <div className={classes.form__actions}>
+            <Button type="button" onClick={() => navigate('/register')}>
+              Create new account
+            </Button>
+            <button
+              type="button"
+              className={classes.form__google}
+              onClick={() => loginWithGoogle()}
+            >
+              <img src={googleLogo} />
+            </button>
           </div>
-        </form>
-      </div>
-    </PublicAuthGuard>
+        </div>
+      </form>
+    </div>
   );
 };

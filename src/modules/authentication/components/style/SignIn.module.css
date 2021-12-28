@@ -32,5 +32,11 @@
 .form__actions {
     display: flex;
     flex-direction: row;
-    column-gap: 90px;
+    column-gap: 20px;
+}
+
+.form__google {
+    border: none;
+    background-color: white;
+    cursor: pointer;
 }

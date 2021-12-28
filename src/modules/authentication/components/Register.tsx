@@ -1,21 +1,10 @@
 import { navigate } from '@reach/router';
-import {
-  PublicAuthGuard,
-  RegisterData,
-  useAuthentication,
-} from 'modules/authentication';
+import { RegisterData, useAuthentication } from 'modules/authentication';
+import googleLogo from 'assets/google.png';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import classes from './style/Register.module.css';
 import { Input, Button } from 'components';
-
-type FormData = {
-  email: string;
-  password: string;
-  lastName: string;
-  firstName: string;
-  photoUrl: File[];
-};
 
 export const Register: React.FC = () => {
   const { registerWithEmailPassword, loginWithGoogle } = useAuthentication();
@@ -24,14 +13,18 @@ export const Register: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<RegisterData>();
   const fileSelectHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) {
       return;
     }
     setUploadedImage(event.target.files[0]);
   };
-  const onSubmit = handleSubmit((data: FormData) => {
+  const onSubmit = handleSubmit((data: RegisterData) => {
+    if (uploadedImage === undefined) {
+      alert('You didnt upload your picture');
+      return;
+    }
     const registerData: RegisterData = {
       email: data.email,
       firstName: data.firstName,
@@ -43,56 +36,71 @@ export const Register: React.FC = () => {
   });
 
   return (
-    <PublicAuthGuard>
-      <div className={classes.container}>
-        <form className={classes.form}>
-          <h1 className={classes.form__title}>Sign Up</h1>
-          <div>
-            <Input
-              type="text"
-              required
-              id="firstName"
-              placeholder="First Name"
-              {...register('firstName', { required: true })}
-            />
+    <div className={classes.container}>
+      <form className={classes.form}>
+        <h1 className={classes.form__title}>Sign Up</h1>
+        <div>
+          <Input
+            type="text"
+            required
+            id="firstName"
+            placeholder="First Name"
+            {...register('firstName', { required: true })}
+          />
+          <p className={classes.form__error}>
+            {' '}
             {errors.firstName?.type === 'required' && 'First name is required'}
-            <Input
-              type="text"
-              required
-              id="lastName"
-              placeholder="Last Name"
-              {...register('lastName', { required: true })}
-            />
+          </p>
+
+          <Input
+            type="text"
+            required
+            id="lastName"
+            placeholder="Last Name"
+            {...register('lastName', { required: true })}
+          />
+          <p className={classes.form__error}>
             {errors.lastName?.type === 'required' && 'Last name is required'}
-            <Input
-              type="email"
-              required
-              id="email"
-              placeholder="Email address"
-              {...register('email', { required: true })}
-            />
+          </p>
+          <Input
+            type="email"
+            required
+            id="email"
+            placeholder="Email address"
+            {...register('email', { required: true })}
+          />
+          <p className={classes.form__error}>
             {errors.email?.type === 'required' && 'Email is required'}
-            <Input
-              type="password"
-              required
-              id="password"
-              placeholder="Password"
-              {...register('password', { required: true })}
-            />
+          </p>
+          <Input
+            type="password"
+            required
+            id="password"
+            placeholder="Password"
+            {...register('password', { required: true })}
+          />
+          <p className={classes.form__error}>
+            {' '}
             {errors.password?.type === 'required' && 'Password is required'}
-            <Input type="file" id="userPhoto" onChange={fileSelectHandler} />
-            <Button type="submit" onClick={onSubmit}>
-              Register
-            </Button>
-            <Button type="button" onClick={() => loginWithGoogle()}>
-              Sign in with Google
-            </Button>
+          </p>
+          <Input type="file" id="userPhoto" onChange={fileSelectHandler} />
+          <Button type="submit" onClick={onSubmit}>
+            Register
+          </Button>
+          <div className={classes.form__actions}>
+            <button
+              type="button"
+              className={classes.form__google}
+              onClick={() => loginWithGoogle()}
+            >
+              <img src={googleLogo} />
+            </button>
             <Button type="button" onClick={() => navigate('/')}>
               Already have account?
             </Button>
           </div>
-        </form>
-      </div>
-    </PublicAuthGuard>
+        </div>
+      </form>
+    </div>
   );
 };

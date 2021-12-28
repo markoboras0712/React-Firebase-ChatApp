@@ -1,12 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { User } from 'models';
 import {
   logout,
   sendPasswordReset,
   signInWithEmailPassword,
   signInWithGoogle,
   signUpWithEmailPassword,
+  saveUser,
 } from 'modules/authentication/redux/userActions';
+import { createSlice } from '@reduxjs/toolkit';
+import { User } from 'models';
 
 const initialState: User = {
   userData: {
@@ -25,15 +26,6 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    saveUser: (state, action) => {
-      state.userData.displayName = action.payload.displayName;
-      state.userData.email = action.payload?.email;
-      state.userPhoto = action.payload?.userPhoto;
-      state.authenticated = true;
-      state.userData.id = action.payload?.id;
-      state.refreshToken = action.payload?.refreshToken;
-      state.isLoading = false;
-    },
     clearUser: (state) => {
       state.userData.displayName = null;
       state.userData.email = null;
@@ -81,10 +73,8 @@ export const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(signInWithEmailPassword.fulfilled, (state, action) => {
-      state.userData.displayName = action.payload?.displayName;
       state.userData.email = action.payload?.user.email;
       state.authenticated = true;
-      state.userPhoto = action.payload.photoUrl;
       state.userData.id = action.payload?.user.uid;
       state.refreshToken = action.payload?.user.refreshToken;
       state.isLoading = false;
@@ -120,8 +110,20 @@ export const userSlice = createSlice({
       state.error = action.error;
       state.isLoading = false;
     });
+    builder.addCase(saveUser.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(saveUser.fulfilled, (state, action) => {
+      state.userData.displayName = action.payload.userData.displayName;
+      state.userPhoto = action.payload.userData.userPhoto;
+      state.refreshToken = action.payload.userData.refreshToken;
+      state.authenticated = true;
+      state.isLoading = false;
+      state.userData.id = action.payload.userData.id;
+      state.userData.email = action.payload.userData.email;
+    });
   },
 });
 const { actions, reducer } = userSlice;
-export const { saveUser, clearUser } = actions;
+export const { clearUser } = actions;
 export const userReducer = reducer;

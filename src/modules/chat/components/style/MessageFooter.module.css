@@ -38,3 +38,8 @@
 .footer__imgbuttons:disabled {
     cursor: not-allowed;
 }
+
+.horizontal_line {
+    opacity: 0.1;
+    border: 1px solid #000000;
+}

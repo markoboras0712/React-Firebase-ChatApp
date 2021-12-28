@@ -21,11 +21,6 @@ export const useContact = () => {
       (message.to === params.id && userId === message.uid) ||
       (message.uid === params.id && message.to === userId),
   );
-  const timestampDate = allMessagesWithTimestamp[0].createdAt?.toDate();
-  const numberofHours =
-    timestampDate?.getHours() + ':' + timestampDate?.getMinutes();
-  console.log('Timestamp date', timestampDate);
-  console.log(' num of hours and ninutes', numberofHours);
   const allMessages = allMessagesWithTimestamp.map((message) => {
     return { ...message, createdAt: message.createdAt?.toDate() };
   });

@@ -9,24 +9,8 @@ import {
   User,
 } from 'firebase/auth';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { RegisterData, LoginData } from 'modules/authentication';
+import { RegisterData, LoginData, UserData } from 'modules/authentication';
 import { auth, db, provider, storage } from 'modules/redux-store';
-
-const getPhotoDisplayName = async (user: User) => {
-  const userRef = collection(db, 'users');
-  const q = query(userRef, where('id', '==', user.uid));
-  const querySnapshot = await getDocs(q);
-  const dataFromFirestore: string[] = [];
-  if (querySnapshot.docs.length === 1) {
-    querySnapshot.docs.map((res) => {
-      dataFromFirestore.push(res.data().userPhoto);
-      dataFromFirestore.push(res.data().displayName);
-    });
-  }
-  const photoUrl = dataFromFirestore[0];
-  const displayName = dataFromFirestore[1];
-  return { photoUrl, displayName };
-};
 
 const getFirestoreImageUrl = async (userData: RegisterData) => {
   const storageRef = ref(storage);
@@ -98,11 +82,10 @@ export const signInWithEmailPassword = createAsyncThunk(
         userData.email,
         userData.password,
       );
-
       const { user } = response;
-      const { photoUrl, displayName } = await getPhotoDisplayName(user);
-      return { user, photoUrl, displayName };
+      return { user };
     } catch (error) {
+      alert(error);
       throw new Error('Didnt sign in');
     }
   },
@@ -122,7 +105,22 @@ export const sendPasswordReset = createAsyncThunk(
     try {
       await sendPasswordResetEmail(auth, userEmail);
     } catch (error) {
+      alert(error);
       throw new Error('didnt send password reset');
     }
   },
 );
+
+export const saveUser = createAsyncThunk('saveUser', async (user: User) => {
+  try {
+    const userRef = collection(db, 'users');
+    const q = query(userRef, where('id', '==', user.uid));
+    const querySnapshot = await getDocs(q);
+    let userData: UserData = {};
+    querySnapshot.docs.map((res) => (userData = res.data()));
+    return { userData };
+  } catch (error) {
+    alert(error);
+    throw new Error('didnt get user data');
+  }
+});
