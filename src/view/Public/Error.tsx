@@ -1,14 +1,3 @@
-import { navigate } from '@reach/router';
-import { Button } from 'components';
-import classes from './Error.module.css';
+import { Error } from 'components';
 
-export const NotFound: React.FC = () => {
-  return (
-    <div className={classes.error}>
-      <Button type="submit" onClick={() => navigate('/messages')}>
-        The page you are looking for does not exist. How you get here is a
-        mistery. But you can click the button to go back to the homepage
-      </Button>
-    </div>
-  );
-};
+export const NotFound: React.FC = () => <Error />;
