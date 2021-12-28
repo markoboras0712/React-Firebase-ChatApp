@@ -5,7 +5,6 @@ export interface UserAuthData {
   displayName?: string | null | undefined;
   email?: string | null;
 }
-
 export interface User {
   userData: UserAuthData;
   authenticated: boolean;

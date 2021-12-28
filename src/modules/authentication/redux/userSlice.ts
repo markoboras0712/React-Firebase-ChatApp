@@ -8,6 +8,7 @@ import {
 } from 'modules/authentication/redux/userActions';
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from 'models';
+import { RootState } from 'modules/redux-store';
 
 const initialState: User = {
   userData: {
@@ -125,5 +126,6 @@ export const userSlice = createSlice({
   },
 });
 const { actions, reducer } = userSlice;
+export const selectUser = (state: RootState) => state.user;
 export const { clearUser } = actions;
 export const userReducer = reducer;
