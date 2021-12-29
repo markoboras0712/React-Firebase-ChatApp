@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Message } from 'modules/chat';
 import { RootState } from 'modules/redux-store';
 import ScrollableFeed from 'react-scrollable-feed';
 import { useSelector } from 'react-redux';
@@ -19,7 +17,6 @@ interface Props {
 
 export const MessageBody: React.FC<Props> = ({ messages }) => {
   const user = useSelector((state: RootState) => state.user);
-  console.log('msgs', messages);
   return (
     <ScrollableFeed className={classes.messages}>
       {messages.map(({ text, uid, id, createdAt }, index) => (

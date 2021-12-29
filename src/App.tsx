@@ -1,6 +1,6 @@
 import './App.css';
-import { Routing } from 'modules/routing/components/Routing';
 import { AuthListener } from 'modules/authentication';
+import { Routing } from 'modules/routing';
 
 export const App: React.FC = () => {
   return (

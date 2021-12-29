@@ -1,6 +1,6 @@
 import { Layout } from 'components';
 import { PrivateAuthGuard } from 'modules/authentication';
-import { MessageList } from 'modules/chat/components/MessageList';
+import { MessageList } from 'modules/chat';
 
 export const AllMessages: React.FC = () => {
   return (

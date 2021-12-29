@@ -5,7 +5,8 @@ import { useMessages } from 'modules/chat';
 import { useEffect } from 'react';
 
 export const useContact = () => {
-  const params = useParams();
+  const { id } = useParams();
+
   const users = useSelector((state: RootState) => state.users.allUsers);
   const userId = useSelector((state: RootState) => state.user.userData.id);
 
@@ -15,16 +16,15 @@ export const useContact = () => {
   const { getMessages } = useMessages();
   useEffect(getMessages, []);
 
-  const contact = users.find((user) => user.uid === params.id);
+  const contact = users.find((user) => user.uid === id);
   const allMessagesWithTimestamp = messages.filter(
     (message) =>
-      (message.to === params.id && userId === message.uid) ||
-      (message.uid === params.id && message.to === userId),
+      (message.to === id && userId === message.uid) ||
+      (message.uid === id && message.to === userId),
   );
   const allMessages = allMessagesWithTimestamp.map((message) => {
     return { ...message, createdAt: message.createdAt?.toDate() };
   });
-  console.log('New array with dates', allMessages);
 
   return { contact, allMessages };
 };

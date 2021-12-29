@@ -7,6 +7,7 @@ const initialState: AllMessages = {
   loading: false,
   error: '',
   message: {
+    to: '',
     text: '',
     uid: '',
   },

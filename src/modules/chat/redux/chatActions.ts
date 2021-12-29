@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { db } from 'modules/redux-store/firebase';
 import {
   addDoc,
@@ -6,7 +5,6 @@ import {
   onSnapshot,
   orderBy,
   query,
-  Timestamp,
 } from 'firebase/firestore';
 import {
   fetchMessagesFulfilled,

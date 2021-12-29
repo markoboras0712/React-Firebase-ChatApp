@@ -1,5 +1,4 @@
-import { sendMsg } from 'modules/chat/redux/chatActions';
-import { Message, setMessagesListener } from 'modules/chat';
+import { Message, setMessagesListener, sendMsg } from 'modules/chat';
 import { RootState } from 'modules/redux-store';
 import { useDispatch, useSelector } from 'react-redux';
 

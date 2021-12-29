@@ -6,7 +6,7 @@ import { useMessages } from 'modules/chat';
 import { useState } from 'react';
 
 interface Props {
-  uid?: string | undefined | null;
+  uid: string;
 }
 
 export const MessageFooter: React.FC<Props> = ({ uid }) => {
@@ -14,7 +14,7 @@ export const MessageFooter: React.FC<Props> = ({ uid }) => {
   const [msg, setMsg] = useState('');
   const sendMessage = (event: React.FormEvent) => {
     event.preventDefault();
-    sendMessageToFirestore(msg, uid as string);
+    sendMessageToFirestore(msg, uid);
     setMsg('');
   };
   return (

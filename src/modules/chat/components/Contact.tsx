@@ -12,11 +12,7 @@ export const Contact: React.FC<Props> = ({ uid, userName, userPhoto }) => {
   return (
     <Link to={`/messages/${uid}`} className={classes.link}>
       <div className={classes.contact} key={uid}>
-        <img
-          src={userPhoto as string}
-          alt="avatar"
-          className={classes.contact__avatar}
-        />
+        <img src={userPhoto} alt="avatar" className={classes.contact__avatar} />
 
         <span className={classes.contact__userName}>{userName}</span>
         <button type="button" className={classes.contact__shape}>

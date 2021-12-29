@@ -1,5 +1,4 @@
-import { PublicAuthGuard } from 'modules/authentication';
-import { SignIn } from 'modules/authentication/components/SignIn';
+import { PublicAuthGuard, SignIn } from 'modules/authentication';
 
 export const Login: React.FC = () => (
   <PublicAuthGuard>

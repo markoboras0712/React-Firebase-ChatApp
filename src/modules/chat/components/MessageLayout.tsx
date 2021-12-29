@@ -8,12 +8,13 @@ import {
 
 export const MessageLayout: React.FC = () => {
   const { contact, allMessages } = useContact();
+
   return (
     <div className={classes.container}>
       <MessageHeader
-        uid={contact?.uid as string}
-        userName={contact?.userName as string}
-        userPhoto={contact?.userPhoto as string}
+        uid={contact?.uid}
+        userName={contact?.userName}
+        userPhoto={contact?.userPhoto}
       />
       <MessageBody messages={allMessages} />
       <MessageFooter uid={contact?.uid as string} />

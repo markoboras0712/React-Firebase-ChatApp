@@ -1,5 +1,6 @@
-import { useContacts } from 'modules/users/hooks/useContacts';
 import { Contact } from 'modules/chat';
+import { useContacts } from 'modules/users';
+
 import classes from './style/ContactList.module.css';
 
 export const ContactList: React.FC = () => {
@@ -9,9 +10,9 @@ export const ContactList: React.FC = () => {
       {contacts.map(({ uid, userName, userPhoto }) => (
         <Contact
           key={uid}
-          uid={uid as string}
-          userName={userName as string}
-          userPhoto={userPhoto as string}
+          uid={uid}
+          userName={userName}
+          userPhoto={userPhoto}
         />
       ))}
     </div>

@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prefer-const */
 import { db } from 'modules/redux-store/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { User } from 'modules/users/consts/users';
+import { User } from 'modules/users';
 
 export const fetchUsers = createAsyncThunk('fetchUsers', async () => {
   try {

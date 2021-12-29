@@ -2,28 +2,15 @@ import React, { useState } from 'react';
 import classes from './Navigation.module.css';
 import { ReactComponent as Dots } from 'assets/dots.svg';
 import { Modal } from 'components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from 'modules/authentication';
-import { RootState } from 'modules/redux-store';
+import { addKeyword } from 'modules/users';
 
 export const Navigation: React.FC = () => {
   const user = useSelector(selectUser);
-  const users = useSelector((state: RootState) => state.users.allUsers);
-  const [search, setSearch]: [string, (search: string) => void] = useState('');
-
+  const dispatch = useDispatch();
   const handleChange = (e: { target: { value: string } }) => {
-    const keyword = e.target.value;
-    setSearch(keyword);
-    if (keyword !== '') {
-      const results = users.filter((user) => {
-        return (
-          user.userName?.toLowerCase().startsWith(keyword.toLowerCase()) ||
-          user.userName?.toLowerCase().includes(search.toLowerCase())
-        );
-      });
-      console.log('results', results);
-    }
-    console.log('Search value', search);
+    dispatch(addKeyword(e.target.value));
   };
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
@@ -50,7 +37,6 @@ export const Navigation: React.FC = () => {
       <div className={classes.header__search}>
         <input
           type="text"
-          value={search}
           onChange={handleChange}
           placeholder="Search"
           className={classes.header__searchbar}
