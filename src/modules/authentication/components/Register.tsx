@@ -15,10 +15,9 @@ export const Register: React.FC = () => {
     formState: { errors },
   } = useForm<RegisterData>();
   const fileSelectHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) {
-      return;
+    if (event.target.files) {
+      setUploadedImage(event.target.files[0]);
     }
-    setUploadedImage(event.target.files[0]);
   };
   const onSubmit = handleSubmit((data: RegisterData) => {
     if (uploadedImage === undefined) {

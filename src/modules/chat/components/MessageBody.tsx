@@ -3,7 +3,7 @@ import ScrollableFeed from 'react-scrollable-feed';
 import { useSelector } from 'react-redux';
 import classes from './style/MessageBody.module.css';
 interface Messages {
-  createdAt: Date | undefined;
+  createdAt: Date;
   text?: string | undefined;
   uid?: string | undefined;
   to?: string | undefined;
@@ -17,6 +17,7 @@ interface Props {
 
 export const MessageBody: React.FC<Props> = ({ messages }) => {
   const user = useSelector((state: RootState) => state.user);
+
   return (
     <ScrollableFeed className={classes.messages}>
       {messages.map(({ text, uid, id, createdAt }, index) => (

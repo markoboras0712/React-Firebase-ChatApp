@@ -23,8 +23,17 @@ export const useContact = () => {
       (message.uid === id && message.to === userId),
   );
   const allMessages = allMessagesWithTimestamp.map((message) => {
-    return { ...message, createdAt: message.createdAt?.toDate() };
+    return { ...message, createdAt: message.createdAt?.toDate() as Date };
   });
 
-  return { contact, allMessages };
+  const allDates = allMessages.map((message) => message.createdAt);
+  const temp = [];
+  if (allDates.length > 0) {
+    const max = allDates.reduce((a, b) => {
+      return a > b ? a : b;
+    });
+    temp.push(max.toLocaleDateString());
+  }
+
+  return { contact, allMessages, maxDate: temp[0] };
 };

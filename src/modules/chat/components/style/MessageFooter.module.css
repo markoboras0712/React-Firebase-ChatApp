@@ -10,6 +10,7 @@
     display: flex;
     flex-direction: row;
     color: #242424;
+    height: 63px;
 }
 
 .footer__smiley {
@@ -21,12 +22,14 @@
 .footer__input {
     width: 100%;
     padding-left: 18px;
-    border: none;
-    font-family: Inter;
     font-style: normal;
     font-weight: normal;
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: -0.41px;
+    margin-right: 1px;
+    border: none !important;
+    border-radius: 10px;
 }
 
 .footer__imgbuttons {
