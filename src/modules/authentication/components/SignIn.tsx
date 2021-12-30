@@ -1,5 +1,6 @@
 import { navigate } from '@reach/router';
 import googleLogo from 'assets/google.png';
+import { Routes } from 'fixtures';
 import { useAuthentication, LoginData } from 'modules/authentication';
 import { useForm } from 'react-hook-form';
 import classes from './style/SignIn.module.css';
@@ -61,7 +62,7 @@ export const SignIn: React.FC = () => {
           </Button>
 
           <div className={classes.form__actions}>
-            <Button type="button" onClick={() => navigate('/register')}>
+            <Button type="button" onClick={() => navigate(Routes.Register)}>
               Create new account
             </Button>
             <button

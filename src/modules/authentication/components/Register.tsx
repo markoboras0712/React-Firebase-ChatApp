@@ -4,6 +4,7 @@ import googleLogo from 'assets/google.png';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import classes from './style/Register.module.css';
+import { Routes } from 'fixtures';
 import { Input, Button } from 'components';
 
 export const Register: React.FC = () => {
@@ -94,7 +95,7 @@ export const Register: React.FC = () => {
             >
               <img src={googleLogo} />
             </button>
-            <Button type="button" onClick={() => navigate('/')}>
+            <Button type="button" onClick={() => navigate(Routes.Login)}>
               Already have account?
             </Button>
           </div>

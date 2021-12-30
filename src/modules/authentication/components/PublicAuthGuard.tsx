@@ -1,6 +1,7 @@
 import { LinearProgress } from '@mui/material';
 import { navigate } from '@reach/router';
 import { selectUser, selectUserLoading } from 'modules/authentication';
+import { Routes } from 'fixtures';
 import { selectUsersLoading } from 'modules/users';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -11,7 +12,7 @@ export const PublicAuthGuard: React.FC = ({ children }) => {
   const usersLoading = useSelector(selectUsersLoading);
   useEffect(() => {
     if (!userLoading && user.authenticated) {
-      navigate('/contacts');
+      navigate(Routes.Contacts);
     }
   }, [user.authenticated]);
 

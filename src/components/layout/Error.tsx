@@ -1,6 +1,7 @@
 import { navigate } from '@reach/router';
 import { Button } from 'components';
 import { selectUser } from 'modules/authentication';
+import { Routes } from 'fixtures';
 import { useSelector } from 'react-redux';
 import classes from './Error.module.css';
 
@@ -11,7 +12,9 @@ export const Error: React.FC = () => {
       <Button
         type="submit"
         onClick={() =>
-          user.authenticated ? navigate('/messages') : navigate('/')
+          user.authenticated
+            ? navigate(Routes.Messages)
+            : navigate(Routes.Login)
         }
       >
         The page you are looking for does not exist. How you get here is a
