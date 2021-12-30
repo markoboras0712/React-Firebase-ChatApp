@@ -9,7 +9,8 @@ import {
   User,
 } from 'firebase/auth';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { RegisterData, LoginData, UserData } from 'modules/authentication';
+import { RegisterData, LoginData } from 'modules/authentication';
+import { AuthUser } from 'models';
 import { auth, db, provider, storage } from 'modules/redux-store';
 
 const getFirestoreImageUrl = async (userData: RegisterData) => {
@@ -28,18 +29,19 @@ export const signInWithGoogle = createAsyncThunk(
       const { user } = res;
       const userRef = collection(db, 'users');
       const q = query(userRef, where('id', '==', user.uid));
+      const authUser: AuthUser = {
+        authenticated: true,
+        refreshToken: user.refreshToken,
+        userPhoto: user.photoURL as string,
+        displayName: user.displayName as string,
+        email: user.email as string,
+        id: user.uid,
+      };
       const querySnapshot = await getDocs(q);
       if (querySnapshot.docs.length === 0) {
-        await addDoc(collection(db, 'users'), {
-          id: user.uid,
-          authenticated: true,
-          displayName: user.displayName,
-          email: user.email,
-          refreshToken: user.refreshToken,
-          userPhoto: user.photoURL,
-        });
+        await addDoc(collection(db, 'users'), authUser);
       }
-      return user;
+      return { authUser };
     } catch (err) {
       throw new Error('Didnt sign in');
     }
@@ -58,15 +60,16 @@ export const signUpWithEmailPassword = createAsyncThunk(
       const { user } = response;
       const url = await getFirestoreImageUrl(userData);
       const displayName = `${userData.firstName} ${userData.lastName}`;
-      await addDoc(collection(db, 'users'), {
-        id: user.uid,
+      const authUser: AuthUser = {
         authenticated: true,
-        displayName: displayName,
-        email: user.email,
         refreshToken: user.refreshToken,
         userPhoto: url,
-      });
-      return { user, url, displayName };
+        displayName: displayName,
+        email: user.email as string,
+        id: user.uid,
+      };
+      await addDoc(collection(db, 'users'), authUser);
+      return { authUser };
     } catch (error) {
       throw new Error('Didng signup');
     }
@@ -83,7 +86,13 @@ export const signInWithEmailPassword = createAsyncThunk(
         userData.password,
       );
       const { user } = response;
-      return { user };
+      const authUser: AuthUser = {
+        authenticated: true,
+        refreshToken: user.refreshToken,
+        email: user.email as string,
+        id: user.uid,
+      };
+      return { authUser };
     } catch (error) {
       alert(error);
       throw new Error('Didnt sign in');
@@ -116,9 +125,9 @@ export const saveUser = createAsyncThunk('saveUser', async (user: User) => {
     const userRef = collection(db, 'users');
     const q = query(userRef, where('id', '==', user.uid));
     const querySnapshot = await getDocs(q);
-    let userData: UserData = {};
-    querySnapshot.docs.map((res) => (userData = res.data()));
-    return { userData };
+    let authUser: AuthUser = {};
+    querySnapshot.docs.map((res) => (authUser = res.data()));
+    return { authUser };
   } catch (error) {
     alert(error);
     throw new Error('didnt get user data');

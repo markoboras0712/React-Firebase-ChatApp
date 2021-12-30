@@ -24,7 +24,7 @@ export const MessageBody: React.FC<Props> = ({ messages }) => {
         <div key={id}>
           <div
             className={` ${
-              uid === user.userData.id ? classes.sent : classes.received
+              uid === user.user.id ? classes.sent : classes.received
             } ${
               messages[index]?.uid !== messages[index - 1]?.uid
                 ? classes.first
@@ -40,9 +40,7 @@ export const MessageBody: React.FC<Props> = ({ messages }) => {
           </div>
           <p
             className={`${
-              uid === user.userData.id
-                ? classes.time__sent
-                : classes.time__received
+              uid === user.user.id ? classes.time__sent : classes.time__received
             } ${
               messages[index]?.uid === messages[index + 1]?.uid
                 ? classes.hidetime

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export const useContacts = () => {
   const dispatch = useDispatch();
   const allUsers = useSelector((state: RootState) => state.users.allUsers);
-  const user = useSelector((state: RootState) => state.user.userData);
+  const user = useSelector((state: RootState) => state.user.user);
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);

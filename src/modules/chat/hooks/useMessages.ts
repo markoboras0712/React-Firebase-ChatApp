@@ -9,9 +9,9 @@ export const useMessages = () => {
     const message: Message = {
       text: msg,
       to: to,
-      uid: user.userData.id,
-      userName: user.userData.displayName,
-      userPhoto: user.userPhoto,
+      uid: user.user.id,
+      userName: user.user.displayName,
+      userPhoto: user.user.userPhoto,
     };
     await dispatch(sendMsg(message));
   };

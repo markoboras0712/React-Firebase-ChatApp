@@ -4,6 +4,6 @@ export interface UserData {
   email?: string | null;
   authenticated?: boolean;
   refreshToken?: string;
-  userPhoto?: string | null;
+  userPhoto?: string;
   loading?: boolean;
 }

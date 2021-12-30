@@ -8,7 +8,7 @@ export const useContact = () => {
   const { id } = useParams();
 
   const users = useSelector((state: RootState) => state.users.allUsers);
-  const userId = useSelector((state: RootState) => state.user.userData.id);
+  const userId = useSelector((state: RootState) => state.user.user.id);
 
   const messages = useSelector(
     (state: RootState) => state.messages.allMessages,

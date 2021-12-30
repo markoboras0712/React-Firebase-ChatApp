@@ -23,7 +23,7 @@ const getChattedUsers = (allOtherUsers: User[], textedMessages: Message[]) => {
 export const useInbox = () => {
   const dispatch = useDispatch();
   const allUsers = useSelector((state: RootState) => state.users.allUsers);
-  const user = useSelector((state: RootState) => state.user.userData);
+  const user = useSelector((state: RootState) => state.user.user);
   const messages = useSelector(
     (state: RootState) => state.messages.allMessages,
   );

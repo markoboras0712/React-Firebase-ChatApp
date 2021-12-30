@@ -9,10 +9,10 @@ export const PublicAuthGuard: React.FC = ({ children }) => {
   const user = useSelector(selectUser);
   const users = useSelector((state: RootState) => state.users);
   useEffect(() => {
-    if (!user.isLoading && user.authenticated) {
+    if (!user.isLoading && user.user.authenticated) {
       navigate('/contacts');
     }
-  }, [user.authenticated]);
+  }, [user.user.authenticated]);
 
   if (user.isLoading || users.isLoading) {
     return <LinearProgress color="success" />;
