@@ -1,16 +1,12 @@
 import { sendMsg } from './chatActions';
-import { AllMessages } from 'modules/chat';
-import { createSlice } from '@reduxjs/toolkit';
+import { AllMessages, Message } from 'modules/chat';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from 'modules/redux-store';
 
 const initialState: AllMessages = {
   allMessages: [],
   loading: false,
   error: '',
-  message: {
-    to: '',
-    text: '',
-    uid: '',
-  },
 };
 
 export const chatSlice = createSlice({
@@ -20,8 +16,8 @@ export const chatSlice = createSlice({
     fetchMessagesPending: (state) => {
       state.loading = true;
     },
-    fetchMessagesFulfilled: (state, { payload }) => {
-      state.allMessages = payload;
+    fetchMessagesFulfilled: (state, action: PayloadAction<Message[]>) => {
+      state.allMessages = action.payload;
       state.loading = false;
     },
     fetchMessagesRejected: (state, { payload }) => {
@@ -47,4 +43,6 @@ export const {
   fetchMessagesFulfilled,
   fetchMessagesRejected,
 } = chatSlice.actions;
+export const selectAllMessages = (state: RootState) =>
+  state.messages.allMessages;
 export const chatReducer = chatSlice.reducer;

@@ -4,9 +4,9 @@ import { ReactComponent as Dots } from 'assets/dots.svg';
 import { navigate } from '@reach/router';
 
 interface Props {
-  uid?: string | undefined;
-  userName?: string | undefined;
-  userPhoto?: string | undefined;
+  uid: string;
+  userName: string;
+  userPhoto: string;
 }
 
 export const MessageHeader: React.FC<Props> = ({

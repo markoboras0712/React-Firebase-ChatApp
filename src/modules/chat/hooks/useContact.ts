@@ -1,39 +1,41 @@
 import { useSelector } from 'react-redux';
 import { useParams } from '@reach/router';
-import { RootState } from 'modules/redux-store';
-import { useMessages } from 'modules/chat';
+
+import { MessageDate, selectAllMessages, useMessages } from 'modules/chat';
 import { useEffect } from 'react';
+import { selectUsers } from 'modules/users';
+import { selectUser } from 'modules/authentication';
 
 export const useContact = () => {
   const { id } = useParams();
-
-  const users = useSelector((state: RootState) => state.users.allUsers);
-  const userId = useSelector((state: RootState) => state.user.user.id);
-
-  const messages = useSelector(
-    (state: RootState) => state.messages.allMessages,
-  );
+  const users = useSelector(selectUsers);
+  const user = useSelector(selectUser);
+  const messages = useSelector(selectAllMessages);
   const { getMessages } = useMessages();
   useEffect(getMessages, []);
 
-  const contact = users.find((user) => user.uid === id);
+  const contact = users.filter((user) => user.uid === (id as string));
+
   const allMessagesWithTimestamp = messages.filter(
     (message) =>
-      (message.to === id && userId === message.uid) ||
-      (message.uid === id && message.to === userId),
+      (message.to === id && user.id === message.uid) ||
+      (message.uid === id && message.to === user.id),
   );
   const allMessages = allMessagesWithTimestamp.map((message) => {
-    return { ...message, createdAt: message.createdAt?.toDate() as Date };
+    return {
+      ...message,
+      createdAt: message.createdAt?.toDate() as Date,
+    } as MessageDate;
   });
 
-  const allDates = allMessages.map((message) => message.createdAt);
-  const temp = [];
+  const allDates = allMessages.map((message) => message.createdAt as Date);
+  let maxDate = '';
   if (allDates.length > 0) {
     const max = allDates.reduce((a, b) => {
       return a > b ? a : b;
     });
-    temp.push(max.toLocaleDateString());
+    maxDate = max.toLocaleDateString();
   }
 
-  return { contact, allMessages, maxDate: temp[0] };
+  return { contact: contact[0], allMessages, maxDate };
 };

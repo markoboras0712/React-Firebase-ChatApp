@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import classes from './style/MessageLayout.module.css';
 import {
   MessageHeader,
@@ -13,13 +12,13 @@ export const MessageLayout: React.FC = () => {
   return (
     <div className={classes.container}>
       <MessageHeader
-        uid={contact?.uid}
-        userName={contact?.userName}
-        userPhoto={contact?.userPhoto}
+        uid={contact.uid}
+        userName={contact.userName}
+        userPhoto={contact.userPhoto}
       />
       {maxDate ? <p className={classes.message__date}>{maxDate}</p> : ''}
       <MessageBody messages={allMessages} />
-      <MessageFooter uid={contact?.uid as string} />
+      <MessageFooter uid={contact.uid} />
     </div>
   );
 };

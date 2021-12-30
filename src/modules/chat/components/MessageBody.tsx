@@ -1,31 +1,22 @@
-import { RootState } from 'modules/redux-store';
 import ScrollableFeed from 'react-scrollable-feed';
 import { useSelector } from 'react-redux';
 import classes from './style/MessageBody.module.css';
-interface Messages {
-  createdAt: Date;
-  text?: string | undefined;
-  uid?: string | undefined;
-  to?: string | undefined;
-  userName?: string | null | undefined;
-  userPhoto?: string | null | undefined;
-  id?: string | undefined;
-}
+import { selectUser } from 'modules/authentication';
+import { MessageDate } from 'modules/chat';
+
 interface Props {
-  messages: Messages[];
+  messages: MessageDate[];
 }
 
 export const MessageBody: React.FC<Props> = ({ messages }) => {
-  const user = useSelector((state: RootState) => state.user);
+  const user = useSelector(selectUser);
 
   return (
     <ScrollableFeed className={classes.messages}>
       {messages.map(({ text, uid, id, createdAt }, index) => (
         <div key={id}>
           <div
-            className={` ${
-              uid === user.user.id ? classes.sent : classes.received
-            } ${
+            className={` ${uid === user.id ? classes.sent : classes.received} ${
               messages[index]?.uid !== messages[index - 1]?.uid
                 ? classes.first
                 : ''
@@ -40,7 +31,7 @@ export const MessageBody: React.FC<Props> = ({ messages }) => {
           </div>
           <p
             className={`${
-              uid === user.user.id ? classes.time__sent : classes.time__received
+              uid === user.id ? classes.time__sent : classes.time__received
             } ${
               messages[index]?.uid === messages[index + 1]?.uid
                 ? classes.hidetime
