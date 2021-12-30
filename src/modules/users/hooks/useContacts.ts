@@ -1,17 +1,22 @@
-import { RootState } from 'modules/redux-store';
-import { fetchUsers, useFilter } from 'modules/users';
+import { selectUser } from 'modules/authentication';
+import {
+  fetchUsers,
+  selectKeyword,
+  selectUsers,
+  useFilter,
+} from 'modules/users';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const useContacts = () => {
   const dispatch = useDispatch();
-  const allUsers = useSelector((state: RootState) => state.users.allUsers);
-  const user = useSelector((state: RootState) => state.user.user);
+  const allUsers = useSelector(selectUsers);
+  const user = useSelector(selectUser);
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
 
-  const keyword = useSelector((state: RootState) => state.users.keyword);
+  const keyword = useSelector(selectKeyword);
   const contactsForFilter = allUsers.filter(
     (contact) => user.email !== contact.email,
   );

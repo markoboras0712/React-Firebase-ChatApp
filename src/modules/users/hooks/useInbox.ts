@@ -1,6 +1,12 @@
-import { Message, useMessages } from 'modules/chat';
-import { RootState } from 'modules/redux-store';
-import { fetchUsers, useFilter, User } from 'modules/users';
+import { selectUser } from 'modules/authentication';
+import { Message, selectAllMessages, useMessages } from 'modules/chat';
+import {
+  fetchUsers,
+  selectKeyword,
+  selectUsers,
+  useFilter,
+  User,
+} from 'modules/users';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -22,11 +28,9 @@ const getChattedUsers = (allOtherUsers: User[], textedMessages: Message[]) => {
 
 export const useInbox = () => {
   const dispatch = useDispatch();
-  const allUsers = useSelector((state: RootState) => state.users.allUsers);
-  const user = useSelector((state: RootState) => state.user.user);
-  const messages = useSelector(
-    (state: RootState) => state.messages.allMessages,
-  );
+  const allUsers = useSelector(selectUsers);
+  const user = useSelector(selectUser);
+  const messages = useSelector(selectAllMessages);
   const { getMessages } = useMessages();
   useEffect(() => {
     dispatch(fetchUsers());
@@ -43,7 +47,7 @@ export const useInbox = () => {
   const filteredUsers = chattedUsers.filter(
     ({ uid }, index) => !ids.includes(uid, index + 1),
   );
-  const keyword = useSelector((state: RootState) => state.users.keyword);
+  const keyword = useSelector(selectKeyword);
   const filteredInbox = useFilter(keyword, filteredUsers);
 
   return filteredInbox;
