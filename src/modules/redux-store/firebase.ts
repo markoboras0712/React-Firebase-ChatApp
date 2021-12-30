@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, enableIndexedDbPersistence } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
@@ -17,3 +17,10 @@ export const storage = getStorage(firebaseApp);
 export const auth = getAuth();
 export const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
+enableIndexedDbPersistence(db).catch((err) => {
+  if (err.code == 'failed-precondition') {
+    console.log('error code', err);
+  } else if (err.code == 'unimplemented') {
+    console.log('error code', err);
+  }
+});
