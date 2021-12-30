@@ -43,6 +43,7 @@ export const signInWithGoogle = createAsyncThunk(
       }
       return { authUser };
     } catch (err) {
+      alert(err);
       throw new Error('Didnt sign in');
     }
   },
@@ -71,6 +72,7 @@ export const signUpWithEmailPassword = createAsyncThunk(
       await addDoc(collection(db, 'users'), authUser);
       return { authUser };
     } catch (error) {
+      alert(error);
       throw new Error('Didng signup');
     }
   },
