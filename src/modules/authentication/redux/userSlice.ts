@@ -101,6 +101,8 @@ export const userSlice = createSlice({
   },
 });
 const { actions, reducer } = userSlice;
-export const selectUser = (state: RootState) => state.user;
+export const selectUser = (state: RootState) => state.user.user;
+export const selectUserLoading = (state: RootState) => state.user.isLoading;
+
 export const { clearUser } = actions;
 export const userReducer = reducer;

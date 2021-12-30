@@ -1,20 +1,21 @@
 import { LinearProgress } from '@mui/material';
 import { navigate } from '@reach/router';
-import { selectUser } from 'modules/authentication';
+import { selectUser, selectUserLoading } from 'modules/authentication';
 import { RootState } from 'modules/redux-store';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 export const PublicAuthGuard: React.FC = ({ children }) => {
   const user = useSelector(selectUser);
+  const loading = useSelector(selectUserLoading);
   const users = useSelector((state: RootState) => state.users);
   useEffect(() => {
-    if (!user.isLoading && user.user.authenticated) {
+    if (!loading && user.authenticated) {
       navigate('/contacts');
     }
-  }, [user.user.authenticated]);
+  }, [user.authenticated]);
 
-  if (user.isLoading || users.isLoading) {
+  if (loading || users.isLoading) {
     return <LinearProgress color="success" />;
   }
 

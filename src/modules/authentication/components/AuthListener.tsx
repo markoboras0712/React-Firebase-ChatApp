@@ -8,7 +8,7 @@ export const AuthListener: React.FC = ({ children }) => {
 
   useEffect(() => {
     autoLogin();
-  }, [user.user.authenticated]);
+  }, [user.authenticated]);
 
   return <>{children}</>;
 };
