@@ -1,7 +1,7 @@
-import { LinearProgress } from '@mui/material';
 import { navigate } from '@reach/router';
 import { selectUser, selectUserLoading } from 'modules/authentication';
 import { Routes } from 'fixtures';
+import { LoadingSpinner } from 'components';
 import { selectUsersLoading } from 'modules/users';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -17,7 +17,7 @@ export const PrivateAuthGuard: React.FC = ({ children }) => {
   }, [user.authenticated]);
 
   if (userLoading || usersLoading) {
-    return <LinearProgress color="success" />;
+    return <LoadingSpinner />;
   }
 
   return <>{children}</>;

@@ -15,8 +15,11 @@ export const Navigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <header className={classes.header} onClick={() => setIsOpen(!isOpen)}>
-      <div className={classes.header__content}>
+    <header className={classes.header}>
+      <div
+        className={classes.header__content}
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <div>
           <img
             src={user.userPhoto}

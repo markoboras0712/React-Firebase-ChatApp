@@ -1,10 +1,10 @@
-import { LinearProgress } from '@mui/material';
 import { navigate } from '@reach/router';
 import { selectUser, selectUserLoading } from 'modules/authentication';
 import { Routes } from 'fixtures';
 import { selectUsersLoading } from 'modules/users';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { LoadingSpinner } from 'components';
 
 export const PublicAuthGuard: React.FC = ({ children }) => {
   const user = useSelector(selectUser);
@@ -17,7 +17,7 @@ export const PublicAuthGuard: React.FC = ({ children }) => {
   }, [user.authenticated]);
 
   if (userLoading || usersLoading) {
-    return <LinearProgress color="success" />;
+    return <LoadingSpinner />;
   }
 
   return <>{children}</>;

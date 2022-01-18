@@ -28,13 +28,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     clearUser: (state) => {
-      state.user.displayName = undefined;
-      state.user.email = undefined;
-      state.user.userPhoto = '';
-      state.user.authenticated = false;
-      state.user.id = '';
-      state.user.refreshToken = null;
-      state.isLoading = false;
+      state = initialState;
     },
   },
   extraReducers: (builder) => {
