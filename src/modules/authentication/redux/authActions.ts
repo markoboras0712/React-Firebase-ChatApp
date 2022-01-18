@@ -9,7 +9,7 @@ import {
   User,
 } from 'firebase/auth';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { Register, Login, AuthUser } from 'modules/authentication';
+import { Register, Login, AuthData } from 'modules/authentication';
 
 import { auth, db, provider, storage } from 'modules/redux-store';
 
@@ -29,7 +29,7 @@ export const signInWithGoogle = createAsyncThunk(
       const { user } = res;
       const userRef = collection(db, 'users');
       const q = query(userRef, where('id', '==', user.uid));
-      const authUser: AuthUser = {
+      const authUser: AuthData = {
         authenticated: true,
         refreshToken: user.refreshToken,
         userPhoto: user.photoURL as string,
@@ -61,7 +61,7 @@ export const signUpWithEmailPassword = createAsyncThunk(
       const { user } = response;
       const url = await getFirestoreImageUrl(userData);
       const displayName = `${userData.firstName} ${userData.lastName}`;
-      const authUser: AuthUser = {
+      const authUser: AuthData = {
         authenticated: true,
         refreshToken: user.refreshToken,
         userPhoto: url,
@@ -88,7 +88,7 @@ export const signInWithEmailPassword = createAsyncThunk(
         userData.password,
       );
       const { user } = response;
-      const authUser: AuthUser = {
+      const authUser: AuthData = {
         authenticated: true,
         refreshToken: user.refreshToken,
         email: user.email as string,
@@ -127,9 +127,9 @@ export const saveUser = createAsyncThunk('saveUser', async (user: User) => {
     const userRef = collection(db, 'users');
     const q = query(userRef, where('id', '==', user.uid));
     const querySnapshot = await getDocs(q);
-    let authUser: AuthUser = {};
-    querySnapshot.docs.map((res) => (authUser = res.data()));
-    return { authUser };
+
+    const test = querySnapshot.docs.map((res) => res.data() as AuthData);
+    return { test };
   } catch (error) {
     alert(error);
     throw new Error('didnt get user data');

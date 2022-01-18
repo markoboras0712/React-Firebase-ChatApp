@@ -1,16 +1,16 @@
 import { SerializedError } from '@reduxjs/toolkit';
 
-export interface AuthUser {
-  id?: string;
+export interface AuthData {
+  id: string;
   displayName?: string;
-  email?: string;
-  authenticated?: boolean;
-  refreshToken?: string | undefined | null;
+  email: string;
+  authenticated: boolean;
+  refreshToken: string | null;
   userPhoto?: string;
 }
 
-export interface User {
-  data: AuthUser;
+export interface Auth {
+  data: AuthData;
   error?: SerializedError | string;
   isLoading?: boolean;
 }

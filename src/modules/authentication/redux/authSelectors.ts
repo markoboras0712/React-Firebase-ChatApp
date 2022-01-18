@@ -1,7 +1,7 @@
 import { createDraftSafeSelector } from '@reduxjs/toolkit';
 import { RootState } from 'modules/redux-store';
 
-export const userSelector = (state: RootState) => state.user;
+export const userSelector = (state: RootState) => state.auth;
 
 export const selectUser = createDraftSafeSelector(
   userSelector,

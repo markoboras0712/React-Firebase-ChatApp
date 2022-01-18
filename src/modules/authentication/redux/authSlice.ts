@@ -5,11 +5,11 @@ import {
   signInWithGoogle,
   signUpWithEmailPassword,
   saveUser,
-} from 'modules/authentication/redux/userActions';
+} from 'modules/authentication/redux/authActions';
 import { createSlice } from '@reduxjs/toolkit';
-import { User } from 'modules/authentication';
+import { Auth } from 'modules/authentication';
 
-const initialState: User = {
+const initialState: Auth = {
   data: {
     authenticated: false,
     refreshToken: '',
@@ -22,8 +22,8 @@ const initialState: User = {
   isLoading: false,
 };
 
-export const userSlice = createSlice({
-  name: 'user',
+export const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
     clearUser: (state) => {
@@ -88,12 +88,12 @@ export const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(saveUser.fulfilled, (state, action) => {
-      state.data = action.payload.authUser;
+      state.data = action.payload.test[0];
       state.isLoading = false;
     });
   },
 });
-const { actions, reducer } = userSlice;
+const { actions, reducer } = authSlice;
 
 export const { clearUser } = actions;
-export const userReducer = reducer;
+export const authReducer = reducer;
