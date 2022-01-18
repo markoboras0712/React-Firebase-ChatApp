@@ -12,11 +12,13 @@ interface Props {
 export const MessageFooter: React.FC<Props> = ({ uid }) => {
   const { sendMessageToFirestore } = useMessages();
   const [msg, setMsg] = useState('');
+
   const sendMessage = (event: React.FormEvent) => {
     event.preventDefault();
     sendMessageToFirestore(msg, uid);
     setMsg('');
   };
+
   return (
     <div className={classes.sticky}>
       <hr className={classes.horizontal_line} />

@@ -16,6 +16,7 @@ export const MessageHeader: React.FC<Props> = ({
 }) => {
   const firstName = userName?.split(' ')[0];
   const lastName = userName?.split(' ')[1];
+
   return (
     <>
       <header className={classes.header}>

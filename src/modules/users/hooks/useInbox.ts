@@ -32,20 +32,28 @@ export const useInbox = () => {
   const user = useSelector(selectUser);
   const messages = useSelector(selectAllMessages);
   const { getMessages } = useMessages();
+
   useEffect(() => {
     dispatch(fetchUsers());
     getMessages();
   }, []);
+
   const textedMessages = messages.filter(
     ({ to, uid }) => to === user.id || uid === user.id,
   );
+
   const allOtherUsers = allUsers.filter(({ email }) => user.email !== email);
+
   const chattedUsers = getChattedUsers(allOtherUsers, textedMessages);
+
   const ids = chattedUsers.map(({ uid }) => uid);
+
   const filteredUsers = chattedUsers.filter(
     ({ uid }, index) => !ids.includes(uid, index + 1),
   );
+
   const keyword = useSelector(selectKeyword);
+
   const filteredInbox = useFilter(keyword, filteredUsers);
 
   return filteredInbox;

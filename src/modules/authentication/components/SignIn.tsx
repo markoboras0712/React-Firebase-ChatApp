@@ -12,6 +12,7 @@ export const SignIn: React.FC = () => {
   const { register, handleSubmit, formState } = useForm<Login>({
     mode: 'onChange',
   });
+
   const onSubmit = handleSubmit((data: Login) => {
     loginWithEmailPassword(data);
   });

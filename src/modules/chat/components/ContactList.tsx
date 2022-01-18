@@ -5,6 +5,7 @@ import classes from './style/ContactList.module.css';
 
 export const ContactList: React.FC = () => {
   const contacts = useContacts();
+
   return (
     <div className={classes.container}>
       {contacts.map(({ uid, userName, userPhoto }) => (

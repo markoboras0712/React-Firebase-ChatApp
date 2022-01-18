@@ -15,11 +15,13 @@ export const SignUp: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Register>();
+
   const fileSelectHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       setUploadedImage(event.target.files[0]);
     }
   };
+
   const onSubmit = handleSubmit((data: Register) => {
     if (uploadedImage === undefined) {
       alert('You didnt upload your picture');

@@ -12,6 +12,7 @@ export const useContacts = () => {
   const dispatch = useDispatch();
   const allUsers = useSelector(selectUsers);
   const user = useSelector(selectUser);
+
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);

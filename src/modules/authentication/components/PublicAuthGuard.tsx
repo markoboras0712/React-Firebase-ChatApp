@@ -10,6 +10,7 @@ export const PublicAuthGuard: React.FC = ({ children }) => {
   const user = useSelector(selectUser);
   const userLoading = useSelector(selectUserLoading);
   const usersLoading = useSelector(selectUsersLoading);
+
   useEffect(() => {
     if (!userLoading && user.authenticated) {
       navigate(Routes.Contacts);
