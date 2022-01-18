@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import classes from './style/SignUp.module.css';
 import { Routes } from 'fixtures';
 import { Input, Button } from 'components';
+import React from 'react';
 
 export const SignUp: React.FC = () => {
   const { registerWithEmailPassword, loginWithGoogle } = useAuthentication();
@@ -22,13 +23,18 @@ export const SignUp: React.FC = () => {
     }
   };
 
-  const onSubmit = handleSubmit((data: Register) => {
-    if (uploadedImage === undefined) {
-      alert('You didnt upload your picture');
-      return;
-    }
-    registerWithEmailPassword(data, uploadedImage);
-  });
+  const onSubmit = React.useCallback(
+    handleSubmit((data: Register) => {
+      if (uploadedImage === undefined) {
+        alert('You didnt upload your picture');
+        return;
+      }
+      registerWithEmailPassword(data, uploadedImage);
+    }),
+    [],
+  );
+
+  const handleGoogleLogin = React.useCallback(() => loginWithGoogle(), []);
 
   return (
     <div className={classes.container}>
@@ -82,10 +88,7 @@ export const SignUp: React.FC = () => {
           <Button type="submit" onClick={onSubmit}>
             Register
           </Button>
-          <div
-            className={classes.form__google}
-            onClick={() => loginWithGoogle()}
-          >
+          <div className={classes.form__google} onClick={handleGoogleLogin}>
             <div className={classes.form__google__img}>
               <GoogleIcon />
             </div>

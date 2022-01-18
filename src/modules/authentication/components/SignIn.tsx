@@ -5,6 +5,7 @@ import { ReactComponent as GoogleIcon } from 'assets/googleSVG.svg';
 import { useForm } from 'react-hook-form';
 import classes from './style/SignIn.module.css';
 import { Input, Button } from 'components';
+import React from 'react';
 
 export const SignIn: React.FC = () => {
   const { loginWithGoogle, loginWithEmailPassword, resetPassword } =
@@ -13,13 +14,21 @@ export const SignIn: React.FC = () => {
     mode: 'onChange',
   });
 
-  const onSubmit = handleSubmit((data: Login) => {
-    loginWithEmailPassword(data);
-  });
+  const onSubmit = React.useCallback(
+    handleSubmit((data: Login) => {
+      loginWithEmailPassword(data);
+    }),
+    [],
+  );
 
-  const passwordResetHandler = handleSubmit((data: Login) => {
-    resetPassword(data.email);
-  });
+  const passwordResetHandler = React.useCallback(
+    handleSubmit((data: Login) => {
+      resetPassword(data.email);
+    }),
+    [],
+  );
+
+  const handleGoogleLogin = React.useCallback(() => loginWithGoogle(), []);
 
   return (
     <div className={classes.container}>
@@ -58,10 +67,7 @@ export const SignIn: React.FC = () => {
             Forgot your password?
           </Button>
 
-          <div
-            className={classes.form__google}
-            onClick={() => loginWithGoogle()}
-          >
+          <div className={classes.form__google} onClick={handleGoogleLogin}>
             <div className={classes.form__google__img}>
               <GoogleIcon />
             </div>
