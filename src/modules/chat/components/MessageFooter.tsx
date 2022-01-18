@@ -4,12 +4,13 @@ import { ReactComponent as Buttons } from 'assets/imgupload.svg';
 import { ReactComponent as SendButton } from 'assets/send_svg.svg';
 import { useMessages } from 'modules/chat';
 import { useState } from 'react';
+import React from 'react';
 
 interface Props {
   uid: string;
 }
 
-export const MessageFooter: React.FC<Props> = ({ uid }) => {
+export const MessageFooter = React.memo<Props>(({ uid }) => {
   const { sendMessageToFirestore } = useMessages();
   const [msg, setMsg] = useState('');
 
@@ -43,4 +44,4 @@ export const MessageFooter: React.FC<Props> = ({ uid }) => {
       </form>
     </div>
   );
-};
+});

@@ -16,14 +16,12 @@ export const useContact = () => {
 
   const contact = users.filter(({ uid }) => uid === (id as string));
 
-  const allMessagesWithTimestamp = messages.filter(
+  const allMessages = messages.filter(
     ({ to, uid }) =>
       (to === id && user.id === uid) || (uid === id && to === user.id),
   );
 
-  const allDates = allMessagesWithTimestamp.map(
-    ({ createdAt }) => createdAt as Date,
-  );
+  const allDates = allMessages.map(({ createdAt }) => createdAt as Date);
   let maxDate = '';
   if (allDates.length > 0) {
     const max = allDates.reduce((a, b) => {
@@ -32,5 +30,5 @@ export const useContact = () => {
     maxDate = max.toLocaleDateString();
   }
 
-  return { contact: contact[0], allMessagesWithTimestamp, maxDate };
+  return { contact: contact[0], allMessages, maxDate };
 };

@@ -6,8 +6,8 @@ import {
   signUpWithEmailPassword,
   saveUser,
 } from 'modules/authentication/redux/authActions';
-import { createSlice } from '@reduxjs/toolkit';
-import { Auth } from 'modules/authentication';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Auth, AuthData } from 'modules/authentication';
 
 const initialState: Auth = {
   data: {
@@ -34,10 +34,13 @@ export const authSlice = createSlice({
     builder.addCase(signInWithGoogle.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(signInWithGoogle.fulfilled, (state, action) => {
-      state.data = action.payload.authUser;
-      state.isLoading = false;
-    });
+    builder.addCase(
+      signInWithGoogle.fulfilled,
+      (state, action: PayloadAction<AuthData>) => {
+        state.data = action.payload;
+        state.isLoading = false;
+      },
+    );
     builder.addCase(signInWithGoogle.rejected, (state, action) => {
       state.error = action.error;
       state.isLoading = false;
@@ -45,10 +48,13 @@ export const authSlice = createSlice({
     builder.addCase(signUpWithEmailPassword.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(signUpWithEmailPassword.fulfilled, (state, action) => {
-      state.data = action.payload.authUser;
-      state.isLoading = false;
-    });
+    builder.addCase(
+      signUpWithEmailPassword.fulfilled,
+      (state, action: PayloadAction<AuthData>) => {
+        state.data = action.payload;
+        state.isLoading = false;
+      },
+    );
     builder.addCase(signUpWithEmailPassword.rejected, (state, action) => {
       state.error = action.error;
       state.isLoading = false;
@@ -56,10 +62,13 @@ export const authSlice = createSlice({
     builder.addCase(signInWithEmailPassword.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(signInWithEmailPassword.fulfilled, (state, action) => {
-      state.data = action.payload.authUser;
-      state.isLoading = false;
-    });
+    builder.addCase(
+      signInWithEmailPassword.fulfilled,
+      (state, action: PayloadAction<AuthData>) => {
+        state.data = action.payload;
+        state.isLoading = false;
+      },
+    );
     builder.addCase(signInWithEmailPassword.rejected, (state, action) => {
       state.error = action.error;
       state.isLoading = false;
@@ -87,10 +96,13 @@ export const authSlice = createSlice({
     builder.addCase(saveUser.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(saveUser.fulfilled, (state, action) => {
-      state.data = action.payload.test[0];
-      state.isLoading = false;
-    });
+    builder.addCase(
+      saveUser.fulfilled,
+      (state, action: PayloadAction<AuthData>) => {
+        state.data = action.payload;
+        state.isLoading = false;
+      },
+    );
   },
 });
 const { actions, reducer } = authSlice;

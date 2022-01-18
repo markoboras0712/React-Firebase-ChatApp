@@ -41,7 +41,7 @@ export const signInWithGoogle = createAsyncThunk(
       if (querySnapshot.docs.length === 0) {
         await addDoc(collection(db, 'users'), authUser);
       }
-      return { authUser };
+      return authUser;
     } catch (err) {
       alert(err);
       throw new Error('Didnt sign in');
@@ -70,7 +70,7 @@ export const signUpWithEmailPassword = createAsyncThunk(
         id: user.uid,
       };
       await addDoc(collection(db, 'users'), authUser);
-      return { authUser };
+      return authUser;
     } catch (error) {
       alert(error);
       throw new Error('Didng signup');
@@ -94,7 +94,7 @@ export const signInWithEmailPassword = createAsyncThunk(
         email: user.email as string,
         id: user.uid,
       };
-      return { authUser };
+      return authUser;
     } catch (error) {
       alert(error);
       throw new Error('Didnt sign in');
@@ -127,9 +127,14 @@ export const saveUser = createAsyncThunk('saveUser', async (user: User) => {
     const userRef = collection(db, 'users');
     const q = query(userRef, where('id', '==', user.uid));
     const querySnapshot = await getDocs(q);
-
-    const test = querySnapshot.docs.map((res) => res.data() as AuthData);
-    return { test };
+    let authUser: AuthData = {
+      id: '',
+      email: '',
+      authenticated: false,
+      refreshToken: null,
+    };
+    querySnapshot.docs.map((res) => (authUser = res.data() as AuthData));
+    return authUser;
   } catch (error) {
     alert(error);
     throw new Error('didnt get user data');

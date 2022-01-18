@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux';
 import classes from './style/MessageBody.module.css';
 import { selectUser } from 'modules/authentication';
 import { Message } from 'modules/chat';
+import React from 'react';
 
 interface Props {
   messages: Message[];
 }
 
-export const MessageBody: React.FC<Props> = ({ messages }) => {
+export const MessageBody = React.memo<Props>(({ messages }) => {
   const user = useSelector(selectUser);
 
   return (
@@ -45,4 +46,4 @@ export const MessageBody: React.FC<Props> = ({ messages }) => {
       ))}
     </ScrollableFeed>
   );
-};
+});
