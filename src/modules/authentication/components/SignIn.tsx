@@ -1,7 +1,7 @@
-import { navigate } from '@reach/router';
-import googleLogo from 'assets/google.png';
+import { Link } from '@reach/router';
 import { Routes } from 'fixtures';
 import { useAuthentication, LoginData } from 'modules/authentication';
+import { ReactComponent as GoogleIcon } from 'assets/googleSVG.svg';
 import { useForm } from 'react-hook-form';
 import classes from './style/SignIn.module.css';
 import { Input, Button } from 'components';
@@ -61,17 +61,20 @@ export const SignIn: React.FC = () => {
             Forgot your password?
           </Button>
 
+          <div
+            className={classes.form__google}
+            onClick={() => loginWithGoogle()}
+          >
+            <div className={classes.form__google__img}>
+              <GoogleIcon />
+            </div>
+            <span>Sign in with Google</span>
+          </div>
+
           <div className={classes.form__actions}>
-            <Button type="button" onClick={() => navigate(Routes.Register)}>
-              Create new account
-            </Button>
-            <button
-              type="button"
-              className={classes.form__google}
-              onClick={() => loginWithGoogle()}
-            >
-              <img src={googleLogo} />
-            </button>
+            <Link to={Routes.Register} style={{ textDecoration: 'none' }}>
+              Don't have an account? Sign Up
+            </Link>
           </div>
         </div>
       </form>

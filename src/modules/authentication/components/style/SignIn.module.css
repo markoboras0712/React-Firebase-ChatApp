@@ -29,14 +29,40 @@
     margin-top: 0.2em;
 }
 
-.form__actions {
-    display: flex;
-    flex-direction: row;
-    column-gap: 20px;
+.form__google {
+    background-color: rgb(66, 133, 244);
+    color: rgb(255, 255, 255);
+    height: 50px;
+    width: 100%;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    border: none;
+    text-align: center;
+    box-shadow: rgb(0 0 0 / 25%) 0px 2px 4px 0px;
+    font-size: 16px;
+    line-height: 48px;
+    display: block;
+    border-radius: 1px;
+    transition: background-color 0.218s ease 0s, border-color 0.218s ease 0s,
+        box-shadow 0.218s ease 0s;
+    font-family: Roboto, arial, sans-serif;
+    cursor: pointer;
+    user-select: none;
 }
 
-.form__google {
-    border: none;
-    background-color: white;
-    cursor: pointer;
+.form__google__img {
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    display: block;
+    margin-top: 1px;
+    margin-left: 1px;
+    float: left;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    white-space: nowrap;
+}
+
+.form__actions {
+    margin-top: 16px;
 }

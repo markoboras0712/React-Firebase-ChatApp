@@ -1,6 +1,6 @@
-import { navigate } from '@reach/router';
+import { Link } from '@reach/router';
 import { RegisterData, useAuthentication } from 'modules/authentication';
-import googleLogo from 'assets/google.png';
+import { ReactComponent as GoogleIcon } from 'assets/googleSVG.svg';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import classes from './style/Register.module.css';
@@ -87,17 +87,19 @@ export const Register: React.FC = () => {
           <Button type="submit" onClick={onSubmit}>
             Register
           </Button>
+          <div
+            className={classes.form__google}
+            onClick={() => loginWithGoogle()}
+          >
+            <div className={classes.form__google__img}>
+              <GoogleIcon />
+            </div>
+            <span>Sign in with Google</span>
+          </div>
           <div className={classes.form__actions}>
-            <button
-              type="button"
-              className={classes.form__google}
-              onClick={() => loginWithGoogle()}
-            >
-              <img src={googleLogo} />
-            </button>
-            <Button type="button" onClick={() => navigate(Routes.Login)}>
-              Already have account?
-            </Button>
+            <Link to={Routes.Login} style={{ textDecoration: 'none' }}>
+              Already have an account? Sign in
+            </Link>
           </div>
         </div>
       </form>
