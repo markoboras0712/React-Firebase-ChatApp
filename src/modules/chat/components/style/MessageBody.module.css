@@ -84,3 +84,9 @@
 .hidetime {
     display: none;
 }
+
+
+.horizontal_line {
+    opacity: 0.1;
+    border: 1px solid #000000;
+}

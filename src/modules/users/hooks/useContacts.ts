@@ -18,7 +18,7 @@ export const useContacts = () => {
 
   const keyword = useSelector(selectKeyword);
   const contactsForFilter = allUsers.filter(
-    (contact) => user.email !== contact.email,
+    ({ email }) => user.email !== email,
   );
   const filteredContacts = useFilter(keyword, contactsForFilter);
 

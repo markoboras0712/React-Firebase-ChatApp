@@ -38,8 +38,12 @@ export const useAuthentication = () => {
     dispatch(sendPasswordReset(email));
   };
 
-  const registerWithEmailPassword = (data: Register) => {
-    dispatch(signUpWithEmailPassword(data));
+  const registerWithEmailPassword = (data: Register, image: File) => {
+    const registerData: Register = {
+      ...data,
+      uploadedPhoto: image,
+    };
+    dispatch(signUpWithEmailPassword(registerData));
   };
 
   const logoutUser = () => {

@@ -13,11 +13,7 @@ export const SignIn: React.FC = () => {
     mode: 'onChange',
   });
   const onSubmit = handleSubmit((data: Login) => {
-    const loginData: Login = {
-      email: data.email,
-      password: data.password,
-    };
-    loginWithEmailPassword(loginData);
+    loginWithEmailPassword(data);
   });
 
   const passwordResetHandler = handleSubmit((data: Login) => {

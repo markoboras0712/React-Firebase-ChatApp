@@ -37,13 +37,11 @@ export const useInbox = () => {
     getMessages();
   }, []);
   const textedMessages = messages.filter(
-    (message) => message.to === user.id || message.uid === user.id,
+    ({ to, uid }) => to === user.id || uid === user.id,
   );
-  const allOtherUsers = allUsers.filter(
-    (contact) => user.email !== contact.email,
-  );
+  const allOtherUsers = allUsers.filter(({ email }) => user.email !== email);
   const chattedUsers = getChattedUsers(allOtherUsers, textedMessages);
-  const ids = chattedUsers.map((user) => user.uid);
+  const ids = chattedUsers.map(({ uid }) => uid);
   const filteredUsers = chattedUsers.filter(
     ({ uid }, index) => !ids.includes(uid, index + 1),
   );

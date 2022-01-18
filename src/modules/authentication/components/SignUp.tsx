@@ -25,14 +25,7 @@ export const SignUp: React.FC = () => {
       alert('You didnt upload your picture');
       return;
     }
-    const registerData: Register = {
-      email: data.email,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      password: data.password,
-      uploadedPhoto: uploadedImage,
-    };
-    registerWithEmailPassword(registerData);
+    registerWithEmailPassword(data, uploadedImage);
   });
 
   return (

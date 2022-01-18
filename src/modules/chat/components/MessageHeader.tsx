@@ -17,7 +17,7 @@ export const MessageHeader: React.FC<Props> = ({
   const firstName = userName?.split(' ')[0];
   const lastName = userName?.split(' ')[1];
   return (
-    <div className={classes.sticky}>
+    <>
       <header className={classes.header}>
         <button className={classes.header__arrow} onClick={() => navigate(-1)}>
           <Arrow />
@@ -40,6 +40,6 @@ export const MessageHeader: React.FC<Props> = ({
         </button>
       </header>
       <hr className={classes.horizontal_line} />
-    </div>
+    </>
   );
 };

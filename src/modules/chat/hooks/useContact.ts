@@ -14,16 +14,15 @@ export const useContact = () => {
   const { getMessages } = useMessages();
   useEffect(getMessages, []);
 
-  const contact = users.filter((user) => user.uid === (id as string));
+  const contact = users.filter(({ uid }) => uid === (id as string));
 
   const allMessagesWithTimestamp = messages.filter(
-    (message) =>
-      (message.to === id && user.id === message.uid) ||
-      (message.uid === id && message.to === user.id),
+    ({ to, uid }) =>
+      (to === id && user.id === uid) || (uid === id && to === user.id),
   );
 
   const allDates = allMessagesWithTimestamp.map(
-    (message) => message.createdAt as Date,
+    ({ createdAt }) => createdAt as Date,
   );
   let maxDate = '';
   if (allDates.length > 0) {
