@@ -9,7 +9,7 @@ export interface AuthUser {
   userPhoto?: string;
 }
 
-export interface ReduxUser {
+export interface User {
   data: AuthUser;
   error?: SerializedError | string;
   isLoading?: boolean;

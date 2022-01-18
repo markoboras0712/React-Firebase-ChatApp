@@ -29,7 +29,6 @@ export const sendMsg = createAsyncThunk('sendMsg', async (message: Message) => {
     throw new Error('didnt send message');
   }
 });
-
 export const setMessagesListener =
   (): AppThunk => async (dispatch: AppDispatch) => {
     try {
@@ -42,8 +41,10 @@ export const setMessagesListener =
             ({
               ...doc.data(),
               id: doc.id,
+              createdAt: doc.data().createdAt.toDate(),
             } as Message),
         );
+        console.log(messages);
         dispatch(fetchMessagesFulfilled(messages));
       });
       return unsubscribe;

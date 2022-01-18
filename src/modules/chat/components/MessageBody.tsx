@@ -2,10 +2,10 @@ import ScrollableFeed from 'react-scrollable-feed';
 import { useSelector } from 'react-redux';
 import classes from './style/MessageBody.module.css';
 import { selectUser } from 'modules/authentication';
-import { MessageDate } from 'modules/chat';
+import { Message } from 'modules/chat';
 
 interface Props {
-  messages: MessageDate[];
+  messages: Message[];
 }
 
 export const MessageBody: React.FC<Props> = ({ messages }) => {

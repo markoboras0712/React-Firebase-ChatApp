@@ -1,31 +1,31 @@
 import { Link } from '@reach/router';
-import { RegisterData, useAuthentication } from 'modules/authentication';
+import { Register, useAuthentication } from 'modules/authentication';
 import { ReactComponent as GoogleIcon } from 'assets/googleSVG.svg';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import classes from './style/Register.module.css';
+import classes from './style/SignUp.module.css';
 import { Routes } from 'fixtures';
 import { Input, Button } from 'components';
 
-export const Register: React.FC = () => {
+export const SignUp: React.FC = () => {
   const { registerWithEmailPassword, loginWithGoogle } = useAuthentication();
   const [uploadedImage, setUploadedImage] = useState<File>();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterData>();
+  } = useForm<Register>();
   const fileSelectHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       setUploadedImage(event.target.files[0]);
     }
   };
-  const onSubmit = handleSubmit((data: RegisterData) => {
+  const onSubmit = handleSubmit((data: Register) => {
     if (uploadedImage === undefined) {
       alert('You didnt upload your picture');
       return;
     }
-    const registerData: RegisterData = {
+    const registerData: Register = {
       email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,

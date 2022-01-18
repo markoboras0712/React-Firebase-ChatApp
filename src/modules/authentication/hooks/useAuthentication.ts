@@ -1,7 +1,7 @@
 import {
   clearUser,
-  LoginData,
-  RegisterData,
+  Login,
+  Register,
   logout,
   sendPasswordReset,
   signInWithEmailPassword,
@@ -30,7 +30,7 @@ export const useAuthentication = () => {
     dispatch(signInWithGoogle());
   };
 
-  const loginWithEmailPassword = (data: LoginData) => {
+  const loginWithEmailPassword = (data: Login) => {
     dispatch(signInWithEmailPassword(data));
   };
 
@@ -38,7 +38,7 @@ export const useAuthentication = () => {
     dispatch(sendPasswordReset(email));
   };
 
-  const registerWithEmailPassword = (data: RegisterData) => {
+  const registerWithEmailPassword = (data: Register) => {
     dispatch(signUpWithEmailPassword(data));
   };
 

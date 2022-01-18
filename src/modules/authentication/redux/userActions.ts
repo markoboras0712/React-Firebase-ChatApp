@@ -9,11 +9,11 @@ import {
   User,
 } from 'firebase/auth';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { RegisterData, LoginData } from 'modules/authentication';
-import { AuthUser } from 'models';
+import { Register, Login, AuthUser } from 'modules/authentication';
+
 import { auth, db, provider, storage } from 'modules/redux-store';
 
-const getFirestoreImageUrl = async (userData: RegisterData) => {
+const getFirestoreImageUrl = async (userData: Register) => {
   const storageRef = ref(storage);
   const imagesRef = ref(storageRef, userData.uploadedPhoto?.name);
   await uploadBytes(imagesRef, userData.uploadedPhoto as File);
@@ -51,7 +51,7 @@ export const signInWithGoogle = createAsyncThunk(
 
 export const signUpWithEmailPassword = createAsyncThunk(
   'signUpWithEmailPassword',
-  async (userData: RegisterData) => {
+  async (userData: Register) => {
     try {
       const response = await createUserWithEmailAndPassword(
         auth,
@@ -80,7 +80,7 @@ export const signUpWithEmailPassword = createAsyncThunk(
 
 export const signInWithEmailPassword = createAsyncThunk(
   'signInWithEmailPassword',
-  async (userData: LoginData) => {
+  async (userData: Login) => {
     try {
       const response = await signInWithEmailAndPassword(
         auth,

@@ -1,6 +1,6 @@
 import { Link } from '@reach/router';
 import { Routes } from 'fixtures';
-import { useAuthentication, LoginData } from 'modules/authentication';
+import { useAuthentication, Login } from 'modules/authentication';
 import { ReactComponent as GoogleIcon } from 'assets/googleSVG.svg';
 import { useForm } from 'react-hook-form';
 import classes from './style/SignIn.module.css';
@@ -9,18 +9,18 @@ import { Input, Button } from 'components';
 export const SignIn: React.FC = () => {
   const { loginWithGoogle, loginWithEmailPassword, resetPassword } =
     useAuthentication();
-  const { register, handleSubmit, formState } = useForm<LoginData>({
+  const { register, handleSubmit, formState } = useForm<Login>({
     mode: 'onChange',
   });
-  const onSubmit = handleSubmit((data: LoginData) => {
-    const loginData: LoginData = {
+  const onSubmit = handleSubmit((data: Login) => {
+    const loginData: Login = {
       email: data.email,
       password: data.password,
     };
     loginWithEmailPassword(loginData);
   });
 
-  const passwordResetHandler = handleSubmit((data: LoginData) => {
+  const passwordResetHandler = handleSubmit((data: Login) => {
     resetPassword(data.email);
   });
 

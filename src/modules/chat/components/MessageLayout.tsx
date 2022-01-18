@@ -7,7 +7,7 @@ import {
 } from 'modules/chat';
 
 export const MessageLayout: React.FC = () => {
-  const { contact, allMessages, maxDate } = useContact();
+  const { contact, allMessagesWithTimestamp, maxDate } = useContact();
 
   return (
     <div className={classes.container}>
@@ -17,7 +17,7 @@ export const MessageLayout: React.FC = () => {
         userPhoto={contact.userPhoto}
       />
       {maxDate ? <p className={classes.message__date}>{maxDate}</p> : ''}
-      <MessageBody messages={allMessages} />
+      <MessageBody messages={allMessagesWithTimestamp} />
       <MessageFooter uid={contact.uid} />
     </div>
   );

@@ -1,5 +1,5 @@
 export * from './AuthListener';
 export * from './SignIn';
-export * from './Register';
+export * from './SignUp';
 export * from './PublicAuthGuard';
 export * from './PrivateAuthGuard';

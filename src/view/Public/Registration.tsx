@@ -1,7 +1,7 @@
-import { PublicAuthGuard, Register } from 'modules/authentication';
+import { PublicAuthGuard, SignUp } from 'modules/authentication';
 
 export const Registration: React.FC = () => (
   <PublicAuthGuard>
-    <Register />
+    <SignUp />
   </PublicAuthGuard>
 );

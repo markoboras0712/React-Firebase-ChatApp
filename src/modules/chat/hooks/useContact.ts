@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useSelector } from 'react-redux';
 import { useParams } from '@reach/router';
-import { MessageDate, selectAllMessages, useMessages } from 'modules/chat';
+import { selectAllMessages, useMessages } from 'modules/chat';
 import { useEffect } from 'react';
 import { selectUsers } from 'modules/users';
 import { selectUser } from 'modules/authentication';
@@ -20,14 +21,10 @@ export const useContact = () => {
       (message.to === id && user.id === message.uid) ||
       (message.uid === id && message.to === user.id),
   );
-  const allMessages = allMessagesWithTimestamp.map((message) => {
-    return {
-      ...message,
-      createdAt: message.createdAt?.toDate() as Date,
-    } as MessageDate;
-  });
 
-  const allDates = allMessages.map((message) => message.createdAt as Date);
+  const allDates = allMessagesWithTimestamp.map(
+    (message) => message.createdAt as Date,
+  );
   let maxDate = '';
   if (allDates.length > 0) {
     const max = allDates.reduce((a, b) => {
@@ -36,5 +33,5 @@ export const useContact = () => {
     maxDate = max.toLocaleDateString();
   }
 
-  return { contact: contact[0], allMessages, maxDate };
+  return { contact: contact[0], allMessagesWithTimestamp, maxDate };
 };

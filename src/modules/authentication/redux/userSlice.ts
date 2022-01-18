@@ -7,9 +7,9 @@ import {
   saveUser,
 } from 'modules/authentication/redux/userActions';
 import { createSlice } from '@reduxjs/toolkit';
-import { ReduxUser } from 'models';
+import { User } from 'modules/authentication';
 
-const initialState: ReduxUser = {
+const initialState: User = {
   data: {
     authenticated: false,
     refreshToken: '',
