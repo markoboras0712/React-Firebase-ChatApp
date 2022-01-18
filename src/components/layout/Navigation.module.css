@@ -60,6 +60,6 @@
 }
 
 .header__modal {
-    background-color: white;
-    margin-left: auto;
+    width: 112px;
+    border: 2px solid green;
 }

@@ -1,25 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classes from './Navigation.module.css';
 import { ReactComponent as Dots } from 'assets/dots.svg';
-import { Modal } from 'components';
+import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
+import '@szhsin/react-menu/dist/transitions/slide.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from 'modules/authentication';
+import { selectUser, useAuthentication } from 'modules/authentication';
 import { addKeyword } from 'modules/users';
+import { navigate } from '@reach/router';
+import { Routes } from 'fixtures';
+
+const menuStyles = {
+  border: '5px',
+  width: '112px',
+};
 
 export const Navigation: React.FC = () => {
   const user = useSelector(selectUser);
+  const { logoutUser } = useAuthentication();
   const dispatch = useDispatch();
   const handleChange = (e: { target: { value: string } }) => {
     dispatch(addKeyword(e.target.value));
   };
-  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <header className={classes.header}>
-      <div
-        className={classes.header__content}
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <div className={classes.header__content}>
         <div>
           <img
             src={user.userPhoto}
@@ -28,15 +34,20 @@ export const Navigation: React.FC = () => {
           />
         </div>
         <div className={classes.header__chats}>Chats</div>
-        <button
-          className={classes.header__dots}
-          onClick={() => setIsOpen(!isOpen)}
+        <Menu
+          menuButton={
+            <MenuButton className={classes.header__dots}>
+              <Dots />
+            </MenuButton>
+          }
+          menuStyles={menuStyles}
         >
-          <Dots />
-        </button>
-      </div>
-      <div className={classes.header__modal}>
-        {isOpen && <Modal setIsOpen={setIsOpen} />}
+          <MenuItem onClick={() => navigate(Routes.Messages)}>Inbox</MenuItem>
+          <MenuItem onClick={() => navigate(Routes.Contacts)}>
+            Contacts
+          </MenuItem>
+          <MenuItem onClick={() => logoutUser()}>Logout</MenuItem>
+        </Menu>
       </div>
       <div className={classes.header__search}>
         <input

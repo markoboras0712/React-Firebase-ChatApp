@@ -17,6 +17,7 @@ export const storage = getStorage(firebaseApp);
 export const auth = getAuth();
 export const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
+
 enableIndexedDbPersistence(db).catch((err) => {
   if (err.code == 'failed-precondition') {
     console.log('error code', err);
