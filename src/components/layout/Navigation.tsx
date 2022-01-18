@@ -13,8 +13,9 @@ export const Navigation: React.FC = () => {
     dispatch(addKeyword(e.target.value));
   };
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
-    <header className={classes.header}>
+    <header className={classes.header} onClick={() => setIsOpen(!isOpen)}>
       <div className={classes.header__content}>
         <div>
           <img

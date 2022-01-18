@@ -12,36 +12,34 @@ export const Modal = ({ setIsOpen }: Props) => {
   const user = useSelector(selectUser);
   const { logoutUser } = useAuthentication();
   return (
-    <div className={classes.modal} onClick={() => setIsOpen(false)}>
-      <ul className={classes.modal__links}>
+    <ul className={classes.modal__links} onClick={() => setIsOpen(false)}>
+      <li className={classes.modal__item}>
+        <Link to={Routes.Messages}>
+          <button type="button" className={classes.modal__button}>
+            Inbox
+          </button>
+        </Link>
+      </li>
+      <li className={classes.modal__item}>
+        <Link to={Routes.Contacts}>
+          <button type="button" className={classes.modal__button}>
+            Contacts
+          </button>
+        </Link>
+      </li>
+      {user.authenticated && (
         <li className={classes.modal__item}>
-          <Link to={Routes.Messages}>
-            <button type="button" className={classes.modal__button}>
-              Inbox
+          <Link to={Routes.Login}>
+            <button
+              type="button"
+              className={classes.modal__button}
+              onClick={() => logoutUser()}
+            >
+              Logout
             </button>
           </Link>
         </li>
-        <li className={classes.modal__item}>
-          <Link to={Routes.Contacts}>
-            <button type="button" className={classes.modal__button}>
-              Contacts
-            </button>
-          </Link>
-        </li>
-        {user.authenticated && (
-          <li className={classes.modal__item}>
-            <Link to={Routes.Login}>
-              <button
-                type="button"
-                className={classes.modal__button}
-                onClick={() => logoutUser()}
-              >
-                Logout
-              </button>
-            </Link>
-          </li>
-        )}
-      </ul>
-    </div>
+      )}
+    </ul>
   );
 };

@@ -1,26 +1,29 @@
-.modal {
-    display: flex;
-    justify-content: space-between;
-}
-
 .modal__links {
-    list-style: none;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 10px;
+    width: 100%;
+    align-items: center;
+    background-color: whitesmoke;
 }
 
 .modal__item {
     display: inline-block;
-    padding-left: 10px;
 }
 
 .modal__button {
-    border-radius: 10px;
-    color: #000000;
     font-style: normal;
     font-weight: normal;
     font-size: 17px;
     line-height: 22px;
     letter-spacing: -0.41px;
-    background: rgba(0, 0, 0, 0.05);
     border: none !important;
     cursor: pointer;
+}
+
+.modal__button:hover {
+    background-color: rgb(201, 193, 193);
 }
