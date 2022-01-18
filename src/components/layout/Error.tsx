@@ -3,7 +3,7 @@ import { Button } from 'components';
 import { selectUser } from 'modules/authentication';
 import { Routes } from 'fixtures';
 import { useSelector } from 'react-redux';
-import classes from './Error.module.css';
+import classes from './style/Error.module.css';
 
 export const Error: React.FC = () => {
   const user = useSelector(selectUser);

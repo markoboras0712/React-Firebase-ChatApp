@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prefer-spread */
 import { selectUser } from 'modules/authentication';
 import { Message, selectAllMessages, useMessages } from 'modules/chat';
 import {
@@ -11,19 +13,20 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const getChattedUsers = (allOtherUsers: User[], textedMessages: Message[]) => {
-  const chattedUsers = [];
-  for (let i = 0; i < allOtherUsers.length; i++) {
-    const currentUser = allOtherUsers[i];
-    for (let j = 0; j < textedMessages.length; j++) {
-      if (
-        currentUser.uid === textedMessages[j].uid ||
-        currentUser.uid === textedMessages[j].to
-      ) {
-        chattedUsers.push(currentUser);
-      }
-    }
-  }
-  return chattedUsers;
+  const arrayWithDuplicates = textedMessages
+    .map((message) =>
+      allOtherUsers.filter(
+        (user) => user.uid === message.uid || user.uid === message.to,
+      ),
+    )
+    .flat(1);
+  const ids = arrayWithDuplicates.map(({ uid }) => uid);
+
+  const filteredUsers = arrayWithDuplicates.filter(
+    ({ uid }, index) => !ids.includes(uid, index + 1),
+  );
+
+  return filteredUsers;
 };
 
 export const useInbox = () => {
@@ -41,20 +44,11 @@ export const useInbox = () => {
   const textedMessages = messages.filter(
     ({ to, uid }) => to === user.id || uid === user.id,
   );
-
   const allOtherUsers = allUsers.filter(({ email }) => user.email !== email);
-
   const chattedUsers = getChattedUsers(allOtherUsers, textedMessages);
 
-  const ids = chattedUsers.map(({ uid }) => uid);
-
-  const filteredUsers = chattedUsers.filter(
-    ({ uid }, index) => !ids.includes(uid, index + 1),
-  );
-
   const keyword = useSelector(selectKeyword);
-
-  const filteredInbox = useFilter(keyword, filteredUsers);
+  const filteredInbox = useFilter(keyword, chattedUsers);
 
   return filteredInbox;
 };

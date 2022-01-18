@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Navigation.module.css';
+import classes from './style/Navigation.module.css';
 import { ReactComponent as Dots } from 'assets/dots.svg';
 import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';

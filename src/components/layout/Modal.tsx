@@ -2,7 +2,7 @@ import { Link } from '@reach/router';
 import { selectUser, useAuthentication } from 'modules/authentication';
 import { Routes } from 'fixtures';
 import { useSelector } from 'react-redux';
-import classes from './Modal.module.css';
+import classes from './style/Modal.module.css';
 
 interface Props {
   setIsOpen: (isOpen: boolean) => void;

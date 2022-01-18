@@ -1,4 +1,4 @@
-import classes from './LoadingSpinner.module.css';
+import classes from './style/LoadingSpinner.module.css';
 
 export const LoadingSpinner: React.FC = () => (
   <div className={classes.loader__box}>
