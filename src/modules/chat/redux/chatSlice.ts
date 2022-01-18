@@ -1,7 +1,6 @@
 import { sendMsg } from './chatActions';
 import { AllMessages, Message } from 'modules/chat';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from 'modules/redux-store';
 
 const initialState: AllMessages = {
   allMessages: [],
@@ -43,6 +42,4 @@ export const {
   fetchMessagesFulfilled,
   fetchMessagesRejected,
 } = chatSlice.actions;
-export const selectAllMessages = (state: RootState) =>
-  state.messages.allMessages;
 export const chatReducer = chatSlice.reducer;

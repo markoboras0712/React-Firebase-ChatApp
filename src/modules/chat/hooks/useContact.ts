@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { useParams } from '@reach/router';
-
 import { MessageDate, selectAllMessages, useMessages } from 'modules/chat';
 import { useEffect } from 'react';
 import { selectUsers } from 'modules/users';

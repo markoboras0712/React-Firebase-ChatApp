@@ -8,10 +8,9 @@ import {
 } from 'modules/authentication/redux/userActions';
 import { createSlice } from '@reduxjs/toolkit';
 import { ReduxUser } from 'models';
-import { RootState } from 'modules/redux-store';
 
 const initialState: ReduxUser = {
-  user: {
+  data: {
     authenticated: false,
     refreshToken: '',
     displayName: '',
@@ -28,7 +27,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     clearUser: (state) => {
-      state.user = initialState.user;
+      state.data = initialState.data;
     },
   },
   extraReducers: (builder) => {
@@ -36,7 +35,7 @@ export const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(signInWithGoogle.fulfilled, (state, action) => {
-      state.user = action.payload.authUser;
+      state.data = action.payload.authUser;
       state.isLoading = false;
     });
     builder.addCase(signInWithGoogle.rejected, (state, action) => {
@@ -47,7 +46,7 @@ export const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(signUpWithEmailPassword.fulfilled, (state, action) => {
-      state.user = action.payload.authUser;
+      state.data = action.payload.authUser;
       state.isLoading = false;
     });
     builder.addCase(signUpWithEmailPassword.rejected, (state, action) => {
@@ -58,7 +57,7 @@ export const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(signInWithEmailPassword.fulfilled, (state, action) => {
-      state.user = action.payload.authUser;
+      state.data = action.payload.authUser;
       state.isLoading = false;
     });
     builder.addCase(signInWithEmailPassword.rejected, (state, action) => {
@@ -89,14 +88,12 @@ export const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(saveUser.fulfilled, (state, action) => {
-      state.user = action.payload.authUser;
+      state.data = action.payload.authUser;
       state.isLoading = false;
     });
   },
 });
 const { actions, reducer } = userSlice;
-export const selectUser = (state: RootState) => state.user.user;
-export const selectUserLoading = (state: RootState) => state.user.isLoading;
 
 export const { clearUser } = actions;
 export const userReducer = reducer;

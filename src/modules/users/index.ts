@@ -1,3 +1,3 @@
 export * from './redux';
 export * from './hooks';
-export * from './consts';
+export * from './models';

@@ -10,7 +10,7 @@ export interface AuthUser {
 }
 
 export interface ReduxUser {
-  user: AuthUser;
+  data: AuthUser;
   error?: SerializedError | string;
   isLoading?: boolean;
 }
