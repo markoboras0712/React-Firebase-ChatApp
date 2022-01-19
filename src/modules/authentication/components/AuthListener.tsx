@@ -1,14 +1,12 @@
 import { useEffect } from 'react';
-import { selectUser, useAuthentication } from 'modules/authentication';
-import { useSelector } from 'react-redux';
+import { useAuthentication } from 'modules/authentication';
 
 export const AuthListener: React.FC = ({ children }) => {
   const { autoLogin } = useAuthentication();
-  const user = useSelector(selectUser);
 
   useEffect(() => {
     autoLogin();
-  }, [user.authenticated]);
+  }, []);
 
   return <>{children}</>;
 };
