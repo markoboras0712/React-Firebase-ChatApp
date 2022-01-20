@@ -8,7 +8,7 @@ import {
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const useContacts = () => {
+export const useUsers = () => {
   const dispatch = useDispatch();
   const allUsers = useSelector(selectUsers);
   const user = useSelector(selectUser);
@@ -23,5 +23,10 @@ export const useContacts = () => {
   );
   const filteredContacts = useFilter(keyword, contactsForFilter);
 
-  return filteredContacts;
+  const allOtherUsers = allUsers
+    .filter(({ email }) => user.email !== email)
+    .filter(({ activeChats }) => activeChats.length !== 0);
+  const filteredInbox = useFilter(keyword, allOtherUsers);
+
+  return { filteredContacts, filteredInbox };
 };

@@ -6,9 +6,15 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  User,
 } from 'firebase/auth';
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore';
 import { Register, Login, AuthData } from 'modules/authentication';
 
 import { auth, db, provider, storage } from 'modules/redux-store';
@@ -36,10 +42,11 @@ export const signInWithGoogle = createAsyncThunk(
         displayName: user.displayName as string,
         email: user.email as string,
         id: user.uid,
+        activeChats: [],
       };
       const querySnapshot = await getDocs(q);
       if (querySnapshot.docs.length === 0) {
-        await addDoc(collection(db, 'users'), authUser);
+        await setDoc(doc(db, 'users', user.uid), authUser);
       }
       return authUser;
     } catch (err) {
@@ -68,8 +75,9 @@ export const signUpWithEmailPassword = createAsyncThunk(
         displayName: displayName,
         email: user.email as string,
         id: user.uid,
+        activeChats: [],
       };
-      await addDoc(collection(db, 'users'), authUser);
+      await setDoc(doc(db, 'users', user.uid), authUser);
       return authUser;
     } catch (error) {
       alert(error);
@@ -93,6 +101,7 @@ export const signInWithEmailPassword = createAsyncThunk(
         refreshToken: user.refreshToken,
         email: user.email as string,
         id: user.uid,
+        activeChats: [],
       };
       return authUser;
     } catch (error) {
@@ -122,16 +131,17 @@ export const sendPasswordReset = createAsyncThunk(
   },
 );
 
-export const saveUser = createAsyncThunk('saveUser', async (user: User) => {
+export const saveUser = createAsyncThunk('saveUser', async (uid: string) => {
   try {
     const userRef = collection(db, 'users');
-    const q = query(userRef, where('id', '==', user.uid));
+    const q = query(userRef, where('id', '==', uid));
     const querySnapshot = await getDocs(q);
     let authUser: AuthData = {
       id: '',
       email: '',
       authenticated: false,
       refreshToken: null,
+      activeChats: [],
     };
     querySnapshot.docs.map((res) => (authUser = res.data() as AuthData));
     return authUser;

@@ -11,12 +11,13 @@ interface Props {
 }
 
 export const MessageFooter = React.memo<Props>(({ uid }) => {
-  const { sendMessageToFirestore } = useMessages();
+  const { sendMsg } = useMessages();
   const [msg, setMsg] = useState('');
 
   const sendMessage = (event: React.FormEvent) => {
     event.preventDefault();
-    sendMessageToFirestore(msg, uid);
+
+    sendMsg(msg, uid);
     setMsg('');
   };
 

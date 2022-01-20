@@ -1,9 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   addDoc,
+  arrayUnion,
   collection,
+  doc,
   onSnapshot,
   orderBy,
   query,
+  setDoc,
+  updateDoc,
+  where,
 } from 'firebase/firestore';
 import {
   fetchMessagesFulfilled,
@@ -14,25 +20,60 @@ import {
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, AppThunk, db } from 'modules/redux-store';
 
-export const sendMsg = createAsyncThunk('sendMsg', async (message: Message) => {
-  try {
-    await addDoc(collection(db, 'messages'), {
-      createdAt: new Date(Date.now()),
-      text: message.text,
-      uid: message.uid,
-      to: message.to,
-      userName: message.userName,
-      userPhoto: message.userPhoto,
-    });
-  } catch (error) {
-    alert(error);
-    throw new Error('didnt send message');
-  }
-});
-export const setMessagesListener =
-  (): AppThunk => async (dispatch: AppDispatch) => {
+export const createNewChat = createAsyncThunk(
+  'createNewChat',
+  async (message: Message) => {
     try {
-      const messagesRef = collection(db, 'messages');
+      const chatRef = await addDoc(collection(db, 'messages'), {});
+      await addDoc(collection(db, 'messages', chatRef.id, 'messages'), {
+        createdAt: new Date(Date.now()),
+        text: message.text,
+        uid: message.uid,
+        to: message.to,
+      });
+      const fromRef = doc(db, 'users', message.uid);
+      const toRef = doc(db, 'users', message.to);
+      await updateDoc(fromRef, {
+        activeChats: arrayUnion(chatRef.id),
+      });
+      await updateDoc(toRef, {
+        activeChats: arrayUnion(chatRef.id),
+      });
+    } catch (error) {
+      alert(error);
+      throw new Error('didnt send message');
+    }
+  },
+);
+
+export const sendNewMessage = createAsyncThunk(
+  'sendNewMessage',
+  async (message: Message) => {
+    try {
+      const subCollectionRef = collection(
+        db,
+        'messages',
+        message.subCollection as string,
+        'messages',
+      );
+      await addDoc(subCollectionRef, {
+        createdAt: new Date(Date.now()),
+        text: message.text,
+        uid: message.uid,
+        to: message.to,
+      });
+    } catch (error) {
+      alert(error);
+      throw new Error('didnt send message');
+    }
+  },
+);
+
+export const setMessagesListener =
+  (id: string): AppThunk =>
+  async (dispatch: AppDispatch) => {
+    try {
+      const messagesRef = collection(db, 'messages', id, 'messages');
       dispatch(fetchMessagesPending());
       const q = query(messagesRef, orderBy('createdAt'));
       const unsubscribe = onSnapshot(q, (snapshot) => {

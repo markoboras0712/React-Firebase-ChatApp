@@ -1,3 +1,2 @@
-export * from './useContacts';
+export * from './useUsers';
 export * from './useFilter';
-export * from './useInbox';

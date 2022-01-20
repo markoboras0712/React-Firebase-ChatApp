@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { navigate } from '@reach/router';
 import { selectUser, selectUserLoading } from 'modules/authentication';
 import { Routes } from 'fixtures';
@@ -17,9 +18,9 @@ export const PrivateAuthGuard: React.FC = ({ children }) => {
     }
   }, [user.authenticated]);
 
-  if (userLoading || usersLoading) {
-    return <LoadingSpinner />;
-  }
+  // if (userLoading || usersLoading) {
+  //   return <LoadingSpinner />;
+  // }
 
   return <>{children}</>;
 };

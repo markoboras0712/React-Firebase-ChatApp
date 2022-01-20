@@ -17,6 +17,7 @@ const initialState: Auth = {
     email: '',
     id: '',
     userPhoto: '',
+    activeChats: [],
   },
   error: '',
   isLoading: false,

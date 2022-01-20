@@ -1,13 +1,13 @@
 import { Contact } from 'modules/chat';
 import classes from './style/ContactList.module.css';
-import { useInbox } from 'modules/users';
+import { useUsers } from 'modules/users';
 
 export const MessageList: React.FC = () => {
-  const contacts = useInbox();
+  const { filteredInbox } = useUsers();
 
   return (
     <div className={classes.container}>
-      {contacts.map(({ uid, userName, userPhoto }) => (
+      {filteredInbox.map(({ uid, userName, userPhoto }) => (
         <Contact
           key={uid}
           uid={uid}

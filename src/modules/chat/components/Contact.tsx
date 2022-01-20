@@ -9,7 +9,7 @@ interface Props {
   userPhoto: string;
 }
 
-export const Contact = React.memo<Props>(({ uid, userName, userPhoto }) => {
+export const Contact: React.FC<Props> = ({ uid, userName, userPhoto }) => {
   return (
     <Link to={`/messages/${uid}`} className={classes.contact} key={uid}>
       <img src={userPhoto} alt="avatar" className={classes.contact__avatar} />
@@ -20,4 +20,4 @@ export const Contact = React.memo<Props>(({ uid, userName, userPhoto }) => {
       </button>
     </Link>
   );
-});
+};

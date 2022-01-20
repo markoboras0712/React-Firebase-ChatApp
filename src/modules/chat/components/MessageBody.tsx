@@ -9,7 +9,7 @@ interface Props {
   messages: Message[];
 }
 
-export const MessageBody = React.memo<Props>(({ messages }) => {
+export const MessageBody: React.FC<Props> = ({ messages }) => {
   const user = useSelector(selectUser);
 
   return (
@@ -46,4 +46,4 @@ export const MessageBody = React.memo<Props>(({ messages }) => {
       ))}
     </ScrollableFeed>
   );
-});
+};

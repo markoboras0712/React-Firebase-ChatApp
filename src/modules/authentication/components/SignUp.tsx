@@ -23,17 +23,13 @@ export const SignUp: React.FC = () => {
     }
   };
 
-  const onSubmit = React.useCallback(
-    handleSubmit((data: Register) => {
-      if (uploadedImage === undefined) {
-        alert('You didnt upload your picture');
-        return;
-      }
-      registerWithEmailPassword(data, uploadedImage);
-    }),
-    [],
-  );
-
+  const onSubmit = handleSubmit((data: Register) => {
+    if (uploadedImage === undefined) {
+      alert('You didnt upload your picture');
+      return;
+    }
+    registerWithEmailPassword(data, uploadedImage);
+  });
   const handleGoogleLogin = React.useCallback(() => loginWithGoogle(), []);
 
   return (

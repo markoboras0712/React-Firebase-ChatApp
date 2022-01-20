@@ -4,10 +4,25 @@ import {
   MessageBody,
   MessageFooter,
   useContact,
+  useMessages,
+  selectAllMessages,
 } from 'modules/chat';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from 'modules/users';
 
 export const MessageLayout: React.FC = () => {
-  const { contact, allMessages, maxDate } = useContact();
+  const dispatch = useDispatch();
+  const { contact, maxDate } = useContact();
+  const messages = useSelector(selectAllMessages);
+  const { getMessages, findIdOfChat } = useMessages();
+
+  const idOfChat = findIdOfChat();
+
+  useEffect(() => {
+    dispatch(setUser(contact.uid));
+    getMessages(idOfChat);
+  }, [idOfChat]);
 
   return (
     <div className={classes.container}>
@@ -17,7 +32,7 @@ export const MessageLayout: React.FC = () => {
         userPhoto={contact.userPhoto}
       />
       {maxDate ? <p className={classes.message__date}>{maxDate}</p> : ''}
-      <MessageBody messages={allMessages} />
+      <MessageBody messages={messages} />
       <MessageFooter uid={contact.uid} />
     </div>
   );

@@ -1,4 +1,4 @@
-import { sendMsg } from './chatActions';
+import { createNewChat } from './chatActions';
 import { AllMessages, Message } from 'modules/chat';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -25,13 +25,13 @@ export const chatSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(sendMsg.pending, (state) => {
+    builder.addCase(createNewChat.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(sendMsg.fulfilled, (state) => {
+    builder.addCase(createNewChat.fulfilled, (state) => {
       state.loading = false;
     });
-    builder.addCase(sendMsg.rejected, (state, action) => {
+    builder.addCase(createNewChat.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
     });

@@ -15,3 +15,8 @@ export const selectUserError = createDraftSafeSelector(
   userSelector,
   (user) => user.error,
 );
+
+export const selectUserActiveChats = createDraftSafeSelector(
+  userSelector,
+  (user) => user.data.activeChats,
+);

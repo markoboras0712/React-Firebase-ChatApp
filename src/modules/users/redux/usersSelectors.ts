@@ -20,3 +20,13 @@ export const selectUsersError = createDraftSafeSelector(
   usersSelector,
   (users) => users.error,
 );
+
+export const selectOtherUserActiveChats = createDraftSafeSelector(
+  usersSelector,
+  (users) => users.user.activeChats,
+);
+
+export const selectOtherUser = createDraftSafeSelector(
+  usersSelector,
+  (users) => users.user,
+);

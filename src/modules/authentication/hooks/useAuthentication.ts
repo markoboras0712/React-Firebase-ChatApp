@@ -17,10 +17,11 @@ import { Routes } from 'fixtures';
 
 export const useAuthentication = () => {
   const dispatch = useDispatch();
+
   const autoLogin = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        dispatch(saveUser(user));
+        dispatch(saveUser(user.uid));
       }
       return unsubscribe;
     });

@@ -5,6 +5,13 @@ import { AllUsers, User } from 'modules/users';
 const initialState: AllUsers = {
   allUsers: [],
   keyword: '',
+  user: {
+    uid: '',
+    userName: '',
+    userPhoto: '',
+    activeChats: [],
+    email: '',
+  },
   isLoading: false,
   error: '',
 };
@@ -15,6 +22,11 @@ export const usersSlice = createSlice({
   reducers: {
     addKeyword(state, action: PayloadAction<string>) {
       state.keyword = action.payload;
+    },
+    setUser(state, action: PayloadAction<string>) {
+      state.user = state.allUsers.find(
+        (user) => user.uid === action.payload,
+      ) as User;
     },
   },
   extraReducers: (builder) => {
@@ -30,4 +42,4 @@ export const usersSlice = createSlice({
 
 export const usersReducer = usersSlice.reducer;
 
-export const { addKeyword } = usersSlice.actions;
+export const { addKeyword, setUser } = usersSlice.actions;

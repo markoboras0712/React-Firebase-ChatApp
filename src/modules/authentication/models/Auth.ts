@@ -7,6 +7,7 @@ export interface AuthData {
   authenticated: boolean;
   refreshToken: string | null;
   userPhoto?: string;
+  activeChats: string[];
 }
 
 export interface Auth {

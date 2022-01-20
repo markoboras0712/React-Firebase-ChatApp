@@ -11,6 +11,7 @@ export const fetchUsers = createAsyncThunk('fetchUsers', async () => {
       uid: res.data().id,
       userName: res.data().displayName,
       userPhoto: res.data().userPhoto,
+      activeChats: res.data().activeChats,
     }));
     return allUsers;
   } catch (error) {
