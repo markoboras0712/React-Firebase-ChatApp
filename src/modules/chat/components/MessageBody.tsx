@@ -1,9 +1,8 @@
-import ScrollableFeed from 'react-scrollable-feed';
 import { useSelector } from 'react-redux';
 import classes from './style/MessageBody.module.css';
 import { selectUser } from 'modules/authentication';
 import { Message } from 'modules/chat';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface Props {
   messages: Message[];
@@ -11,9 +10,16 @@ interface Props {
 
 export const MessageBody: React.FC<Props> = ({ messages }) => {
   const user = useSelector(selectUser);
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
-    <ScrollableFeed className={classes.messages}>
+    <div className={classes.messages}>
       {messages.map(({ text, uid, id, createdAt }, index) => (
         <div key={id}>
           <div
@@ -42,8 +48,9 @@ export const MessageBody: React.FC<Props> = ({ messages }) => {
           >
             {createdAt?.getHours() + ':' + createdAt?.getMinutes()}
           </p>
+          <div ref={messagesEndRef}></div>
         </div>
       ))}
-    </ScrollableFeed>
+    </div>
   );
 };
