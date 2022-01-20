@@ -18,9 +18,9 @@ export const PrivateAuthGuard: React.FC = ({ children }) => {
     }
   }, [user.authenticated]);
 
-  // if (userLoading || usersLoading) {
-  //   return <LoadingSpinner />;
-  // }
+  if (userLoading || usersLoading) {
+    return <LoadingSpinner />;
+  }
 
   return <>{children}</>;
 };

@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 
 .container {
     display: flex;
     flex-direction: column;
     height: 100vh;
     overflow: auto;
-    font-family: 'Inter', sans-serif;
+
 }
 
 .horizontal_line {
@@ -19,9 +19,9 @@
     align-self: center;
     justify-content: center;
     margin-top: 8px;
-    font-family: Inter;
-    font-style: normal;
-    font-weight: normal;
+ 
+    
+   
     font-size: 10px;
     line-height: 16px;
 

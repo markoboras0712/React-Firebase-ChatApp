@@ -52,7 +52,6 @@ export const useMessages = () => {
       dispatch(saveUser(user.id));
     } else {
       findId = myChats.find((chat) => otherUserChats.includes(chat));
-      console.log('id test', findId);
       const message: Message = {
         text: msg,
         to: to,

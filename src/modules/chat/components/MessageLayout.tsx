@@ -31,7 +31,7 @@ export const MessageLayout: React.FC = () => {
         userName={contact.userName}
         userPhoto={contact.userPhoto}
       />
-      {maxDate ? <p className={classes.message__date}>{maxDate}</p> : ''}
+      {maxDate && <p className={classes.message__date}>{maxDate}</p>}
       <MessageBody messages={messages} />
       <MessageFooter uid={contact.uid} />
     </div>

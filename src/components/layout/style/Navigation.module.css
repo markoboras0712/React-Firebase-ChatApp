@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-style: normal;
+
     font-weight: bold;
     font-size: 30px;
     line-height: 38px;
@@ -44,9 +44,6 @@
 .header__searchbar {
     height: 36px;
     flex: 1;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 17px;
     line-height: 22px;
     letter-spacing: -0.41px;
     background: rgba(0, 0, 0, 0.05);
