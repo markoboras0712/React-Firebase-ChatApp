@@ -35,13 +35,6 @@ export const authSlice = createSlice({
     builder.addCase(signInWithGoogle.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(
-      signInWithGoogle.fulfilled,
-      (state, action: PayloadAction<AuthData>) => {
-        state.data = action.payload;
-        state.isLoading = false;
-      },
-    );
     builder.addCase(signInWithGoogle.rejected, (state, action) => {
       state.error = action.error;
       state.isLoading = false;
@@ -63,13 +56,6 @@ export const authSlice = createSlice({
     builder.addCase(signInWithEmailPassword.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(
-      signInWithEmailPassword.fulfilled,
-      (state, action: PayloadAction<AuthData>) => {
-        state.data = action.payload;
-        state.isLoading = false;
-      },
-    );
     builder.addCase(signInWithEmailPassword.rejected, (state, action) => {
       state.error = action.error;
       state.isLoading = false;
@@ -101,6 +87,7 @@ export const authSlice = createSlice({
       saveUser.fulfilled,
       (state, action: PayloadAction<AuthData>) => {
         state.data = action.payload;
+        state.data.authenticated = true;
         state.isLoading = false;
       },
     );

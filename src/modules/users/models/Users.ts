@@ -8,6 +8,7 @@ export interface User {
 
 export interface AllUsers {
   allUsers: User[];
+  inboxUsers: User[];
   user: User;
   keyword: string;
   isLoading: boolean;

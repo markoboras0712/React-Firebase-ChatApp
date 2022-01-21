@@ -11,7 +11,12 @@ interface Props {
 
 export const Contact: React.FC<Props> = ({ uid, userName, userPhoto }) => {
   return (
-    <Link to={`/messages/${uid}`} className={classes.contact} key={uid}>
+    <Link
+      to={`/messages/${uid}`}
+      state={{ myState: uid }}
+      className={classes.contact}
+      key={uid}
+    >
       <img src={userPhoto} alt="avatar" className={classes.contact__avatar} />
 
       <span className={classes.contact__userName}>{userName}</span>

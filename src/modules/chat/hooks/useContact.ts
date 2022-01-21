@@ -1,23 +1,21 @@
 import { useSelector } from 'react-redux';
-import { useParams } from '@reach/router';
+
 import { selectAllMessages } from 'modules/chat';
-import { selectUsers } from 'modules/users';
+import { selectAllOtherUsers, User } from 'modules/users';
 
 export const useContact = () => {
-  const { id } = useParams();
-  const users = useSelector(selectUsers);
+  const users = useSelector(selectAllOtherUsers);
   const messages = useSelector(selectAllMessages);
 
-  const contact = users.filter(({ uid }) => uid === (id as string));
+  const findUser = (id: string) => {
+    return users.find(({ uid }) => uid === id) as User;
+  };
 
   const allDates = messages.map(({ createdAt }) => createdAt as Date);
-  let maxDate = '';
-  if (allDates.length > 0) {
-    const max = allDates.reduce((a, b) => {
-      return a > b ? a : b;
-    });
-    maxDate = max.toLocaleDateString();
-  }
 
-  return { contact: contact[0], maxDate };
+  const maxDate = !!allDates.length
+    ? allDates.reduce((a, b) => (a > b ? a : b)).toLocaleDateString()
+    : '';
+
+  return { maxDate, findUser };
 };

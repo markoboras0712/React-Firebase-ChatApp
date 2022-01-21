@@ -10,11 +10,7 @@ interface Props {
   userPhoto: string;
 }
 
-export const MessageHeader: React.FC<Props> = ({
-  uid,
-  userName,
-  userPhoto,
-}) => {
+export const MessageHeader: React.FC<Props> = ({ userName, userPhoto }) => {
   const firstName = userName?.split(' ')?.[0];
   const lastName = userName?.split(' ')?.[1];
 
@@ -25,7 +21,7 @@ export const MessageHeader: React.FC<Props> = ({
           <Arrow />
         </button>
 
-        <div key={uid} className={classes.header__photo}>
+        <div className={classes.header__photo}>
           <img
             src={userPhoto}
             alt="Avatar"

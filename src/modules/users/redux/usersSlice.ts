@@ -1,9 +1,11 @@
 import { fetchUsers } from 'modules/users/redux';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AllUsers, User } from 'modules/users';
+import { fetchInboxUsers } from 'modules/users/redux/usersActions';
 
 const initialState: AllUsers = {
   allUsers: [],
+  inboxUsers: [],
   keyword: '',
   user: {
     uid: '',
@@ -35,6 +37,13 @@ export const usersSlice = createSlice({
       (state, action: PayloadAction<User[]>) => {
         state.isLoading = false;
         state.allUsers = action.payload;
+      },
+    );
+    builder.addCase(
+      fetchInboxUsers.fulfilled,
+      (state, action: PayloadAction<User[]>) => {
+        state.isLoading = false;
+        state.inboxUsers = action.payload;
       },
     );
   },

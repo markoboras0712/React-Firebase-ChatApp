@@ -1,32 +1,29 @@
-import { selectUser } from 'modules/authentication';
+import { selectUserActiveChats } from 'modules/authentication';
 import {
-  fetchUsers,
   selectKeyword,
-  selectUsers,
+  selectAllOtherUsers,
   useFilter,
+  fetchInboxUsers,
+  selectAllOtherInboxUsers,
 } from 'modules/users';
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const useUsers = () => {
+  const allUsers = useSelector(selectAllOtherUsers);
+  const allOtherInboxUsers = useSelector(selectAllOtherInboxUsers);
+  const userChats = useSelector(selectUserActiveChats);
   const dispatch = useDispatch();
-  const allUsers = useSelector(selectUsers);
-  const user = useSelector(selectUser);
-
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, []);
-
   const keyword = useSelector(selectKeyword);
-  const contactsForFilter = allUsers.filter(
-    ({ email }) => user.email !== email,
-  );
-  const filteredContacts = useFilter(keyword, contactsForFilter);
 
-  const allOtherUsers = allUsers
-    .filter(({ email }) => user.email !== email)
-    .filter(({ activeChats }) => activeChats.length !== 0);
-  const filteredInbox = useFilter(keyword, allOtherUsers);
+  const filteredContacts = useFilter(keyword, allUsers);
 
-  return { filteredContacts, filteredInbox };
+  const getAllInboxUsers = () => {
+    if (userChats) {
+      dispatch(fetchInboxUsers(userChats));
+    }
+  };
+
+  const filteredInbox = useFilter(keyword, allOtherInboxUsers);
+
+  return { filteredContacts, filteredInbox, getAllInboxUsers };
 };

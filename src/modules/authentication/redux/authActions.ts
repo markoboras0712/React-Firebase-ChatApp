@@ -42,10 +42,9 @@ export const signInWithGoogle = createAsyncThunk(
         displayName: user.displayName as string,
         email: user.email as string,
         id: user.uid,
-        activeChats: [],
       };
       const querySnapshot = await getDocs(q);
-      if (querySnapshot.docs.length === 0) {
+      if (!querySnapshot.docs.length) {
         await setDoc(doc(db, 'users', user.uid), authUser);
       }
       return authUser;
@@ -136,15 +135,9 @@ export const saveUser = createAsyncThunk('saveUser', async (uid: string) => {
     const userRef = collection(db, 'users');
     const q = query(userRef, where('id', '==', uid));
     const querySnapshot = await getDocs(q);
-    let authUser: AuthData = {
-      id: '',
-      email: '',
-      authenticated: false,
-      refreshToken: null,
-      activeChats: [],
-    };
-    querySnapshot.docs.map((res) => (authUser = res.data() as AuthData));
-    return authUser;
+    const user = querySnapshot.docs.map((res) => res.data() as AuthData);
+    console.log(user);
+    return user[0];
   } catch (error) {
     alert(error);
     throw new Error('didnt get user data');

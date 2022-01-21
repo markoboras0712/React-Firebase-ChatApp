@@ -30,7 +30,7 @@ export const SignUp: React.FC = () => {
     }
     registerWithEmailPassword(data, uploadedImage);
   });
-  const handleGoogleLogin = React.useCallback(() => loginWithGoogle(), []);
+  const handleGoogleLogin = () => loginWithGoogle();
 
   return (
     <div className={classes.container}>

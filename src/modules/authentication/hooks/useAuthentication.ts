@@ -20,6 +20,7 @@ export const useAuthentication = () => {
 
   const autoLogin = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      console.log('user auto login', user);
       if (user) {
         dispatch(saveUser(user.uid));
       }

@@ -23,10 +23,13 @@ export const chatSlice = createSlice({
       state.error = payload;
       state.loading = false;
     },
+    clearMessages: (state) => {
+      state.allMessages = initialState.allMessages;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(createNewChat.pending, (state) => {
-      state.loading = true;
+      state.loading = false;
     });
     builder.addCase(createNewChat.fulfilled, (state) => {
       state.loading = false;
@@ -41,5 +44,6 @@ export const {
   fetchMessagesPending,
   fetchMessagesFulfilled,
   fetchMessagesRejected,
+  clearMessages,
 } = chatSlice.actions;
 export const chatReducer = chatSlice.reducer;

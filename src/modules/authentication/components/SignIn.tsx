@@ -1,6 +1,7 @@
 import { Link } from '@reach/router';
 import { Routes } from 'fixtures';
 import { useAuthentication, Login } from 'modules/authentication';
+import { useCallback } from 'react';
 import { ReactComponent as GoogleIcon } from 'assets/googleSVG.svg';
 import { useForm } from 'react-hook-form';
 import classes from './style/SignIn.module.css';
@@ -14,21 +15,21 @@ export const SignIn: React.FC = () => {
     mode: 'onChange',
   });
 
-  const onSubmit = React.useCallback(
+  const onSubmit = useCallback(
     handleSubmit((data: Login) => {
       loginWithEmailPassword(data);
     }),
     [],
   );
 
-  const passwordResetHandler = React.useCallback(
+  const passwordResetHandler = useCallback(
     handleSubmit((data: Login) => {
       resetPassword(data.email);
     }),
     [],
   );
 
-  const handleGoogleLogin = React.useCallback(() => loginWithGoogle(), []);
+  const handleGoogleLogin = () => loginWithGoogle();
 
   return (
     <div className={classes.container}>
