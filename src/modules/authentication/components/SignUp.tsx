@@ -8,7 +8,7 @@ import {
 import { ReactComponent as GoogleIcon } from 'assets/googleSVG.svg';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import classes from './style/SignUp.module.css';
+import classes from './style/SignIn.module.css';
 import { Routes } from 'fixtures';
 import { Input, Button } from 'components';
 import React from 'react';
@@ -93,8 +93,8 @@ export const SignUp: React.FC = () => {
           <Button type="submit" onClick={onSubmit}>
             Register
           </Button>
-          <div className={classes.form__google} onClick={handleGoogleLogin}>
-            <div className={classes.form__google__img}>
+          <div className="form__google" onClick={handleGoogleLogin}>
+            <div className="form__google__img">
               <GoogleIcon />
             </div>
             <span>Sign in with Google</span>

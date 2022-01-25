@@ -44,8 +44,8 @@ export const NewPasswordForm: React.FC = () => {
             Reset pasword
           </Button>
 
-          <div className={classes.form__google} onClick={handleGoogleLogin}>
-            <div className={classes.form__google__img}>
+          <div className="form__google" onClick={handleGoogleLogin}>
+            <div className="form__google__img">
               <GoogleIcon />
             </div>
             <span>Sign in with Google</span>

@@ -4,6 +4,7 @@
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
     border-radius: 4px;
     padding: 1em;
+    border: none !important;
     margin-bottom: 1.2em;
     width: 93%;
 }

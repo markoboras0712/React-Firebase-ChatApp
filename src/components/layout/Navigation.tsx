@@ -10,11 +10,6 @@ import { addKeyword } from 'modules/users';
 import { navigate } from '@reach/router';
 import { Routes } from 'fixtures';
 
-const menuStyles = {
-  border: '5px',
-  width: '112px',
-};
-
 export const Navigation: React.FC = () => {
   const user = useSelector(selectUser);
   const { logoutUser } = useAuthentication();
@@ -40,7 +35,6 @@ export const Navigation: React.FC = () => {
               <Dots />
             </MenuButton>
           }
-          menuStyles={menuStyles}
         >
           <MenuItem onClick={() => navigate(Routes.Messages)}>Inbox</MenuItem>
           <MenuItem onClick={() => navigate(Routes.Contacts)}>

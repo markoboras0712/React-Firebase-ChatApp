@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 import { ReactComponent as GoogleIcon } from 'assets/googleSVG.svg';
 import { useForm } from 'react-hook-form';
 import classes from './style/SignIn.module.css';
+import '../../../App.css';
 import { Input, Button } from 'components';
 import React from 'react';
 
@@ -62,8 +63,8 @@ export const SignIn: React.FC = () => {
             Forgot your password?
           </Button>
 
-          <div className={classes.form__google} onClick={handleGoogleLogin}>
-            <div className={classes.form__google__img}>
+          <div className="form__google" onClick={handleGoogleLogin}>
+            <div className="form__google__img">
               <GoogleIcon />
             </div>
             <span>Sign in with Google</span>
