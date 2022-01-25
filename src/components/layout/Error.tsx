@@ -12,9 +12,7 @@ export const Error: React.FC = () => {
       <Button
         type="submit"
         onClick={() =>
-          user.authenticated
-            ? navigate(Routes.Messages)
-            : navigate(Routes.Login)
+          user ? navigate(Routes.Messages) : navigate(Routes.Login)
         }
       >
         The page you are looking for does not exist. How you get here is a

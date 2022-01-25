@@ -1,4 +1,4 @@
-import { getDownloadURL, ref, uploadBytes } from '@firebase/storage';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   createUserWithEmailAndPassword,
@@ -6,48 +6,84 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  User,
 } from 'firebase/auth';
 import {
+  addDoc,
   collection,
   doc,
+  DocumentData,
+  getDoc,
   getDocs,
   query,
   setDoc,
   where,
 } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { Register, Login, AuthData } from 'modules/authentication';
-
 import { auth, db, provider, storage } from 'modules/redux-store';
+import { fetchInboxUsers, fetchUsers } from 'modules/users';
 
-const getFirestoreImageUrl = async (userData: Register) => {
+export const addUserToFirestore = createAsyncThunk(
+  'addUserToFirestore',
+  async (user: AuthData) => {
+    try {
+      console.log('dodavanje u firestore', user);
+      await addDoc(collection(db, 'users'), user);
+    } catch (err) {
+      alert(err);
+      throw new Error('Didnt add user to firestore');
+    }
+  },
+);
+
+export const getUser = createAsyncThunk(
+  'getUser',
+  async (uid: string, { dispatch }) => {
+    try {
+      console.log('fetching user', uid);
+      dispatch(fetchUsers());
+      const docRef = doc(db, 'users', uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const user = docSnap.data() as AuthData;
+        console.log('fetched user get user', user);
+        if (!!user.activeChats)
+          dispatch(fetchInboxUsers(user.activeChats as string[]));
+        return user;
+      }
+    } catch (error) {
+      alert(error);
+      throw new Error('didnt get user data');
+    }
+  },
+);
+
+export const getFirestoreImageUrl = async (photoName: string, photo: File) => {
   const storageRef = ref(storage);
-  const imagesRef = ref(storageRef, userData.uploadedPhoto?.name);
-  await uploadBytes(imagesRef, userData.uploadedPhoto as File);
+  const imagesRef = ref(storageRef, photoName);
+  await uploadBytes(imagesRef, photo);
   const url = await getDownloadURL(imagesRef);
   return url;
 };
 
 export const signInWithGoogle = createAsyncThunk(
   'signInWithGoogle',
-  async () => {
+  async (_, { dispatch }) => {
     try {
-      const res = await signInWithPopup(auth, provider);
-      const { user } = res;
-      const userRef = collection(db, 'users');
-      const q = query(userRef, where('id', '==', user.uid));
-      const authUser: AuthData = {
-        authenticated: true,
-        refreshToken: user.refreshToken,
-        userPhoto: user.photoURL as string,
-        displayName: user.displayName as string,
-        email: user.email as string,
-        id: user.uid,
-      };
+      const { user } = await signInWithPopup(auth, provider);
+      const q = query(collection(db, 'users'), where('id', '==', user.uid));
       const querySnapshot = await getDocs(q);
-      if (!querySnapshot.docs.length) {
-        await setDoc(doc(db, 'users', user.uid), authUser);
+      const authUser: AuthData = {
+        email: user.email,
+        id: user.uid,
+        photoUrl: user.photoURL,
+        activeChats: [],
+        displayName: user.displayName,
+      };
+      if (querySnapshot.docs.length === 0) {
+        await addDoc(collection(db, 'users'), authUser);
       }
-      return authUser;
     } catch (err) {
       alert(err);
       throw new Error('Didnt sign in');
@@ -65,19 +101,15 @@ export const signUpWithEmailPassword = createAsyncThunk(
         userData.password,
       );
       const { user } = response;
-      const url = await getFirestoreImageUrl(userData);
       const displayName = `${userData.firstName} ${userData.lastName}`;
       const authUser: AuthData = {
-        authenticated: true,
-        refreshToken: user.refreshToken,
-        userPhoto: url,
         displayName: displayName,
         email: user.email as string,
         id: user.uid,
         activeChats: [],
+        photoUrl: userData.photoUrl as string,
       };
       await setDoc(doc(db, 'users', user.uid), authUser);
-      return authUser;
     } catch (error) {
       alert(error);
       throw new Error('Didng signup');
@@ -95,14 +127,6 @@ export const signInWithEmailPassword = createAsyncThunk(
         userData.password,
       );
       const { user } = response;
-      const authUser: AuthData = {
-        authenticated: true,
-        refreshToken: user.refreshToken,
-        email: user.email as string,
-        id: user.uid,
-        activeChats: [],
-      };
-      return authUser;
     } catch (error) {
       alert(error);
       throw new Error('Didnt sign in');
@@ -129,17 +153,3 @@ export const sendPasswordReset = createAsyncThunk(
     }
   },
 );
-
-export const saveUser = createAsyncThunk('saveUser', async (uid: string) => {
-  try {
-    const userRef = collection(db, 'users');
-    const q = query(userRef, where('id', '==', uid));
-    const querySnapshot = await getDocs(q);
-    const user = querySnapshot.docs.map((res) => res.data() as AuthData);
-    console.log(user);
-    return user[0];
-  } catch (error) {
-    alert(error);
-    throw new Error('didnt get user data');
-  }
-});

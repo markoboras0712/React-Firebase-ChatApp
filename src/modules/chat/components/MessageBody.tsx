@@ -16,6 +16,13 @@ export const MessageBody: React.FC<Props> = ({ messages }) => {
   };
   useEffect(() => {
     scrollToBottom();
+    messages.map((message) =>
+      console.log(
+        message.createdAt?.getHours(),
+        '',
+        message.createdAt?.toUTCString(),
+      ),
+    );
   }, [messages]);
 
   return (

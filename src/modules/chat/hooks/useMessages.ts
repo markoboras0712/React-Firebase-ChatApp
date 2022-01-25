@@ -10,7 +10,7 @@ import {
   createNewChat,
   sendNewMessage,
 } from 'modules/chat';
-import { fetchUsers, selectAllOtherUsers } from 'modules/users';
+import { selectAllOtherUsers } from 'modules/users';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const useMessages = () => {

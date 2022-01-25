@@ -2,30 +2,18 @@ import { SerializedError } from '@reduxjs/toolkit';
 
 export interface AuthData {
   id: string;
-  displayName?: string;
-  email: string;
-  authenticated: boolean;
-  refreshToken: string | null;
-  userPhoto?: string;
+  displayName?: string | null;
+  email: string | null;
+  photoUrl: string | null;
   activeChats?: string[];
 }
 
 export class AuthData {
-  constructor({
-    id,
-    displayName,
-    email,
-    authenticated,
-    refreshToken,
-    userPhoto,
-    activeChats,
-  }: AuthData) {
+  constructor({ id, displayName, email, photoUrl, activeChats }: AuthData) {
     this.id = id;
     this.displayName = displayName;
     this.email = email;
-    this.authenticated = authenticated;
-    this.refreshToken = refreshToken;
-    this.userPhoto = userPhoto;
+    this.photoUrl = photoUrl;
     this.activeChats = activeChats;
   }
 }

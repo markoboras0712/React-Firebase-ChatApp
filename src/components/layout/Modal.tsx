@@ -27,7 +27,7 @@ export const Modal = ({ setIsOpen }: Props) => {
           </button>
         </Link>
       </li>
-      {user.authenticated && (
+      {user && (
         <li className={classes.modal__item}>
           <Link to={Routes.Login}>
             <button

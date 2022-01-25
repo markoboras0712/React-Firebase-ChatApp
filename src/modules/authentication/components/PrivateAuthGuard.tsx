@@ -14,10 +14,10 @@ export const PrivateAuthGuard: React.FC = ({ children }) => {
   const usersLoading = useSelector(selectUsersLoading);
 
   useEffect(() => {
-    if (!userLoading && !user.authenticated) {
+    if (!userLoading && !user.id) {
       navigate(Routes.Login);
     }
-  }, [user.authenticated]);
+  }, [user]);
 
   // if (userLoading) {
   //   return <LoadingSpinner />;

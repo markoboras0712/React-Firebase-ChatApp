@@ -3,5 +3,5 @@ export interface Register {
   password: string;
   firstName: string;
   lastName: string;
-  uploadedPhoto?: File;
+  photoUrl?: string;
 }

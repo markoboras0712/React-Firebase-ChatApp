@@ -28,7 +28,7 @@ export const Navigation: React.FC = () => {
       <div className={classes.header__content}>
         <div>
           <img
-            src={user.userPhoto}
+            src={user.photoUrl as string}
             alt="Avatar"
             className={classes.header__avatar}
           />

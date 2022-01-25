@@ -1,5 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Link } from '@reach/router';
-import { Register, useAuthentication } from 'modules/authentication';
+import {
+  getFirestoreImageUrl,
+  Register,
+  useAuthentication,
+} from 'modules/authentication';
 import { ReactComponent as GoogleIcon } from 'assets/googleSVG.svg';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -10,25 +15,27 @@ import React from 'react';
 
 export const SignUp: React.FC = () => {
   const { registerWithEmailPassword, loginWithGoogle } = useAuthentication();
-  const [uploadedImage, setUploadedImage] = useState<File>();
+  const [uploadedImage, setUploadedImage] = useState<string>();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Register>();
 
-  const fileSelectHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const fileSelectHandler = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     if (event.target.files) {
-      setUploadedImage(event.target.files[0]);
+      const url = await getFirestoreImageUrl(
+        event.target.files[0].name,
+        event.target.files[0],
+      );
+      setUploadedImage(url);
     }
   };
 
   const onSubmit = handleSubmit((data: Register) => {
-    if (uploadedImage === undefined) {
-      alert('You didnt upload your picture');
-      return;
-    }
-    registerWithEmailPassword(data, uploadedImage);
+    registerWithEmailPassword({ ...data, photoUrl: uploadedImage });
   });
   const handleGoogleLogin = () => loginWithGoogle();
 

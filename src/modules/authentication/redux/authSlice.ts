@@ -3,20 +3,18 @@ import {
   sendPasswordReset,
   signInWithEmailPassword,
   signInWithGoogle,
+  getUser,
   signUpWithEmailPassword,
-  saveUser,
 } from 'modules/authentication/redux/authActions';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Auth, AuthData } from 'modules/authentication';
 
 const initialState: Auth = {
   data: {
-    authenticated: false,
-    refreshToken: '',
     displayName: '',
     email: '',
     id: '',
-    userPhoto: '',
+    photoUrl: '',
     activeChats: [],
   },
   error: '',
@@ -30,6 +28,9 @@ export const authSlice = createSlice({
     clearUser: (state) => {
       state.data = initialState.data;
     },
+    saveUser: (state, action: PayloadAction<string>) => {
+      state.data.id = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(signInWithGoogle.pending, (state) => {
@@ -42,13 +43,6 @@ export const authSlice = createSlice({
     builder.addCase(signUpWithEmailPassword.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(
-      signUpWithEmailPassword.fulfilled,
-      (state, action: PayloadAction<AuthData>) => {
-        state.data = action.payload;
-        state.isLoading = false;
-      },
-    );
     builder.addCase(signUpWithEmailPassword.rejected, (state, action) => {
       state.error = action.error;
       state.isLoading = false;
@@ -74,26 +68,20 @@ export const authSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(logout.fulfilled, (state) => {
+      state.data = initialState.data;
       state.isLoading = false;
     });
     builder.addCase(logout.rejected, (state, action) => {
       state.error = action.error;
       state.isLoading = false;
     });
-    builder.addCase(saveUser.pending, (state) => {
-      state.isLoading = true;
+    builder.addCase(getUser.fulfilled, (state, action) => {
+      state.data = action.payload as AuthData;
+      state.isLoading = false;
     });
-    builder.addCase(
-      saveUser.fulfilled,
-      (state, action: PayloadAction<AuthData>) => {
-        state.data = action.payload;
-        state.data.authenticated = true;
-        state.isLoading = false;
-      },
-    );
   },
 });
 const { actions, reducer } = authSlice;
 
-export const { clearUser } = actions;
+export const { clearUser, saveUser } = actions;
 export const authReducer = reducer;

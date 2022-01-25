@@ -12,10 +12,10 @@ export const PublicAuthGuard: React.FC = ({ children }) => {
   const usersLoading = useSelector(selectUsersLoading);
 
   useEffect(() => {
-    if (!userLoading && user.authenticated) {
+    if (!userLoading && !!user.id) {
       navigate(Routes.Contacts);
     }
-  }, [user.authenticated]);
+  }, [user]);
 
   if (userLoading || usersLoading) {
     return <LoadingSpinner />;
