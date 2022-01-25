@@ -31,6 +31,7 @@ export const useAuthentication = () => {
 
   const resetPassword = (email: string) => {
     dispatch(sendPasswordReset(email));
+    navigate(Routes.Login);
   };
 
   const registerWithEmailPassword = (data: Register) => {

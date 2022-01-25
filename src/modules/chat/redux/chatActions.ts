@@ -19,6 +19,8 @@ import {
 } from 'modules/chat';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, AppThunk, db } from 'modules/redux-store';
+import { fetchUsers } from 'modules/users';
+import { getUser, updateUserChats } from 'modules/authentication';
 
 export const createNewChat = createAsyncThunk(
   'createNewChat',
@@ -39,6 +41,29 @@ export const createNewChat = createAsyncThunk(
       await updateDoc(toRef, {
         activeChats: arrayUnion(chatRef.id),
       });
+    } catch (error) {
+      alert(error);
+      throw new Error('didnt send message');
+    }
+  },
+);
+
+export const createNewChatTest = createAsyncThunk(
+  'createNewChatTest',
+  async (message: Message, { dispatch }) => {
+    try {
+      const chatRef = await addDoc(collection(db, 'messages'), {});
+      console.log('chat ref id', chatRef);
+      await addDoc(collection(db, 'messages', chatRef.id, 'messages'), {});
+      const fromRef = doc(db, 'users', message.uid);
+      const toRef = doc(db, 'users', message.to);
+      await updateDoc(fromRef, {
+        activeChats: arrayUnion(chatRef.id),
+      });
+      await updateDoc(toRef, {
+        activeChats: arrayUnion(chatRef.id),
+      });
+      dispatch(updateUserChats(message.uid));
     } catch (error) {
       alert(error);
       throw new Error('didnt send message');

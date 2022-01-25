@@ -12,7 +12,7 @@ export const PublicAuthGuard: React.FC = ({ children }) => {
   const usersLoading = useSelector(selectUsersLoading);
 
   useEffect(() => {
-    if (!userLoading && !!user.id && !!user.photoUrl) {
+    if (!userLoading && !!user.id) {
       navigate(Routes.Contacts);
     }
   }, [user]);

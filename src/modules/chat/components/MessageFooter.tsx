@@ -5,11 +5,12 @@ import { ReactComponent as Buttons } from 'assets/imgupload.svg';
 import { ReactComponent as SendButton } from 'assets/send_svg.svg';
 import {
   createNewChat,
+  createNewChatTest,
   Message,
   sendNewMessage,
   useMessages,
 } from 'modules/chat';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveUser, selectUser } from 'modules/authentication';
@@ -23,33 +24,31 @@ export const MessageFooter: React.FC<Props> = ({ uid }) => {
   const { findIdOfChat } = useMessages();
   const auth = useSelector(selectUser);
   const dispatch = useDispatch();
-  const { sendMsg } = useMessages();
   const [msg, setMsg] = useState('');
   const idOfChat = findIdOfChat(uid);
   console.log('id of chat footer', idOfChat);
-  const sendMessage = (event: React.FormEvent) => {
-    event.preventDefault();
+
+  useEffect(() => {
     if (!idOfChat) {
       const message: Message = {
-        text: msg,
         to: uid,
         uid: auth.id,
       };
-      dispatch(createNewChat(message));
-      dispatch(fetchUsers());
-      setMsg('');
-    } else {
-      const message: Message = {
-        text: msg,
-        to: uid,
-        uid: auth.id,
-        subCollection: idOfChat,
-      };
-      dispatch(sendNewMessage(message));
-      setMsg('');
+      dispatch(createNewChatTest(message));
     }
-    // sendMsg(msg, uid, idOfChat);
-    // setMsg('');
+  }, []);
+
+  const sendMessage = (event: React.FormEvent) => {
+    event.preventDefault();
+    console.log('id of chat u send message', idOfChat);
+    const message: Message = {
+      text: msg,
+      to: uid,
+      uid: auth.id,
+      subCollection: idOfChat,
+    };
+    dispatch(sendNewMessage(message));
+    setMsg('');
   };
 
   return (

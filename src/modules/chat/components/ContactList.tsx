@@ -13,12 +13,12 @@ import classes from './style/ContactList.module.css';
 
 export const ContactList: React.FC = () => {
   const { filteredContacts, getAllInboxUsers } = useUsers();
-  const userChats = useSelector(selectUserActiveChats);
-  const user = useSelector(selectUser);
+  // const userChats = useSelector(selectUserActiveChats);
+  // const user = useSelector(selectUser);
 
-  // useEffect(() => {
-  //   getAllInboxUsers();
-  // }, [userChats]);
+  useEffect(() => {
+    getAllInboxUsers();
+  }, []);
 
   return (
     <div className={classes.container}>

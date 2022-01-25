@@ -6,6 +6,7 @@ import {
   signInWithGoogle,
   getUser,
   signUpWithEmailPassword,
+  updateUserChats,
 } from 'modules/authentication/redux/authActions';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Auth, AuthData } from 'modules/authentication';
@@ -85,6 +86,10 @@ export const authSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.data = action.payload as AuthData;
+      state.isLoading = false;
+    });
+    builder.addCase(updateUserChats.fulfilled, (state, action) => {
+      state.data.activeChats = action.payload;
       state.isLoading = false;
     });
   },

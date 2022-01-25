@@ -20,13 +20,11 @@ import { LoadingSpinner } from 'components';
 import { saveUser, selectUser } from 'modules/authentication';
 
 export const MessageLayout: React.FC = () => {
-  const messagesLoading = useSelector(selectAllMessagesLoading);
-  const auth = useSelector(selectUser);
   const { getMessages, findIdOfChat } = useMessages();
   const location = useLocation<{ myState: 'value' }>();
   const layoutId = location.state.myState;
   const idOfChat = findIdOfChat(layoutId);
-
+  console.log('id of chat message layout', idOfChat);
   const dispatch = useDispatch();
 
   const { maxDate, findUser } = useContact();
@@ -38,20 +36,8 @@ export const MessageLayout: React.FC = () => {
       getMessages(idOfChat);
     } else {
       dispatch(clearMessages());
-      // const data: NewChat = {
-      //   to: layoutId,
-      //   uid: auth.id,
-      // };
-      // dispatch(createNewChat(data));
-      // dispatch(saveUser(auth.id));
-      // dispatch(fetchUsers());
     }
-    // idOfChat ? getMessages(idOfChat) : dispatch(clearMessages());
-  }, []);
-
-  if (messagesLoading) {
-    return <LoadingSpinner />;
-  }
+  }, [idOfChat]);
 
   return (
     <div className={classes.container}>

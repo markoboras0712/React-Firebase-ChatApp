@@ -28,16 +28,42 @@ import { fetchInboxUsers, fetchUsers } from 'modules/users';
 
 export const getUser = createAsyncThunk(
   'getUser',
-  async ({ uid }: User, { dispatch }) => {
+  async (user: User, { dispatch }) => {
     try {
       dispatch(fetchUsers());
-      const docSnap = await getDoc(doc(db, 'users', uid));
+      const docSnap = await getDoc(doc(db, 'users', user.uid));
       if (docSnap.exists()) {
         const userFromFirestore = docSnap.data();
         if (!!userFromFirestore.activeChats)
           dispatch(fetchInboxUsers(userFromFirestore.activeChats));
         navigate(Routes.Contacts);
+        console.log('user from firestore', userFromFirestore);
         return userFromFirestore;
+      }
+      const authUser: AuthData = {
+        email: user.email,
+        id: user.uid,
+        photoUrl: user.photoURL,
+        activeChats: [],
+        displayName: user.displayName,
+      };
+      return authUser;
+    } catch (error) {
+      alert(error);
+      throw new Error('didnt get user data');
+    }
+  },
+);
+
+export const updateUserChats = createAsyncThunk(
+  'updateUserChats',
+  async (uid: string, { dispatch }) => {
+    try {
+      dispatch(fetchUsers());
+      const docSnap = await getDoc(doc(db, 'users', uid));
+      if (docSnap.exists()) {
+        const userFromFirestore = docSnap.data();
+        return userFromFirestore.activeChats;
       }
     } catch (error) {
       alert(error);
