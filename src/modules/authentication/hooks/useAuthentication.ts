@@ -48,7 +48,6 @@ export const useAuthentication = () => {
       if (user) {
         dispatch(getUser(user));
         dispatch(saveUser(user));
-        navigate(Routes.Contacts);
       }
       if (!user) {
         dispatch(clearUser());

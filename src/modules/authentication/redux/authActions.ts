@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { navigate } from '@reach/router';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   createUserWithEmailAndPassword,
@@ -20,9 +21,30 @@ import {
   where,
 } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { Routes } from 'fixtures';
 import { Register, Login, AuthData } from 'modules/authentication';
 import { auth, db, provider, storage } from 'modules/redux-store';
 import { fetchInboxUsers, fetchUsers } from 'modules/users';
+
+export const getUser = createAsyncThunk(
+  'getUser',
+  async ({ uid }: User, { dispatch }) => {
+    try {
+      dispatch(fetchUsers());
+      const docSnap = await getDoc(doc(db, 'users', uid));
+      if (docSnap.exists()) {
+        const userFromFirestore = docSnap.data();
+        if (!!userFromFirestore.activeChats)
+          dispatch(fetchInboxUsers(userFromFirestore.activeChats));
+        navigate(Routes.Contacts);
+        return userFromFirestore;
+      }
+    } catch (error) {
+      alert(error);
+      throw new Error('didnt get user data');
+    }
+  },
+);
 
 export const addUserToFirestore = createAsyncThunk(
   'addUserToFirestore',
@@ -35,34 +57,6 @@ export const addUserToFirestore = createAsyncThunk(
     }
   },
 );
-
-export const getUser = createAsyncThunk(
-  'getUser',
-  async (user: User, { dispatch }) => {
-    try {
-      dispatch(fetchUsers());
-      const docRef = doc(db, 'users', user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const userFromFirestore = docSnap.data() as AuthData;
-        if (!!userFromFirestore.activeChats)
-          dispatch(fetchInboxUsers(userFromFirestore.activeChats as string[]));
-        return userFromFirestore;
-      }
-    } catch (error) {
-      alert(error);
-      throw new Error('didnt get user data');
-    }
-  },
-);
-
-export const getFirestoreImageUrl = async (photoName: string, photo: File) => {
-  const storageRef = ref(storage);
-  const imagesRef = ref(storageRef, photoName);
-  await uploadBytes(imagesRef, photo);
-  const url = await getDownloadURL(imagesRef);
-  return url;
-};
 
 export const signInWithGoogle = createAsyncThunk(
   'signInWithGoogle',
@@ -90,23 +84,25 @@ export const signInWithGoogle = createAsyncThunk(
 
 export const signUpWithEmailPassword = createAsyncThunk(
   'signUpWithEmailPassword',
-  async (userData: Register) => {
+  async (
+    { email, password, firstName, lastName, photoUrl }: Register,
+    { dispatch },
+  ) => {
     try {
       const response = await createUserWithEmailAndPassword(
         auth,
-        userData.email,
-        userData.password,
+        email,
+        password,
       );
-      const { user } = response;
-      const displayName = `${userData.firstName} ${userData.lastName}`;
-      const authUser: AuthData = {
-        displayName: displayName,
-        email: user.email as string,
-        id: user.uid,
-        activeChats: [],
-        photoUrl: userData.photoUrl as string,
-      };
-      await setDoc(doc(db, 'users', user.uid), authUser);
+      dispatch(
+        addUserToFirestore({
+          displayName: `${firstName} ${lastName}`,
+          email,
+          id: response.user.uid,
+          activeChats: [],
+          photoUrl: photoUrl as string,
+        }),
+      );
     } catch (error) {
       alert(error);
       throw new Error('Didng signup');
@@ -116,14 +112,9 @@ export const signUpWithEmailPassword = createAsyncThunk(
 
 export const signInWithEmailPassword = createAsyncThunk(
   'signInWithEmailPassword',
-  async (userData: Login) => {
+  async ({ email, password }: Login) => {
     try {
-      const response = await signInWithEmailAndPassword(
-        auth,
-        userData.email,
-        userData.password,
-      );
-      const { user } = response;
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       alert(error);
       throw new Error('Didnt sign in');
@@ -141,12 +132,20 @@ export const logout = createAsyncThunk('logout', async () => {
 
 export const sendPasswordReset = createAsyncThunk(
   'sendPasswordReset',
-  async (userEmail: string) => {
+  async (email: string) => {
     try {
-      await sendPasswordResetEmail(auth, userEmail);
+      await sendPasswordResetEmail(auth, email);
     } catch (error) {
       alert(error);
       throw new Error('didnt send password reset');
     }
   },
 );
+
+export const getFirestoreImageUrl = async (photoName: string, photo: File) => {
+  const storageRef = ref(storage);
+  const imagesRef = ref(storageRef, photoName);
+  await uploadBytes(imagesRef, photo);
+  const url = await getDownloadURL(imagesRef);
+  return url;
+};
