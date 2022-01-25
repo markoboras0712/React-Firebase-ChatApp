@@ -65,11 +65,7 @@ export const MessageFooter: React.FC<Props> = ({ uid }) => {
           onChange={(e) => setMsg(e.target.value)}
           className={classes.footer__input}
         />
-        <button
-          className={classes.footer__imgbuttons}
-          type="submit"
-          disabled={!msg}
-        >
+        <button type="submit" disabled={!msg}>
           {!msg.length ? <Buttons /> : <SendButton />}
         </button>
       </form>

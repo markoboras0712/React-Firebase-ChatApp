@@ -31,9 +31,6 @@
 
 .header__dots {
     margin-left: auto;
-    border: none;
-    background-color: white;
-    cursor: pointer;
 }
 
 .header__search {
@@ -47,7 +44,6 @@
     line-height: 22px;
     letter-spacing: -0.41px;
     background: rgba(0, 0, 0, 0.05);
-    border: none !important;
     border-radius: 10px;
     color: #8e8e93;
     background-image: url('/src/assets/searchIcon.svg');

@@ -17,8 +17,6 @@
 .modal__button {
     line-height: 22px;
     letter-spacing: -0.41px;
-    border: none !important;
-    cursor: pointer;
 }
 
 .modal__button:hover {

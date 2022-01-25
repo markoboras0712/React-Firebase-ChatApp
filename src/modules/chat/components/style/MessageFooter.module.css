@@ -14,27 +14,18 @@
 }
 
 .footer__smiley {
-    border: none;
-    background-color: white;
     cursor: not-allowed;
 }
 
 .footer__input {
     width: 100%;
     padding-left: 18px;
-    
-  
+
     line-height: 22px;
     letter-spacing: -0.41px;
     margin-right: 1px;
     border: none !important;
     border-radius: 10px;
-}
-
-.footer__imgbuttons {
-    border: none;
-    background-color: white;
-    cursor: pointer;
 }
 
 .footer__imgbuttons:disabled {

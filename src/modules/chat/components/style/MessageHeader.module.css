@@ -16,12 +16,6 @@
     top: 0;
 }
 
-.header__arrow {
-    border: none;
-    background-color: white;
-    cursor: pointer;
-}
-
 .header__photo {
     padding-left: 16px;
     padding-right: 20px;
@@ -42,22 +36,18 @@
 
 .header__firstName {
     font-weight: bold;
-    
+
     line-height: 24px;
     color: #242424;
 }
 
 .header__lastName {
-    
     line-height: 24px;
     color: #242424;
 }
 
 .header__dots {
     margin-left: auto;
-    border: none;
-    background-color: white;
-    cursor: pointer;
 }
 
 .horizontal_line {

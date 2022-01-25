@@ -17,7 +17,7 @@ export const MessageHeader: React.FC<Props> = ({ userName, userPhoto }) => {
   return (
     <>
       <header className={classes.header}>
-        <button className={classes.header__arrow} onClick={() => navigate(-1)}>
+        <button onClick={() => navigate(-1)}>
           <Arrow />
         </button>
 
