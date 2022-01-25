@@ -35,6 +35,8 @@ export const SignUp: React.FC = () => {
   };
 
   const onSubmit = handleSubmit((data: Register) => {
+    console.log({ ...data, photoUrl: uploadedImage });
+
     registerWithEmailPassword({ ...data, photoUrl: uploadedImage });
   });
   const handleGoogleLogin = () => loginWithGoogle();

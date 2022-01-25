@@ -37,7 +37,6 @@ export const MessageFooter: React.FC<Props> = ({ uid }) => {
       };
       dispatch(createNewChat(message));
       dispatch(fetchUsers());
-      dispatch(saveUser(auth.id));
       setMsg('');
     } else {
       const message: Message = {

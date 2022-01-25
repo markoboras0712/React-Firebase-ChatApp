@@ -15,9 +15,6 @@ export const ContactList: React.FC = () => {
   const { filteredContacts, getAllInboxUsers } = useUsers();
   const userChats = useSelector(selectUserActiveChats);
   const user = useSelector(selectUser);
-  useEffect(() => {
-    getUser(user.id);
-  }, []);
 
   // useEffect(() => {
   //   getAllInboxUsers();

@@ -28,8 +28,7 @@ export const addUserToFirestore = createAsyncThunk(
   'addUserToFirestore',
   async (user: AuthData) => {
     try {
-      console.log('dodavanje u firestore', user);
-      await addDoc(collection(db, 'users'), user);
+      await setDoc(doc(db, 'users', user.id), user);
     } catch (err) {
       alert(err);
       throw new Error('Didnt add user to firestore');
@@ -39,18 +38,16 @@ export const addUserToFirestore = createAsyncThunk(
 
 export const getUser = createAsyncThunk(
   'getUser',
-  async (uid: string, { dispatch }) => {
+  async (user: User, { dispatch }) => {
     try {
-      console.log('fetching user', uid);
       dispatch(fetchUsers());
-      const docRef = doc(db, 'users', uid);
+      const docRef = doc(db, 'users', user.uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        const user = docSnap.data() as AuthData;
-        console.log('fetched user get user', user);
-        if (!!user.activeChats)
-          dispatch(fetchInboxUsers(user.activeChats as string[]));
-        return user;
+        const userFromFirestore = docSnap.data() as AuthData;
+        if (!!userFromFirestore.activeChats)
+          dispatch(fetchInboxUsers(userFromFirestore.activeChats as string[]));
+        return userFromFirestore;
       }
     } catch (error) {
       alert(error);
@@ -81,8 +78,8 @@ export const signInWithGoogle = createAsyncThunk(
         activeChats: [],
         displayName: user.displayName,
       };
-      if (querySnapshot.docs.length === 0) {
-        await addDoc(collection(db, 'users'), authUser);
+      if (!querySnapshot.docs.length) {
+        dispatch(addUserToFirestore(authUser));
       }
     } catch (err) {
       alert(err);

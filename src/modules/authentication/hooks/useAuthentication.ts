@@ -46,7 +46,8 @@ export const useAuthentication = () => {
   const autoLogin = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        dispatch(saveUser(user.uid));
+        dispatch(getUser(user));
+        dispatch(saveUser(user));
         navigate(Routes.Contacts);
       }
       if (!user) {

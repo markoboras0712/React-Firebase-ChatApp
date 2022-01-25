@@ -10,7 +10,7 @@ export const fetchUsers = createAsyncThunk('fetchUsers', async () => {
       email: res.data().email,
       uid: res.data().id,
       userName: res.data().displayName,
-      userPhoto: res.data().userPhoto,
+      userPhoto: res.data().photoUrl,
       activeChats: res.data().activeChats,
     }));
     return allUsers;

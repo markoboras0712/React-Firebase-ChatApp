@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   logout,
   sendPasswordReset,
@@ -8,6 +9,7 @@ import {
 } from 'modules/authentication/redux/authActions';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Auth, AuthData } from 'modules/authentication';
+import { User } from 'firebase/auth';
 
 const initialState: Auth = {
   data: {
@@ -28,8 +30,11 @@ export const authSlice = createSlice({
     clearUser: (state) => {
       state.data = initialState.data;
     },
-    saveUser: (state, action: PayloadAction<string>) => {
-      state.data.id = action.payload;
+    saveUser: (state, action: PayloadAction<User>) => {
+      state.data.displayName = action.payload.displayName;
+      state.data.photoUrl = action.payload.photoURL;
+      state.data.email = action.payload.email;
+      state.data.id = action.payload.uid;
     },
   },
   extraReducers: (builder) => {
@@ -74,6 +79,9 @@ export const authSlice = createSlice({
     builder.addCase(logout.rejected, (state, action) => {
       state.error = action.error;
       state.isLoading = false;
+    });
+    builder.addCase(getUser.pending, (state) => {
+      state.isLoading = true;
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.data = action.payload as AuthData;
