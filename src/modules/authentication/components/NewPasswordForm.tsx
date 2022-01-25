@@ -1,4 +1,4 @@
-import { Link, navigate } from '@reach/router';
+import { Link } from '@reach/router';
 import { Routes } from 'fixtures';
 import { useAuthentication, Login } from 'modules/authentication';
 import { useCallback } from 'react';
@@ -8,27 +8,25 @@ import classes from './style/SignIn.module.css';
 import { Input, Button } from 'components';
 import React from 'react';
 
-export const SignIn: React.FC = () => {
-  const { loginWithGoogle, loginWithEmailPassword } = useAuthentication();
+export const NewPasswordForm: React.FC = () => {
+  const { resetPassword, loginWithGoogle } = useAuthentication();
   const { register, handleSubmit, formState } = useForm<Login>({
     mode: 'onChange',
   });
 
-  const onSubmit = useCallback(
+  const passwordResetHandler = useCallback(
     handleSubmit((data: Login) => {
-      loginWithEmailPassword(data);
+      resetPassword(data.email);
     }),
     [],
   );
-
-  const passwordResetHandler = () => navigate(Routes.ForgotPassword);
 
   const handleGoogleLogin = () => loginWithGoogle();
 
   return (
     <div className={classes.container}>
       <form className={classes.form}>
-        <h1 className={classes.form__title}>Sign In</h1>
+        <h1 className={classes.form__title}>Forgot your password?</h1>
         <div>
           <Input
             type="email"
@@ -37,29 +35,13 @@ export const SignIn: React.FC = () => {
             placeholder="Email address"
             {...register('email', { required: true })}
           />
-          <Input
-            type="password"
-            required
-            id="password"
-            placeholder="Password"
-            {...register('password', {
-              required: true,
-            })}
-          />
 
-          <Button
-            type="submit"
-            onClick={onSubmit}
-            disabled={!formState.isValid}
-          >
-            Login
-          </Button>
           <Button
             type="button"
             onClick={passwordResetHandler}
             disabled={!formState.isValid}
           >
-            Forgot your password?
+            Reset pasword
           </Button>
 
           <div className={classes.form__google} onClick={handleGoogleLogin}>
@@ -70,8 +52,8 @@ export const SignIn: React.FC = () => {
           </div>
 
           <div className={classes.form__actions}>
-            <Link to={Routes.Register} style={{ textDecoration: 'none' }}>
-              Don't have an account? Sign Up
+            <Link to={Routes.Login} style={{ textDecoration: 'none' }}>
+              Sign in
             </Link>
           </div>
         </div>

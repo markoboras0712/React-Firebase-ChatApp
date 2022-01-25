@@ -7,6 +7,7 @@ import {
   NotFound,
   Login,
   Registration,
+  ForgotPassword,
 } from 'view';
 
 const RouterPage = (
@@ -18,6 +19,10 @@ export const Routing: React.FC = () => {
     <Router>
       <RouterPage path={Routes.Login} pageComponent={<Login />} />
       <RouterPage path={Routes.Register} pageComponent={<Registration />} />
+      <RouterPage
+        path={Routes.ForgotPassword}
+        pageComponent={<ForgotPassword />}
+      />
       <RouterPage path={Routes.Messages} pageComponent={<AllMessages />} />
       <RouterPage path={Routes.Contacts} pageComponent={<Contacts />} />
       <RouterPage path={Routes.Message} pageComponent={<Chat />} />
