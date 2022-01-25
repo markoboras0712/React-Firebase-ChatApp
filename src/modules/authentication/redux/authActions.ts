@@ -37,7 +37,6 @@ export const getUser = createAsyncThunk(
         if (!!userFromFirestore.activeChats)
           dispatch(fetchInboxUsers(userFromFirestore.activeChats));
         navigate(Routes.Contacts);
-        console.log('user from firestore', userFromFirestore);
         return userFromFirestore;
       }
       const authUser: AuthData = {

@@ -1,5 +1,5 @@
-import { createNewChat } from './chatActions';
 import { AllMessages, Message } from 'modules/chat';
+import { createNewChat } from 'modules/chat/redux/chatActions';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: AllMessages = {

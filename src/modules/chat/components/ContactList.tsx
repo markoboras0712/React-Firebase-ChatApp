@@ -5,19 +5,18 @@ import {
   selectUserActiveChats,
 } from 'modules/authentication';
 import { Contact } from 'modules/chat';
-import { useUsers } from 'modules/users';
+import { fetchUsers, selectAllOtherUsers, useUsers } from 'modules/users';
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import classes from './style/ContactList.module.css';
 
 export const ContactList: React.FC = () => {
-  const { filteredContacts, getAllInboxUsers } = useUsers();
-  // const userChats = useSelector(selectUserActiveChats);
-  // const user = useSelector(selectUser);
+  const { filteredContacts } = useUsers();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getAllInboxUsers();
+    dispatch(fetchUsers());
   }, []);
 
   return (

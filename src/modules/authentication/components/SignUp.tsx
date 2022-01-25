@@ -6,7 +6,7 @@ import {
   useAuthentication,
 } from 'modules/authentication';
 import { ReactComponent as GoogleIcon } from 'assets/googleSVG.svg';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import classes from './style/SignIn.module.css';
 import { Routes } from 'fixtures';
@@ -35,11 +35,10 @@ export const SignUp: React.FC = () => {
   };
 
   const onSubmit = handleSubmit((data: Register) => {
-    console.log({ ...data, photoUrl: uploadedImage });
-
     registerWithEmailPassword({ ...data, photoUrl: uploadedImage });
   });
-  const handleGoogleLogin = () => loginWithGoogle();
+
+  const handleGoogleLogin = useCallback(() => loginWithGoogle(), []);
 
   return (
     <div className={classes.container}>
@@ -100,9 +99,7 @@ export const SignUp: React.FC = () => {
             <span>Sign in with Google</span>
           </div>
           <div className={classes.form__actions}>
-            <Link to={Routes.Login} style={{ textDecoration: 'none' }}>
-              Already have an account? Sign in
-            </Link>
+            <Link to={Routes.Login}>Already have an account? Sign in</Link>
           </div>
         </div>
       </form>

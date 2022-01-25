@@ -22,9 +22,12 @@ export const SignIn: React.FC = () => {
     [],
   );
 
-  const passwordResetHandler = () => navigate(Routes.ForgotPassword);
+  const passwordResetHandler = useCallback(
+    () => navigate(Routes.ForgotPassword),
+    [],
+  );
 
-  const handleGoogleLogin = () => loginWithGoogle();
+  const handleGoogleLogin = useCallback(() => loginWithGoogle(), []);
 
   return (
     <div className={classes.container}>
@@ -71,9 +74,7 @@ export const SignIn: React.FC = () => {
           </div>
 
           <div className={classes.form__actions}>
-            <Link to={Routes.Register} style={{ textDecoration: 'none' }}>
-              Don't have an account? Sign Up
-            </Link>
+            <Link to={Routes.Register}>Don't have an account? Sign Up</Link>
           </div>
         </div>
       </form>

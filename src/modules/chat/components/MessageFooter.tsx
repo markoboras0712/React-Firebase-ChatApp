@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import classes from './style/MessageFooter.module.css';
 import { ReactComponent as Smiley } from 'assets/smiley.svg';
 import { ReactComponent as Buttons } from 'assets/imgupload.svg';
 import { ReactComponent as SendButton } from 'assets/send_svg.svg';
 import {
   createNewChat,
-  createNewChatTest,
   Message,
   sendNewMessage,
   useMessages,
@@ -13,8 +11,7 @@ import {
 import { useEffect, useState } from 'react';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveUser, selectUser } from 'modules/authentication';
-import { fetchUsers } from 'modules/users';
+import { selectUser } from 'modules/authentication';
 
 interface Props {
   uid: string;
@@ -26,7 +23,6 @@ export const MessageFooter: React.FC<Props> = ({ uid }) => {
   const dispatch = useDispatch();
   const [msg, setMsg] = useState('');
   const idOfChat = findIdOfChat(uid);
-  console.log('id of chat footer', idOfChat);
 
   useEffect(() => {
     if (!idOfChat) {
@@ -34,13 +30,12 @@ export const MessageFooter: React.FC<Props> = ({ uid }) => {
         to: uid,
         uid: auth.id,
       };
-      dispatch(createNewChatTest(message));
+      dispatch(createNewChat(message));
     }
   }, []);
 
   const sendMessage = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log('id of chat u send message', idOfChat);
     const message: Message = {
       text: msg,
       to: uid,

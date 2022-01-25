@@ -15,8 +15,3 @@ export interface AllMessages {
   loading: boolean;
   error: string | unknown;
 }
-
-export interface NewChat {
-  uid: string;
-  to: string;
-}

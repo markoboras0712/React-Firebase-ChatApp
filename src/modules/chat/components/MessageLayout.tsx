@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import classes from './style/MessageLayout.module.css';
 import {
   MessageHeader,
@@ -8,23 +7,16 @@ import {
   useMessages,
   selectAllMessages,
   clearMessages,
-  selectAllMessagesLoading,
-  createNewChat,
-  NewChat,
 } from 'modules/chat';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsers, setUser } from 'modules/users';
 import { useLocation } from '@reach/router';
-import { LoadingSpinner } from 'components';
-import { saveUser, selectUser } from 'modules/authentication';
 
 export const MessageLayout: React.FC = () => {
   const { getMessages, findIdOfChat } = useMessages();
   const location = useLocation<{ myState: 'value' }>();
   const layoutId = location.state.myState;
   const idOfChat = findIdOfChat(layoutId);
-  console.log('id of chat message layout', idOfChat);
   const dispatch = useDispatch();
 
   const { maxDate, findUser } = useContact();
@@ -34,9 +26,8 @@ export const MessageLayout: React.FC = () => {
   useEffect(() => {
     if (idOfChat) {
       getMessages(idOfChat);
-    } else {
-      dispatch(clearMessages());
     }
+    dispatch(clearMessages());
   }, [idOfChat]);
 
   return (

@@ -52,9 +52,7 @@ export const NewPasswordForm: React.FC = () => {
           </div>
 
           <div className={classes.form__actions}>
-            <Link to={Routes.Login} style={{ textDecoration: 'none' }}>
-              Sign in
-            </Link>
+            <Link to={Routes.Login}>Sign in</Link>
           </div>
         </div>
       </form>
