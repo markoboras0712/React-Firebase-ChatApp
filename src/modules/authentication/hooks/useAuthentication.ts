@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   clearUser,
   Login,
@@ -8,11 +7,10 @@ import {
   signInWithEmailPassword,
   signInWithGoogle,
   signUpWithEmailPassword,
-  selectUser,
   getUser,
   saveUser,
 } from 'modules/authentication';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from 'modules/redux-store';
 import { navigate } from '@reach/router';

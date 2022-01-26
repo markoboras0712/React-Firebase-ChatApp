@@ -1,9 +1,14 @@
 import { Contact } from 'modules/chat';
 import classes from './style/ContactList.module.css';
 import { useUsers } from 'modules/users';
+import { useEffect } from 'react';
 
 export const MessageList: React.FC = () => {
-  const { filteredInbox } = useUsers();
+  const { filteredInbox, getAllInboxUsers } = useUsers();
+
+  useEffect(() => {
+    getAllInboxUsers();
+  }, []);
 
   return (
     <div className={classes.container}>

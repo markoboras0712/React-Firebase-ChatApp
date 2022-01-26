@@ -67,7 +67,7 @@ export const setMessagesListener =
     try {
       const messagesRef = collection(db, 'messages', id, 'messages');
       dispatch(fetchMessagesPending());
-      const q = query(messagesRef, orderBy('createdAt'));
+      const q = query(messagesRef, orderBy('createdAt', 'asc'));
       const unsubscribe = onSnapshot(q, (snapshot) => {
         const messages = snapshot.docs.map(
           (doc) =>
@@ -77,6 +77,7 @@ export const setMessagesListener =
               createdAt: doc.data().createdAt.toDate(),
             } as Message),
         );
+        console.log('messages', messages);
         dispatch(fetchMessagesFulfilled(messages));
       });
       return unsubscribe;

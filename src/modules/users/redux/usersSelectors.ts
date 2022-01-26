@@ -8,10 +8,6 @@ export const selectUsersLoading = createDraftSafeSelector(
   (users) => users.isLoading,
 );
 
-export const selectUsersError = createDraftSafeSelector(
-  usersSelector,
-  (users) => users.error,
-);
 export const selectKeyword = createDraftSafeSelector(
   usersSelector,
   (users) => users.keyword,
@@ -24,9 +20,13 @@ export const selectAllOtherUsers = createDraftSafeSelector(
     users.allUsers.filter(({ email }) => userEmail !== email),
 );
 
-export const selectAllOtherInboxUsers = createDraftSafeSelector(
+export const selectInboxUsers = createDraftSafeSelector(
   usersSelector,
-  (state: RootState) => state.auth.data.email,
-  (users, userEmail) =>
-    users.inboxUsers.filter(({ email }) => userEmail !== email),
+
+  (users) => users.inboxUsers,
+);
+
+export const selectUsersError = createDraftSafeSelector(
+  usersSelector,
+  (users) => users.error,
 );

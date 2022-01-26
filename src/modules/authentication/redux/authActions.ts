@@ -30,12 +30,12 @@ export const getUser = createAsyncThunk(
   'getUser',
   async (user: User, { dispatch }) => {
     try {
-      dispatch(fetchUsers());
       const docSnap = await getDoc(doc(db, 'users', user.uid));
+      dispatch(fetchUsers(user.uid));
       if (docSnap.exists()) {
         const userFromFirestore = docSnap.data();
         if (!!userFromFirestore.activeChats)
-          dispatch(fetchInboxUsers(userFromFirestore.activeChats));
+          dispatch(fetchInboxUsers(userFromFirestore as AuthData));
         navigate(Routes.Contacts);
         return userFromFirestore;
       }
@@ -58,7 +58,7 @@ export const updateUserChats = createAsyncThunk(
   'updateUserChats',
   async (uid: string, { dispatch }) => {
     try {
-      dispatch(fetchUsers());
+      dispatch(fetchUsers(uid));
       const docSnap = await getDoc(doc(db, 'users', uid));
       if (docSnap.exists()) {
         const userFromFirestore = docSnap.data();

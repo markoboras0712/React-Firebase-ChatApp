@@ -6,14 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 export const useMessages = () => {
   const dispatch = useDispatch();
   const myChats = useSelector(selectUserActiveChats);
-  const otherUsers = useSelector(selectAllOtherUsers);
+  const users = useSelector(selectAllOtherUsers);
 
   const getMessages = (id: string) => {
     dispatch(setMessagesListener(id));
   };
 
   const findIdOfChat = (id: string) => {
-    const otherUsersActiveChats = otherUsers
+    const otherUsersActiveChats = users
       .find((user) => user.uid === id)
       ?.activeChats.map((chat) => chat);
 

@@ -46,7 +46,9 @@ export const MessageBody: React.FC<Props> = ({ messages }) => {
             }
             `}
           >
-            {createdAt?.getHours() + ':' + createdAt?.getMinutes()}
+            {createdAt?.getHours() +
+              ':' +
+              ('0' + createdAt?.getMinutes()).slice(-2)}
           </p>
           <div ref={messagesEndRef}></div>
         </div>
